@@ -7,7 +7,7 @@ zyphor_pkg_remove() {
   # ==================================================
   # SAFE DEFAULTS (prevents curl issues)
   # ==================================================
-  REGISTRY_URL="${REGISTRY_URL:-https://markjasonespelita.github.io/zyphor_repo/registry/registry.json}"
+  REGISTRY_URL="${REGISTRY_URL:-https://zyphor-os.github.io/registry/registry.json}"
   CACHE_FILE="${CACHE_FILE:-/tmp/zyphor_registry.json}"
 
   # ==================================================
