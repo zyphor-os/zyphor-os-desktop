@@ -160,22 +160,18 @@ sections: [
 
 const releaseNotes = {
     distro: "Zyphor OS",
-    version: "1.12.0-u15",
+    version: "1.13.0-u16",
     date: "Updated On: June 16, 2026",
 
     sections: [
         {
-            title: "🔒 Security Updates",
-            items: [
-                "Changed ownership of Zyphor CLI files and libraries to root for improved system integrity and security.",
-                "Changed ownership of Zyphor Command Center files and libraries to root for improved system integrity and security."
-            ]
-        },
-        {
             title: "✨ New Features",
             items: [
-                "Created and applied the new zyphor.list repository configuration for the new package hosting infrastructure.",
-                "Updated the App Registry JSON configuration to support the latest application registry changes."
+                "Modified the APT package source configuration in /etc/apt/source.list.d to use the official Zyphor OS repository: deb [trusted=yes] https://zyphor-os.github.io stable main.",
+                "This change ensures that package updates, system upgrades, and repository metadata are fetched directly from the Zyphor OS distribution source.",
+                "Added the trusted=yes option to allow seamless package installation and updates without requiring separate repository key configuration.",
+                "Improves repository consistency across installations and simplifies package management for users running Zyphor OS.",
+                "Existing systems will now receive software packages, bug fixes, and future updates from the centralized Zyphor OS package repository."
             ]
         }
     ]
