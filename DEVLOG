@@ -50,3 +50,4 @@ This will be updated daily.
 2026-06-16
 - create separate github account for zyphor-os
 - created zyphor-repo-config for apt sources.list.d changes
+- changed development workflow, (forking)

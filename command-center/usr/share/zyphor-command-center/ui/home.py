@@ -50,7 +50,7 @@ class HomePage(QWidget):
 
         # IMPORTANT ==================== (Date and Version)
 
-        version = QLabel("Version 1.11.1-u15 • Updated On: June 16, 2026")
+        version = QLabel("Version 1.12.0-u15 • Updated On: June 16, 2026")
 
         # /IMPORTANT =================== (Date and Version)
 
