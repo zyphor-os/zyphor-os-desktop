@@ -1,0 +1,33 @@
+## Directories
+/.build/
+/cache/
+/chroot/
+## `lb` will generate this folder, `config`
+##   Which is why our config directory is called `zyphor-config`
+/config/
+## In case symlink, no slash
+/images
+
+## Files
+.lock
+.mirror
+build.log
+wget-log*
+
+## After Build
+binary.modified_timestamps
+/binary
+chroot.files
+chroot.packages.install
+chroot.packages.live
+live-image-amd64.contents
+live-image-amd64.files
+live-image-amd64.packages
+
+## Executables
+bootHardDisk
+bootCDROM
+vmInit
+
+# debian packages
+/*.deb
