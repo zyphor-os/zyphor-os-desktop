@@ -1,0 +1,5 @@
+# ----------------
+# Graphics (GPU)
+# ----------------
+xserver-xorg
+xserver-xorg-video-all

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+zyphor_ftp_download() {
+
+  read -p "FTP Host: " HOST
+  read -p "Username: " USER
+  read -p "Remote file: " REMOTE
+  read -p "Local save path (optional): " LOCAL
+
+  if [ -z "$HOST" ] || [ -z "$USER" ] || [ -z "$REMOTE" ]; then
+    echo "Zyphor: ✖ Missing input"
+    return 1
+  fi
+
+  if [ -z "$LOCAL" ]; then
+    LOCAL="."
+  fi
+
+  echo ""
+  echo "Zyphor: Downloading → $REMOTE from $HOST"
+  echo ""
+
+  ftp -inv "$HOST" <<EOF
+user $USER
+get "$REMOTE" "$LOCAL"
+bye
+EOF
+
+  echo "Zyphor: ✔ Download complete"
+  echo ""
+}

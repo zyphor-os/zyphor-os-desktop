@@ -1,0 +1,8 @@
+Package: zyphor-wallpapers-pragmata
+Version: 1.2.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: bash
+Maintainer: Mark Jason P. Espelita
+Description: Zyphor OS wallpapers-pragmata

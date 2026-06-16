@@ -1,0 +1,33 @@
+=================
+Versioning Scheme
+=================
+
+vX.X.X-YYY.MM.DD-rx
+
+==============
+New ISO Images
+==============
+
+located at /images
+
+========================
+Initiate virtual Machine
+========================
+
+./vmInit
+
+===============
+Boot From CDROM
+===============
+
+usually for installation
+
+./bootCDROM
+
+===================
+Boot From Hard Disk
+===================
+
+after installation, it can be booted in hard Disk
+
+./bootHardDisk

@@ -1,0 +1,72 @@
+#!/bin/bash
+set -e
+
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+  echo "Zyphor: Removing wallpaper symlinks..."
+
+  # removing symlinks
+
+  rm -f /usr/share/images/desktop-base/pragmata-1
+
+  rm -f /usr/share/images/desktop-base/pragmata-2
+
+  rm -f /usr/share/images/desktop-base/pragmata-3
+
+  rm -f /usr/share/images/desktop-base/pragmata-4
+
+  rm -f /usr/share/images/desktop-base/pragmata-5
+  
+  rm -f /usr/share/images/desktop-base/pragmata-6
+
+  rm -f /usr/share/images/desktop-base/pragmata-7
+
+  rm -f /usr/share/images/desktop-base/pragmata-8
+
+  rm -f /usr/share/images/desktop-base/pragmata-9
+
+  rm -f /usr/share/images/desktop-base/pragmata-10
+
+  rm -f /usr/share/backgrounds/pragmata-1
+
+  rm -f /usr/share/backgrounds/pragmata-2
+
+  rm -f /usr/share/backgrounds/pragmata-3
+
+  rm -f /usr/share/backgrounds/pragmata-4
+
+  rm -f /usr/share/backgrounds/pragmata-5
+  
+  rm -f /usr/share/backgrounds/pragmata-6
+
+  rm -f /usr/share/backgrounds/pragmata-7
+
+  rm -f /usr/share/backgrounds/pragmata-8
+
+  rm -f /usr/share/backgrounds/pragmata-9
+
+  rm -f /usr/share/backgrounds/pragmata-10
+
+  # removing raw files
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-1.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-2.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-3.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-4.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-5.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-6.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-7.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-8.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-9.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-pragmata/pragmata-10.jpg
+
+  echo "Zyphor: Cleanup done."
+fi

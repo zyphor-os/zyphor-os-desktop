@@ -1,0 +1,7 @@
+# ----------------
+# Filesystems
+# ----------------
+e2fsprogs        # ext4
+dosfstools       # FAT / EFI
+ntfs-3g          # NTFS
+squashfs-tools   # Live ISO support

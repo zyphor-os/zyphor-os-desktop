@@ -1,0 +1,5 @@
+# ----------------
+# Input Devices
+# ----------------
+libinput10
+xserver-xorg-input-libinput

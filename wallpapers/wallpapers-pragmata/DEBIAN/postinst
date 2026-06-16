@@ -1,0 +1,53 @@
+#!/bin/bash
+set -e
+
+echo "Zyphor: Applying wallpapers setup..."
+
+TARGET_DIR_DESKTOP_BASE="/usr/share/images/desktop-base"
+TARGET_DIR_BACKGROUNDS="/usr/share/backgrounds"
+SRC_DIR="/usr/share/backgrounds/wallpapers-pragmata"
+
+mkdir -p "$TARGET_DIR_DESKTOP_BASE"
+
+# safe symlinks (overwrite only if ours)
+ln -sfn "$SRC_DIR/pragmata-1.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-1"
+
+ln -sfn "$SRC_DIR/pragmata-2.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-2"
+
+ln -sfn "$SRC_DIR/pragmata-3.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-3"
+
+ln -sfn "$SRC_DIR/pragmata-4.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-4"
+
+ln -sfn "$SRC_DIR/pragmata-5.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-5"
+
+ln -sfn "$SRC_DIR/pragmata-6.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-6"
+
+ln -sfn "$SRC_DIR/pragmata-7.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-7"
+
+ln -sfn "$SRC_DIR/pragmata-8.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-8"
+
+ln -sfn "$SRC_DIR/pragmata-9.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-9"
+
+ln -sfn "$SRC_DIR/pragmata-10.jpg" "$TARGET_DIR_DESKTOP_BASE/pragmata-10"
+
+ln -sfn "$SRC_DIR/pragmata-1.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-1"
+
+ln -sfn "$SRC_DIR/pragmata-2.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-2"
+
+ln -sfn "$SRC_DIR/pragmata-3.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-3"
+
+ln -sfn "$SRC_DIR/pragmata-4.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-4"
+
+ln -sfn "$SRC_DIR/pragmata-5.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-5"
+
+ln -sfn "$SRC_DIR/pragmata-6.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-6"
+
+ln -sfn "$SRC_DIR/pragmata-7.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-7"
+
+ln -sfn "$SRC_DIR/pragmata-8.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-8"
+
+ln -sfn "$SRC_DIR/pragmata-9.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-9"
+
+ln -sfn "$SRC_DIR/pragmata-10.jpg" "$TARGET_DIR_BACKGROUNDS/pragmata-10"
+
+echo "Zyphor: Wallpapers configured."

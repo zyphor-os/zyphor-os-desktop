@@ -1,0 +1,51 @@
+This will be updated daily.
+
+2026-06-07
+- added DEVLOG
+- restday
+
+2026-06-08
+- Re-archived the wallpapers-jenalyn-2026 package for review and evaluation.
+- Completed contributor onboarding for Graphic Designer Jenalyn Iso.
+- Completed contributor onboarding for Security Tester Dan Stephen B. Blanco.
+- Conducted a security review meeting regarding a reported Zyphor CLI vulnerability.
+
+2026-06-09
+- Resolved a privilege escalation vulnerability affecting Zyphor CLI
+  by applying stricter file permissions (555) to protected executable components by default.
+- Resolved a privilege escalation vulnerability affecting Zyphor Command Center
+  by applying stricter file permissions (555) to protected executable components by default.
+- created a video tutorial on how to install Zyphor OS. Video link is included in README.md file.
+
+2026-06-10
+- submission and checking of wallpapers from graphic designers.
+- patched zyphor-cli path, added symbolic link from /usr/local/bin/zyphor to /usr/bin/zyphor
+- added wallpaper-nicole-ervas
+- started the development of zyphor-whats-new
+
+2026-06-11
+- deployed the v1.0.0-stable-release of zyphor-whats-new-package
+- added zyphor-whats-new in the app registry
+- added dr24377965 for daily release
+- added wr24377965 for weekly release
+- added zyphor whats new on the default official repository
+
+2026-06-12
+- restday (Independence Day) holiday
+
+2026-06-13
+- make the ZCC homepage as Whats New page.
+- released ZCC homepage as Whats New page.
+- utilizes Makefile for git deployment automation.
+- New OS banner format: Zyphor OS vX.X.X-uX (ZyShell) X.X.X.
+
+2026-06-14
+- released of the Zyphor Horizon v1.0.0-beta-2026-06-14-r1
+- released of the Zyphor OS v1.12.0-2026-06-14-r4
+- completed automation using Makefile in switching editions.
+
+2026-06-15
+- merged graphic-jenalyn and graphic-nicole from wr24377965
+
+2026-06-16
+-

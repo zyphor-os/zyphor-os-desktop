@@ -1,0 +1,335 @@
+#!/bin/bash
+
+zyphor_setup_dev() {
+
+  TARGET="$3"
+
+  # ==================================================
+  # VALIDATE INPUT
+  # ==================================================
+  if [ -z "$TARGET" ]; then
+    echo ""
+    echo "Zyphor: ✖ Missing dev target"
+    echo "Usage: zyphor setup dev <target>"
+    echo "Example: zyphor setup dev php"
+    echo ""
+    return 1
+  fi
+
+  # ==================================================
+  # ROOT CHECK
+  # ==================================================
+  if [ "$EUID" -ne 0 ]; then
+    echo ""
+    echo "Zyphor: ⚠ Requires root privileges"
+    echo "Try: sudo zyphor setup dev $TARGET"
+    echo ""
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: 🚀 Setting up dev environment → $TARGET"
+  echo ""
+
+  # ==================================================
+  # TARGET HANDLER
+  # ==================================================
+  case "$TARGET" in
+
+    # --------------------------
+    # PHP DEV SETUP
+    # --------------------------
+    php)
+
+      # --------------------------
+      # CHECK PHP
+      # --------------------------
+      if ! command -v php >/dev/null 2>&1; then
+        echo "Zyphor: Installing PHP..."
+        apt update -qq
+        apt install -y php php-cli php-mbstring unzip curl
+      fi
+
+      # --------------------------
+      # INSTALL COMPOSER
+      # --------------------------
+      echo "Zyphor: Installing Composer..."
+
+      php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+      php composer-setup.php
+
+      mv composer.phar /usr/local/bin/composer
+
+      rm -f composer-setup.php
+
+      echo "Zyphor: ✔ Composer installed"
+
+      # --------------------------
+      # REMOVE OLD NODEJS
+      # --------------------------
+      echo "Zyphor: Removing old Node.js..."
+      apt remove nodejs -y || true
+
+      # --------------------------
+      # INSTALL NODE 20
+      # --------------------------
+      echo "Zyphor: Installing Node.js 20..."
+
+      curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+
+      apt install -y nodejs
+
+      echo "Zyphor: ✔ Node.js installed"
+
+      # --------------------------
+      # VERIFY
+      # --------------------------
+      echo ""
+      echo "Zyphor: Verifying environment..."
+
+      php -v || echo "⚠ PHP missing"
+      composer -V || echo "⚠ Composer missing"
+      node -v || echo "⚠ Node missing"
+      npm -v || echo "⚠ NPM missing"
+
+      ;;
+
+    # --------------------------
+    # GIT SETUP
+    # --------------------------
+    git)
+      # ==================================================
+      # ROOT CHECK
+      # ==================================================
+      if [ "$EUID" -ne 0 ]; then
+        echo ""
+        echo "Zyphor: ⚠ Requires root privileges"
+        echo "Try: sudo zyphor setup dev git"
+        echo ""
+        return 1
+      fi
+
+      echo ""
+      echo "Zyphor: 🚀 Setting up Git development environment"
+      echo ""
+
+      # ==================================================
+      # INSTALL REQUIRED PACKAGES
+      # ==================================================
+      echo "Zyphor: Installing Git and OpenSSH..."
+
+      apt update -qq
+
+      apt install -y git openssh-client curl || {
+        echo ""
+        echo "Zyphor: ✖ Failed installing dependencies"
+        echo ""
+        return 1
+      }
+
+      # ==================================================
+      # USER INPUT
+      # ==================================================
+      echo ""
+      read -rp "Git Username: " GIT_USERNAME
+
+      read -rp "Git Email: " GIT_EMAIL
+
+      read -rp "SSH Algorithm [default: ed25519]: " SSH_ALGO
+
+      # Default algorithm
+      SSH_ALGO="${SSH_ALGO:-ed25519}"
+
+      # ==================================================
+      # VALIDATION
+      # ==================================================
+      if [ -z "$GIT_USERNAME" ]; then
+        echo ""
+        echo "Zyphor: ✖ Username is required"
+        echo ""
+        return 1
+      fi
+
+      if [ -z "$GIT_EMAIL" ]; then
+        echo ""
+        echo "Zyphor: ✖ Email is required"
+        echo ""
+        return 1
+      fi
+
+      # ==================================================
+      # CONFIGURE GIT
+      # ==================================================
+      echo ""
+      echo "Zyphor: Configuring Git..."
+
+      git config --global user.name "$GIT_USERNAME"
+
+      git config --global user.email "$GIT_EMAIL"
+
+      git config --global init.defaultBranch master
+
+      echo ""
+      echo "Zyphor: ✔ Git configured"
+      echo ""
+
+      git config --list
+
+      # ==================================================
+      # SSH SETUP
+      # ==================================================
+      echo ""
+      echo "Zyphor: Generating SSH key..."
+
+      mkdir -p "$HOME/.ssh"
+
+      chmod 700 "$HOME/.ssh"
+
+      SSH_KEY="$HOME/.ssh/id_$SSH_ALGO"
+
+      # Prevent overwrite
+      if [ -f "$SSH_KEY" ]; then
+        echo ""
+        echo "Zyphor: ⚠ SSH key already exists:"
+        echo "$SSH_KEY"
+        echo ""
+
+        read -rp "Overwrite existing SSH key? [y/N]: " OVERWRITE
+
+        case "$OVERWRITE" in
+          y|Y)
+            rm -f "$SSH_KEY" "${SSH_KEY}.pub"
+          ;;
+          *)
+            echo ""
+            echo "Zyphor: Using existing SSH key"
+            echo ""
+          ;;
+        esac
+      fi
+
+      # Generate only if missing
+      if [ ! -f "$SSH_KEY" ]; then
+
+        ssh-keygen \
+          -t "$SSH_ALGO" \
+          -C "$GIT_EMAIL" \
+          -f "$SSH_KEY" \
+          -N "" || {
+
+          echo ""
+          echo "Zyphor: ✖ Failed generating SSH key"
+          echo ""
+
+          return 1
+        }
+      fi
+
+      # ==================================================
+      # START SSH AGENT
+      # ==================================================
+      echo ""
+      echo "Zyphor: Starting SSH agent..."
+
+      eval "$(ssh-agent -s)" >/dev/null
+
+      ssh-add "$SSH_KEY" || {
+        echo ""
+        echo "Zyphor: ✖ Failed adding SSH key"
+        echo ""
+        return 1
+      }
+
+      # ==================================================
+      # DISPLAY PUBLIC KEY
+      # ==================================================
+      echo ""
+      echo "=================================================="
+      echo "GitHub SSH Public Key"
+      echo "=================================================="
+      echo ""
+
+      cat "${SSH_KEY}.pub"
+
+      echo ""
+      echo "=================================================="
+
+      # ==================================================
+      # GITHUB GUIDE
+      # ==================================================
+      echo ""
+      echo "Zyphor: 📘 Add SSH key to GitHub"
+      echo ""
+      echo "1. Open GitHub"
+      echo "2. Go to Settings"
+      echo "3. Open 'SSH and GPG keys'"
+      echo "4. Click 'New SSH key'"
+      echo "5. Paste the SSH key above"
+      echo "6. Save the key"
+      echo ""
+      echo "GitHub SSH Settings:"
+      echo "https://github.com/settings/keys"
+      echo ""
+
+      read -rp "Press ENTER after adding the SSH key to GitHub..."
+
+      # ==================================================
+      # TEST CONNECTION
+      # ==================================================
+      echo ""
+      echo "Zyphor: Testing GitHub SSH connection..."
+      echo ""
+
+      ssh -T git@github.com
+
+      echo ""
+      echo "Zyphor: ✔ Git development environment ready"
+      echo ""
+      ;;
+
+    # --------------------------
+    # FUTURE TARGETS
+    # --------------------------
+    node)
+      echo "Zyphor: Installing Node.js only..."
+
+      apt remove nodejs -y || true
+      curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+      apt install -y nodejs
+      ;;
+
+    composer)
+      echo "Zyphor: Installing Composer only..."
+
+      php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      php composer-setup.php
+      mv composer.phar /usr/local/bin/composer
+      rm -f composer-setup.php
+      ;;
+
+    # --------------------------
+    # UNKNOWN TARGET
+    # --------------------------
+    *)
+      echo ""
+      echo "Zyphor: ✖ Unknown dev target → $TARGET"
+      echo ""
+      return 1
+      ;;
+  esac
+
+  # ==================================================
+  # RESULT
+  # ==================================================
+  if [ $? -eq 0 ]; then
+    echo ""
+    echo "Zyphor: ✔ Dev setup '$TARGET' completed"
+    echo ""
+  else
+    echo ""
+    echo "Zyphor: ✖ Dev setup failed → $TARGET"
+    echo ""
+    return 1
+  fi
+}

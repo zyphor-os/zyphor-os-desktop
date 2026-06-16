@@ -1,0 +1,7 @@
+# ----------------
+# Audio
+# ----------------
+alsa-utils
+pipewire
+pipewire-audio
+wireplumber

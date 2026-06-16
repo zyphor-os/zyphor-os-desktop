@@ -1,0 +1,9 @@
+# ----------------
+# WiFi Firmware
+# ----------------
+firmware-linux
+firmware-linux-nonfree
+firmware-iwlwifi
+firmware-realtek
+firmware-atheros
+firmware-brcm80211

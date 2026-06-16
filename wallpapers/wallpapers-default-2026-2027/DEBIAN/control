@@ -1,0 +1,8 @@
+Package: zyphor-wallpapers-default-2026-2027
+Version: 1.0.1
+Section: utils
+Priority: optional
+Architecture: all
+Depends: bash
+Maintainer: Mark Jason P. Espelita
+Description: Zyphor OS wallpapers-default-2026-2027

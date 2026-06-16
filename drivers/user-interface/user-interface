@@ -1,0 +1,6 @@
+# ----------------
+# Optional (Better UX)
+# ----------------
+xdg-utils
+gvfs
+gvfs-backends

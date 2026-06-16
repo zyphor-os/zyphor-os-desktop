@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# ==================================================
+# ZYPHOR PKG CACHE UTILITY (MANUAL RUN)
+# ==================================================
+
+zyphor_pkg_cache() {
+
+  # ==================================================
+  # SAFE CONFIG
+  # ==================================================
+  REGISTRY_URL="${REGISTRY_URL:-https://markjasonespelita.github.io/zyphor_repo/registry/registry.json}"
+  CACHE_FILE="${CACHE_FILE:-/tmp/zyphor_registry.json}"
+
+  # ==================================================
+  # REQUIREMENTS
+  # ==================================================
+  if [ -z "$REGISTRY_URL" ]; then
+    echo "Zyphor: ✖ REGISTRY_URL not set"
+    return 1
+  fi
+
+  if [ -z "$CACHE_FILE" ]; then
+    echo "Zyphor: ✖ CACHE_FILE not set"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: Updating registry cache..."
+
+  # ==================================================
+  # INTERNET CHECK
+  # ==================================================
+  if curl -s --head "$REGISTRY_URL" >/dev/null 2>&1; then
+
+    echo "Zyphor: Internet available → downloading registry..."
+
+    if curl -fsSL "$REGISTRY_URL" -o "$CACHE_FILE"; then
+      echo "Zyphor: ✔ Cache updated successfully"
+    else
+      echo "Zyphor: ⚠ Download failed → keeping old cache"
+      return 1
+    fi
+
+  else
+    echo "Zyphor: ⚠ No internet → using existing cache"
+  fi
+
+  # ==================================================
+  # VALIDATION
+  # ==================================================
+  if [ ! -f "$CACHE_FILE" ]; then
+    echo "Zyphor: ✖ No cache found"
+    return 1
+  fi
+
+  echo "Zyphor: ✔ Cache ready"
+  echo ""
+}

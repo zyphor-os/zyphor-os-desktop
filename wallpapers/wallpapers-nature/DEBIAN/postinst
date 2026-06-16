@@ -1,0 +1,53 @@
+#!/bin/bash
+set -e
+
+echo "Zyphor: Applying wallpapers setup..."
+
+TARGET_DIR_DESKTOP_BASE="/usr/share/images/desktop-base"
+TARGET_DIR_BACKGROUNDS="/usr/share/backgrounds"
+SRC_DIR="/usr/share/backgrounds/wallpapers-nature"
+
+mkdir -p "$TARGET_DIR_DESKTOP_BASE"
+
+# safe symlinks (overwrite only if ours)
+ln -sfn "$SRC_DIR/nature-1.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-1"
+
+ln -sfn "$SRC_DIR/nature-2.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-2"
+
+ln -sfn "$SRC_DIR/nature-3.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-3"
+
+ln -sfn "$SRC_DIR/nature-4.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-4"
+
+ln -sfn "$SRC_DIR/nature-5.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-5"
+
+ln -sfn "$SRC_DIR/nature-6.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-6"
+
+ln -sfn "$SRC_DIR/nature-7.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-7"
+
+ln -sfn "$SRC_DIR/nature-8.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-8"
+
+ln -sfn "$SRC_DIR/nature-9.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-9"
+
+ln -sfn "$SRC_DIR/nature-10.jpg" "$TARGET_DIR_DESKTOP_BASE/nature-10"
+
+ln -sfn "$SRC_DIR/nature-1.jpg" "$TARGET_DIR_BACKGROUNDS/nature-1"
+
+ln -sfn "$SRC_DIR/nature-2.jpg" "$TARGET_DIR_BACKGROUNDS/nature-2"
+
+ln -sfn "$SRC_DIR/nature-3.jpg" "$TARGET_DIR_BACKGROUNDS/nature-3"
+
+ln -sfn "$SRC_DIR/nature-4.jpg" "$TARGET_DIR_BACKGROUNDS/nature-4"
+
+ln -sfn "$SRC_DIR/nature-5.jpg" "$TARGET_DIR_BACKGROUNDS/nature-5"
+
+ln -sfn "$SRC_DIR/nature-6.jpg" "$TARGET_DIR_BACKGROUNDS/nature-6"
+
+ln -sfn "$SRC_DIR/nature-7.jpg" "$TARGET_DIR_BACKGROUNDS/nature-7"
+
+ln -sfn "$SRC_DIR/nature-8.jpg" "$TARGET_DIR_BACKGROUNDS/nature-8"
+
+ln -sfn "$SRC_DIR/nature-9.jpg" "$TARGET_DIR_BACKGROUNDS/nature-9"
+
+ln -sfn "$SRC_DIR/nature-10.jpg" "$TARGET_DIR_BACKGROUNDS/nature-10"
+
+echo "Zyphor: Wallpapers configured."

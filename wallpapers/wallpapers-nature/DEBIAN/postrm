@@ -1,0 +1,72 @@
+#!/bin/bash
+set -e
+
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+  echo "Zyphor: Removing wallpaper symlinks..."
+
+  # removing symlinks
+
+  rm -f /usr/share/images/desktop-base/nature-1
+
+  rm -f /usr/share/images/desktop-base/nature-2
+
+  rm -f /usr/share/images/desktop-base/nature-3
+
+  rm -f /usr/share/images/desktop-base/nature-4
+
+  rm -f /usr/share/images/desktop-base/nature-5
+  
+  rm -f /usr/share/images/desktop-base/nature-6
+
+  rm -f /usr/share/images/desktop-base/nature-7
+
+  rm -f /usr/share/images/desktop-base/nature-8
+
+  rm -f /usr/share/images/desktop-base/nature-9
+
+  rm -f /usr/share/images/desktop-base/nature-10
+
+  rm -f /usr/share/backgrounds/nature-1
+
+  rm -f /usr/share/backgrounds/nature-2
+
+  rm -f /usr/share/backgrounds/nature-3
+
+  rm -f /usr/share/backgrounds/nature-4
+
+  rm -f /usr/share/backgrounds/nature-5
+  
+  rm -f /usr/share/backgrounds/nature-6
+
+  rm -f /usr/share/backgrounds/nature-7
+
+  rm -f /usr/share/backgrounds/nature-8
+
+  rm -f /usr/share/backgrounds/nature-9
+
+  rm -f /usr/share/backgrounds/nature-10
+
+  # removing raw files
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-1.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-2.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-3.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-4.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-5.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-6.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-7.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-8.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-9.jpg
+
+  rm -f /usr/share/backgrounds/wallpapers-nature/nature-10.jpg
+
+  echo "Zyphor: Cleanup done."
+fi

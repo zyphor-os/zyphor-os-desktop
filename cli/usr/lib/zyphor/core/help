@@ -1,0 +1,115 @@
+#!/bin/bash
+
+# zyphor help (core)
+
+help() {
+
+  echo ""
+  echo "=================================="
+  echo "          ZYPHOR OS CLI v1.14.2"
+  echo "=================================="
+  echo ""
+
+  # ================= SYSTEM =================
+  echo "SYSTEM"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "system upgrade" "Upgrade all system packages"
+  printf "  %-30s %s\n" "system clean"   "Clean system cache & unused packages"
+  printf "  %-30s %s\n" "system info"   "System information"
+  echo ""
+
+   # ================= SETUP =================
+  echo "SETUP"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "setup dev <target>" "Setup development environment"
+  printf "  %-30s %s\n" "setup dev php" "PHP (PHP, Composer, Node.js)"
+  printf "  %-30s %s\n" "setup dev node"    "Install Node.js 20"
+  printf "  %-30s %s\n" "setup dev composer" "Install Composer"
+  printf "  %-30s %s\n" "setup dev git" "Setup Git SSH Configuration"
+  echo ""
+
+  # ================= PACKAGE =================
+  echo "PACKAGE"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "pkg install <pkg>" "Install a package"
+  printf "  %-30s %s\n" "pkg remove <pkg>"  "Remove a package"
+  printf "  %-30s %s\n" "pkg search <key>"  "Search packages"
+  printf "  %-30s %s\n" "pkg list"         "List installed packages"
+  echo ""
+
+  # ================= SERVICE =================
+  echo "SERVICE"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "service list"    "List all services"
+  printf "  %-30s %s\n" "service start <name>"   "Start a service"
+  printf "  %-30s %s\n" "service stop <name>"    "Stop a service"
+  printf "  %-30s %s\n" "service restart <name>" "Restart a service"
+  printf "  %-30s %s\n" "service status <name>"  "Show service status"
+  echo ""
+
+  # ================= NETWORK / STORAGE =================
+  echo "NETWORK / STORAGE"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "smb list"        "List SMB shares from a server"
+  printf "  %-30s %s\n" "smb mount"       "Mount SMB shared folder"
+  printf "  %-30s %s\n" "smb disk-list"   "List available disks"
+  printf "  %-30s %s\n" "smb disk-mount"  "Mount local disk (NTFS)"
+  echo ""
+
+  # ================= FTP =================
+  echo "FTP"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "ftp list"     "List files on FTP server"
+  printf "  %-30s %s\n" "ftp upload"   "Upload file to FTP server"
+  printf "  %-30s %s\n" "ftp download" "Download file from FTP server"
+  echo ""
+
+  # ================= SSH =================
+  echo "SSH"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "ssh connect" "Connect to remote server via SSH"
+  printf "  %-30s %s\n" "ssh cmd"     "Run command on remote SSH server"
+  echo ""
+
+  # ================= DOCTOR =================
+  echo "DOCTOR"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "doctor scan"   "Scan system for issues"
+  printf "  %-30s %s\n" "doctor fix"    "Fix detected issues"
+  printf "  %-30s %s\n" "doctor report" "Generate system report"
+  echo ""
+
+  # ================= BUILD =================
+  echo "BUILD"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "build package [dir]" "Build a .deb package (default: current dir)"
+  printf "  %-30s %s\n" "build repo"          "Generate repository metadata (Packages.gz)"
+  echo ""
+
+  # ================= CORE =================
+  echo "CORE"
+  echo "----------------------------------"
+  printf "  %-30s %s\n" "help"    "Show this help menu"
+  echo ""
+
+  # ================= EXAMPLES =================
+  echo "EXAMPLES"
+  echo "----------------------------------"
+  echo "  zyphor system upgrade"
+  echo "  zyphor pkg install nginx"
+  echo "  zyphor service restart ssh"
+  echo "  zyphor smb list"
+  echo "  zyphor ftp upload"
+  echo "  zyphor ssh connect"
+  echo "  sudo zyphor smb mount"
+  echo "  zyphor doctor scan"
+  echo "  zyphor build package zyphor-cli"
+  echo "  zyphor build repo"
+  echo "  sudo zyphor setup dev php"
+  echo "  sudo zyphor setup dev node"
+  echo "  sudo zyphor setup dev git"
+  echo ""
+
+  echo "=================================="
+  echo ""
+}

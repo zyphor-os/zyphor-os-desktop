@@ -1,0 +1,30 @@
+#!/bin/bash
+set -e
+
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+  echo "Zyphor: Removing wallpaper symlinks..."
+
+  # removing symlinks
+
+  rm -f /usr/share/images/desktop-base/default
+
+  rm -f /usr/share/images/desktop-base/default-2
+
+  rm -f /usr/share/images/desktop-base/default-3
+
+  rm -f /usr/share/images/desktop-base/default-4
+
+  # removing raw files
+
+  rm -f /usr/share/backgrounds/zyphor-grub-bootloader-screensavers
+
+  rm -f /usr/share/backgrounds/backgrounds.png
+
+  rm -f /usr/share/backgrounds/backgrounds2.png
+
+  rm -f /usr/share/backgrounds/backgrounds3.png
+
+  rm -f /usr/share/backgrounds/backgrounds4.png
+
+  echo "Zyphor: Cleanup done."
+fi

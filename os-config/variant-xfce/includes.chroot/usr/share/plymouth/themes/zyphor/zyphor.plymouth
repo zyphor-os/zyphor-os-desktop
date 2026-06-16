@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Zyphor OS
+Description=Zyphor Boot Splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/zyphor
+ScriptFile=/usr/share/plymouth/themes/zyphor/zyphor.script
