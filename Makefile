@@ -33,6 +33,23 @@ merge:
 switch:
 	git checkout $(branch)
 
+# RELEASE AUTOMATION
+
+release:
+	zyphor build package os-release
+	mv os-release.deb zyphor-os-release.deb
+
+	zyphor build package whats-new
+	mv whats-new.deb zyphor-whats-new.deb
+
+	zyphor build package command-center
+	mv command-center.deb zyphor-command-center.deb
+
+	zyphor build package updates
+	mv updates.deb zyphor-updates.deb
+
+	mv ./*.deb ../zyphor-os.github.io/pool/main/z --verbose
+
 # BUILD AUTOMATION
 
 copy-default-assets:
