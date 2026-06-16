@@ -3,10 +3,10 @@ set -e
 
 # Write Zyphor identity file
 cat > /usr/lib/os-release << 'EOF'
-PRETTY_NAME="Zyphor OS v1.11.1-u15"
+PRETTY_NAME="Zyphor OS v1.12.0-u15.1"
 NAME="Zyphor OS GNU/Linux"
-VERSION_ID="1.11.1"
-VERSION="1.11.1"
+VERSION_ID="1.12.0"
+VERSION="1.12.0"
 VERSION_CODENAME=zyphor-os
 ID=zyphor-os
 ID_LIKE=debian
