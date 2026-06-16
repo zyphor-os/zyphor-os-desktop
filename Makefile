@@ -6,17 +6,62 @@ status:
 	git status
 
 add:
-	git add assets-xfce4/default/kali-finish-install
-	git commit -m "chore: modified assets-xfce4/default/kali-finish-install - added the installation default of ZCC."
+	git add DEVLOG
+	git commit -m "chore: updated DEVLOG"
 
-	git add assets-xfce4/horizon/kali-finish-install
-	git commit -m "chore: modified assets-xfce4/horizon/kali-finish-install - added the installation default of ZCC."
+	git add DOCUMENTATION/PACKAGE.txt
+	git commit -m "chore: updated PACKAGE documentation"
 
-	git add os-config/common/includes.installer/kali-finish-install
-	git commit -m "chore: modified os-config/common/includes.installer/kali-finish-install - added the installation default of ZCC."
+	git add cli/DEBIAN/control
+	git commit -m "chore: updated zyphor-cli DEBIAN control"
 
-	git add Makefile
-	git commit -m "chore: modified Makefile"
+	git add cli/DEBIAN/postinst
+	git commit -m "chore: updated zyphor-cli postinst script"
+
+	git add cli/usr/lib/zyphor/pkg/cache
+	git commit -m "chore: updated zyphor-cli pkg cache"
+
+	git add cli/usr/lib/zyphor/pkg/list
+	git commit -m "chore: updated zyphor-cli pkg list"
+
+	git add cli/usr/lib/zyphor/pkg/remove
+	git commit -m "chore: updated zyphor-cli pkg remove"
+
+	git add cli/usr/lib/zyphor/pkg/search
+	git commit -m "chore: updated zyphor-cli pkg search"
+
+	git add command-center/DEBIAN/control
+	git commit -m "chore: updated zyphor-command-center DEBIAN control"
+
+	git add command-center/DEBIAN/postinst
+	git commit -m "chore: updated zyphor-command-center postinst script"
+
+	git add command-center/usr/share/zyphor-command-center/ui/home.py
+	git commit -m "chore: updated zyphor-command-center UI"
+
+	git add os-release/DEBIAN/control
+	git commit -m "chore: updated zyphor-os-release control"
+
+	git add os-release/DEBIAN/postinst
+	git commit -m "chore: updated zyphor-os-release postinst"
+
+	git add updates/DEBIAN/control
+	git commit -m "chore: updated zyphor-updates control"
+
+	git add whats-new/DEBIAN/control
+	git commit -m "chore: updated zyphor-whats-new control"
+
+	git add whats-new/usr/share/zyphor-whats-new/release-notes.html
+	git commit -m "chore: updated release notes"
+
+	git add .getopt.sh
+	git commit -m "chore: added getopt helper script"
+
+	git add .gitignore
+	git commit -m "chore: updated gitignore rules"
+
+	git add repo-config/
+	git commit -m "chore: added zyphor repo-config package"
 
 push:
 	git push origin $(branch)
