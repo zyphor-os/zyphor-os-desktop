@@ -1,0 +1,8 @@
+Package: zyphor-display-mac-v1
+Version: 1.0.11
+Section: utils
+Priority: optional
+Architecture: all
+Depends: bash, compiz, compiz-plugins, compiz-plugins-extra, compizconfig-settings-manager
+Maintainer: Mark Jason P. Espelita
+Description: Zyphor OS display mac
