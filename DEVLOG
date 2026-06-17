@@ -53,3 +53,6 @@ This will be updated daily.
 - changed development workflow, (forking)
 - release of Zyphor OS v1.13.0-2026-06-16-r5.
 - changed github repo host in /etc/apt/sources.list.d/zyphor.list
+
+2026-06-17
+- created the first layout of the website.
