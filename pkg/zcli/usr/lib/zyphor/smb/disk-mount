@@ -1,0 +1,40 @@
+#!/bin/bash
+
+zyphor_smb_disk_mount() {
+
+  source /usr/lib/zyphor/smb/ensure
+  zyphor_smb_ensure || return 1
+
+  if [ "$EUID" -ne 0 ]; then
+    echo ""
+    echo "Zyphor: ⚠ Requires root"
+    echo "Try: sudo zyphor smb disk-mount"
+    echo ""
+    return 1
+  fi
+
+  read -p "Device (e.g. /dev/sda2): " DEV
+  read -p "Mount name (e.g. windows): " NAME
+
+  if [ -z "$DEV" ] || [ -z "$NAME" ]; then
+    echo "Zyphor: ✖ Missing required input"
+    return 1
+  fi
+
+  MOUNT_POINT="/mnt/$NAME"
+  mkdir -p "$MOUNT_POINT"
+
+  echo ""
+  echo "Zyphor: Mounting $DEV → $MOUNT_POINT"
+
+  mount -t ntfs-3g "$DEV" "$MOUNT_POINT"
+
+  if [ $? -eq 0 ]; then
+    echo "Zyphor: ✔ Mounted successfully"
+  else
+    echo "Zyphor: ✖ Mount failed"
+    return 1
+  fi
+
+  echo ""
+}

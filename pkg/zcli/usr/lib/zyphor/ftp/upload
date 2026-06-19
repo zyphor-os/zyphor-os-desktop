@@ -1,0 +1,32 @@
+#!/bin/bash
+
+zyphor_ftp_upload() {
+
+  read -p "FTP Host: " HOST
+  read -p "Username: " USER
+  read -p "Local file: " LOCAL
+  read -p "Remote path (optional): " REMOTE
+
+  if [ -z "$HOST" ] || [ -z "$USER" ] || [ -z "$LOCAL" ]; then
+    echo "Zyphor: ✖ Missing input"
+    return 1
+  fi
+
+  if [ ! -f "$LOCAL" ]; then
+    echo "Zyphor: ✖ File not found → $LOCAL"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: Uploading → $LOCAL to $HOST"
+  echo ""
+
+  ftp -inv "$HOST" <<EOF
+user $USER
+put "$LOCAL" "$REMOTE"
+bye
+EOF
+
+  echo "Zyphor: ✔ Upload complete"
+  echo ""
+}

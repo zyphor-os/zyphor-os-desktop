@@ -1,0 +1,17 @@
+#!/bin/bash
+
+zyphor_ssh_connect() {
+
+  read -p "User@Host (e.g. root@192.168.1.10): " TARGET
+
+  if [ -z "$TARGET" ]; then
+    echo "Zyphor: ✖ Missing target"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: Connecting via SSH → $TARGET"
+  echo ""
+
+  ssh "$TARGET"
+}

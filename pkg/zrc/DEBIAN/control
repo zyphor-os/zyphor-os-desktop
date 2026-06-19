@@ -1,0 +1,8 @@
+Package: zyphor-repo-config
+Version: 1.0.0-r1-stable-release
+Section: admin
+Priority: optional
+Architecture: all
+Maintainer: Mark Jason P. Espelita
+Description: Zyphor OS repository configuration
+ Installs and manages the Zyphor OS APT repository configuration.
