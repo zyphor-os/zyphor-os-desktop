@@ -60,3 +60,8 @@ This will be updated daily.
 
 2026-06-18
 - attempted kernel upgrade to 7.1.0 over 6.19.x failed due to insufficient memory
+- created zylearn package for installation of the Zyphor OS Minimal Skeleton version.
+- ONBOARDING with Nicole Ervas in the new official Zyphor OS Repository.
+
+2026-06-19
+- 
