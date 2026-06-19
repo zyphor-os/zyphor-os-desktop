@@ -5,7 +5,7 @@
 
 void logCommand(int id, int argc, char *argv[])
 {
-    FILE *file = fopen("./zylearn_history.txt", "a");
+    FILE *file = fopen("/tmp/zylearn_history.txt", "a");
     if (!file) {
         printf("zylearn: failed to write history\n");
         return;
@@ -25,17 +25,25 @@ void logCommand(int id, int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
-    char _GITPATH[100] = "/bin/git";
-    const char *_HISTORYPATH = "./zylearn_history.txt";
+    char _GITBINPATH[100] = "/bin/git";
+    char _REMOVEBINPATH[100] = "/bin/rm";
+    char _GITHUBREPOLINK[100] = "https://github.com/zyphor-os/zyphor-os-minimal";
+
+    const char *_HISTORYPATH = "/tmp/zylearn_history.txt";
 
     int commandId = 1;
 
     logCommand(commandId++, argc, argv);
 
-    if (argc < 3) {
+    if (argc < 2) {
         printf("zylearn: missing arguments\n");
         printf("usage: zylearn setup <template>\n");
         return 1;
+    }
+
+    if (argc >= 2 && strcmp(argv[1], "--version") == 0) {
+        printf("zylearn version 1.0.0-stable\n");
+        return 0;
     }
 
     // SETUP
@@ -45,13 +53,12 @@ int main(int argc, char *argv[])
         // SKELETON
 
         if (strcmp(argv[2], "skeleton") == 0) {
-
-            helperCommand(
-                _GITPATH,
-                "clone",
-                "https://github.com/zyphor-os/zyphor-os-minimal",
-                NULL
+            printf(
+                "\nInitializing the installation of the Zyphor Minimal\n"
+                "Learning skeleton operating system environment.\n"
+                "Please wait while the required components are being configured...\n\n"
             );
+            helperCommand(_GITBINPATH, "clone", _GITHUBREPOLINK, NULL);
 
         } else {
             printf("zylearn: unknown '%s'\n", argv[2]);
@@ -102,12 +109,7 @@ int main(int argc, char *argv[])
 
             printf("zylearn history cleared.\n");
 
-            helperCommand(
-                "/bin/rm",
-                "-rf",
-                _HISTORYPATH,
-                NULL
-            );
+            helperCommand(_REMOVEBINPATH, "-rf", _HISTORYPATH, NULL);
         }
 
         else {

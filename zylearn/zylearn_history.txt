@@ -1,3 +1,0 @@
-commandId: 1
-command: zylearn show logs 
----
