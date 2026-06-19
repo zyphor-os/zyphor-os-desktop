@@ -6,32 +6,41 @@ status:
 	git status
 
 add:
-	git add zcc/DEBIAN/control
-	git commit -m "chore: updated zyphor-command-center package metadata"
+	git add DOCUMENTATION/PACKAGE.txt
+	git commit -m "docs: update package documentation"
 
-	git add zor/DEBIAN/control
-	git commit -m "chore: updated zyphor-os-release package metadata"
-
-	git add zrc/DEBIAN/control
-	git commit -m "chore: updated zyphor-repo-config package metadata"
-
-	git add zwn/DEBIAN/control
-	git commit -m "chore: updated zyphor-whats-new package metadata"
-
-	git add zysh/DEBIAN/control
-	git commit -m "chore: updated zysh package metadata"
-
-	git add zylearn/Makefile
-	git commit -m "build: updated zylearn build configuration"
-
-	git add zylearn/main.c
-	git commit -m "feat: updated zylearn command implementation"
-
-	git add zylearn/zylearn
-	git commit -m "feat: added zylearn learning skeleton"
-	
 	git add Makefile
-	git commit -m "chore: modified Makefile"
+	git commit -m "build: update repository build system"
+
+	git add -A zcc
+	git commit -m "refactor: remove legacy zyphor-command-center package"
+
+	git add -A zcli
+	git commit -m "refactor: remove legacy zyphor CLI package"
+
+	git add -A zor
+	git commit -m "refactor: remove legacy zyphor-os-release package"
+
+	git add -A zrc
+	git commit -m "refactor: remove legacy zyphor-repo-config package"
+
+	git add -A zwn
+	git commit -m "refactor: remove legacy zyphor-whats-new package"
+
+	git add -A zysh
+	git commit -m "refactor: remove legacy zysh package"
+
+	git add -A zylearn
+	git commit -m "refactor: remove legacy zylearn package"
+
+	git add -A zyshell
+	git commit -m "refactor: remove legacy zyshell package"
+
+	git add -A updates
+	git commit -m "refactor: remove legacy updates package"
+
+	git add pkg
+	git commit -m "feat: introduce unified pkg directory structure"
 
 push:
 	git push origin $(branch)
@@ -49,27 +58,28 @@ switch:
 
 release:
 
-	zyphor build package zcc
-	mv zcc.deb zyphor-command-center.deb
+	zyphor build package pkg/zcc
+	mv pkg/zcc.deb zyphor-command-center.deb
 
-	zyphor build package zor
-	mv zor.deb zyphor-os-release.deb
+	zyphor build package pkg/zor
+	mv pkg/zor.deb zyphor-os-release.deb
 
-	zyphor build package zrc
-	mv zrc.deb zyphor-repo-config.deb
+	zyphor build package pkg/zrc
+	mv pkg/zrc.deb zyphor-repo-config.deb
 
-	zyphor build package zwn
-	mv zwn.deb zyphor-whats-new.deb
+	zyphor build package pkg/zwn
+	mv pkg/zwn.deb zyphor-whats-new.deb
 
-	zyphor build package zylearn/zylearn
-	mv zylearn/zylearn.deb zylearn.deb
+	zyphor build package pkg/zylearn/zylearn
+	mv pkg/zylearn/zylearn.deb zylearn.deb
 
-	zyphor build package updates
-	mv updates.deb zyphor-updates.deb
+	zyphor build package pkg/updates
+	mv pkg/updates.deb zyphor-updates.deb
 
-	zyphor build package zysh
+	zyphor build package pkg/zysh
+	mv pkg/zysh.deb zysh.deb
 
-	mv ./*.deb ../zyphor-os.github.io/pool/main/z --verbose
+# 	mv ./*.deb ../zyphor-os.github.io/pool/main/z --verbose
 
 # BUILD AUTOMATION
 
