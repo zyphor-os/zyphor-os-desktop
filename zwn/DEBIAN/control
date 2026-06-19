@@ -1,5 +1,5 @@
 Package: zyphor-whats-new
-Version: 7.0.0-stable-release
+Version: 7.0.0-r1-stable-release
 Section: utils
 Priority: optional
 Architecture: amd64
