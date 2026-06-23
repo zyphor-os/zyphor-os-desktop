@@ -160,16 +160,16 @@ sections: [
 
 const releaseNotes = {
     distro: "Zyphor OS",
-    version: "1.13.0-u19",
-    date: "Updated On: June 19, 2026",
+    version: "1.13.0-u20",
+    date: "Updated On: June 23, 2026 @ 9:55PM",
 
     sections: [
         {
-            title: "🚀 Updates",
+            title: "🐞 Bug Fixes",
             items: [
-                "The CLI startup banner now dynamically displays the operating system name using PRETTY_NAME from /etc/os-release.",
-                "Improved terminal branding by replacing hardcoded distribution names with system-defined metadata for greater flexibility.",
-                "Enhanced shell customization and visual consistency across Zyphor OS environments with updated prompt and banner configuration.",
+                "Fixed a bug where Git development setup could create SSH keys for the root account instead of the user running the command.",
+                "Git username and email configuration are now properly saved to the developer's account during setup.",
+                "Improved reliability of the `zyphor setup dev git` workflow to ensure SSH authentication works as expected after installation.",
             ]
         }
     ]

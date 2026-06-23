@@ -7,25 +7,25 @@ status:
 
 add:
 	git add pkg/updater/zor/DEBIAN/control
-	git commit -m "chore: updated zyphor-os-release package metadata"
+	git commit -m "zor: update package metadata"
 
 	git add pkg/updater/zor/DEBIAN/postinst
-	git commit -m "feat: improved zyphor-os-release post-install configuration"
+	git commit -m "zor: improve post-install script"
 
 	git add pkg/updater/zwn/DEBIAN/control
-	git commit -m "chore: updated zyphor-whats-new package metadata"
+	git commit -m "zwn: update package metadata"
 
 	git add pkg/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
-	git commit -m "docs: updated Zyphor OS release notes"
+	git commit -m "zwn: update release notes"
 
-	git add pkg/zysh/DEBIAN/control
-	git commit -m "chore: updated zysh package metadata"
+	git add pkg/zcli/DEBIAN/control
+	git commit -m "zcli: update package metadata"
 
-	git add pkg/zysh/usr/share/zysh/prompt.zsh
-	git commit -m "feat: enhanced zysh prompt styling"
+	git add pkg/zcli/usr/lib/zyphor/setup/dev
+	git commit -m "zcli: fix git setup user ownership handling"
 	
 	git add Makefile
-	git commit -m "build: update repository build system"
+	git commit -m "build: update repository automation"
 
 push:
 	git push origin $(branch)
@@ -51,8 +51,8 @@ release:
 
 # 	---
 
-	zyphor build package pkg/zysh
-	mv pkg/zysh.deb zysh.deb
+	zyphor build package pkg/zcli
+	mv pkg/zcli.deb zyphor-cli.deb
 
 	mv ./*.deb ../zyphor-os.github.io/pool/main/z --verbose
 
