@@ -147,10 +147,14 @@ case "$CATEGORY" in
   # ================= SETUP =================
   setup)
     source /usr/lib/zyphor/setup/dev
+    source /usr/lib/zyphor/setup/theme
 
     case "$ACTION" in
       dev)
         zyphor_setup_dev "$@"
+      ;;
+      theme)
+        zyphor_setup_theme "$@"
       ;;
       *)
         error "setup $ACTION"
