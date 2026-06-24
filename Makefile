@@ -7,22 +7,28 @@ status:
 
 add:
 	git add pkg/updater/zor/DEBIAN/control
-	git commit -m "zor: update package metadata"
+	git commit -m "chore: updated zor package metadata"
 
 	git add pkg/updater/zor/DEBIAN/postinst
-	git commit -m "zor: improve post-install script"
+	git commit -m "feat: improved zor post-installation script"
 
 	git add pkg/updater/zwn/DEBIAN/control
-	git commit -m "zwn: update package metadata"
+	git commit -m "chore: updated zwn package metadata"
 
 	git add pkg/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
-	git commit -m "zwn: update release notes"
+	git commit -m "docs: updated release notes"
 
 	git add pkg/zcli/DEBIAN/control
-	git commit -m "zcli: update package metadata"
+	git commit -m "chore: updated zyphor-cli package metadata"
 
-	git add pkg/zcli/usr/lib/zyphor/setup/dev
-	git commit -m "zcli: fix git setup user ownership handling"
+	git add pkg/zcli/usr/lib/zyphor/core/help
+	git commit -m "docs: updated zyphor CLI help information"
+
+	git add pkg/zcli/usr/local/bin/zyphor
+	git commit -m "feat: added theme management commands"
+
+	git add pkg/zcli/usr/lib/zyphor/setup/theme
+	git commit -m "feat: added zyphor setup theme module"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
