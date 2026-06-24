@@ -6,7 +6,7 @@ help() {
 
   echo ""
   echo "=================================="
-  echo "          ZYPHOR OS CLI v1.14.2"
+  echo "          ZYPHOR OS CLI"
   echo "=================================="
   echo ""
 
@@ -26,6 +26,9 @@ help() {
   printf "  %-30s %s\n" "setup dev node"    "Install Node.js 20"
   printf "  %-30s %s\n" "setup dev composer" "Install Composer"
   printf "  %-30s %s\n" "setup dev git" "Setup Git SSH Configuration"
+  printf "  %-30s %s\n" "setup theme <target>" "Switch desktop theme"
+  printf "  %-30s %s\n" "setup theme light" "Light theme (Windows-10)"
+  printf "  %-30s %s\n" "setup theme dark" "Dark theme (Kali-Dark)"
   echo ""
 
   # ================= PACKAGE =================
@@ -108,6 +111,8 @@ help() {
   echo "  sudo zyphor setup dev php"
   echo "  sudo zyphor setup dev node"
   echo "  sudo zyphor setup dev git"
+  echo "  zyphor setup theme light"
+  echo "  zyphor setup theme dark"
   echo ""
 
   echo "=================================="
