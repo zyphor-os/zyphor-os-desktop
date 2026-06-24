@@ -79,4 +79,8 @@ This will be updated daily.
 - merge pull request of mjespelita. (Onboarding)
 
 2026-06-23
+- patch Zyphor CLI 'zyphor setup dev git' command.
+- fixed a bug where Git development setup could create SSH keys for the root account instead of the user running the command.
+
+2026-06-24
 - 
