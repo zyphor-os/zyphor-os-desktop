@@ -23,9 +23,7 @@ fi
 # Apply theme
 xfconf-query -c xsettings -p /Net/ThemeName -s Windows-10
 xfconf-query -c xfwm4 -p /general/theme -s Windows-10
-
-# Restart panel
-xfce4-panel -r >/dev/null 2>&1 &
+xfconf-query -c xsettings -p /Net/IconThemeName -s "Windows-10-Icons"
 
 touch "$FLAG"
 
