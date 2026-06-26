@@ -83,4 +83,9 @@ This will be updated daily.
 - fixed a bug where Git development setup could create SSH keys for the root account instead of the user running the command.
 
 2026-06-24
-- 
+- completed the website 95%
+- added documentation
+
+2026-06-25
+- planned v2.0.0-rx release next week
+- windows like user experience.
