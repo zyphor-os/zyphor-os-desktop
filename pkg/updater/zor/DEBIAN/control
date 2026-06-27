@@ -1,5 +1,5 @@
 Package: zyphor-os-release
-Version: 21.0.0-r5-stable-release
+Version: 22.0.0-r6-stable-release
 Section: utils
 Priority: optional
 Architecture: all
