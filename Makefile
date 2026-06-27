@@ -6,20 +6,26 @@ status:
 	git status
 
 add:
-	git add pkg/updater/updates/DEBIAN/control
-	git commit -m "chore: updated zyphor-updates control"
+	git add assets-xfce4/default/fastfetch/config.jsonc
+	git commit -m "chore: updated default Fastfetch configuration"
 
-	git add pkg/updater/zor/DEBIAN/control
-	git commit -m "chore: updated zyphor-os-release control"
+	git add assets-xfce4/horizon/fastfetch/config.jsonc
+	git commit -m "chore: updated Horizon Fastfetch configuration"
 
-	git add pkg/updater/zor/DEBIAN/postinst
-	git commit -m "chore: updated zyphor-os-release post-install script"
+	git add os-config/variant-xfce/includes.chroot/etc/fastfetch/config.jsonc
+	git commit -m "chore: updated system Fastfetch configuration"
 
-	git add pkg/updater/zwn/DEBIAN/control
-	git commit -m "chore: updated zyphor-whats-new control"
+	git add os-config/variant-xfce/includes.chroot/etc/skel/.config/fastfetch/config.jsonc
+	git commit -m "chore: updated skeleton Fastfetch configuration"
 
-	git add pkg/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
-	git commit -m "chore: updated zyphor-whats-new release notes"
+	git add pkg/zou/fastfetch-config-1/DEBIAN/control
+	git commit -m "chore: updated fastfetch-config-1 control"
+
+	git add pkg/zou/fastfetch-config-1/etc/fastfetch/config.jsonc
+	git commit -m "chore: updated fastfetch-config-1 system configuration"
+
+	git add pkg/zou/fastfetch-config-1/etc/skel/.config/fastfetch/config.jsonc
+	git commit -m "chore: updated fastfetch-config-1 skeleton configuration"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -40,14 +46,17 @@ switch:
 
 release:
 
-	zyphor build package pkg/updater/zor
-	mv pkg/updater/zor.deb zyphor-os-release.deb
+# 	zyphor build package pkg/updater/zor
+# 	mv pkg/updater/zor.deb zyphor-os-release.deb
 
-	zyphor build package pkg/updater/zwn
-	mv pkg/updater/zwn.deb zyphor-whats-new.deb
+# 	zyphor build package pkg/updater/zwn
+# 	mv pkg/updater/zwn.deb zyphor-whats-new.deb
 
-	zyphor build package pkg/updater/updates
-	mv pkg/updater/updates.deb zyphor-updates.deb
+# 	zyphor build package pkg/updater/updates
+# 	mv pkg/updater/updates.deb zyphor-updates.deb
+
+	zyphor build package pkg/zou/fastfetch-config-1
+	mv pkg/zou/fastfetch-config-1.deb fastfetch-config-1.deb
 
 # 	---
 
