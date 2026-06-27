@@ -1,12 +1,11 @@
 Package: zyphor-updates
-Version: 6.0.0
+Version: 7.0.0-r1-stable-release
 Section: utils
 Priority: optional
 Architecture: all
 Depends: zyphor-os-release,
  fastfetch-config-1,
  grub-screensaver-1,
- zyphor-display-mac-v1,
  fastfetch,
  vim,
  curl,

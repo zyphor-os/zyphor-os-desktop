@@ -6,29 +6,20 @@ status:
 	git status
 
 add:
+	git add pkg/updater/updates/DEBIAN/control
+	git commit -m "chore: updated zyphor-updates control"
+
 	git add pkg/updater/zor/DEBIAN/control
-	git commit -m "chore: updated zor package metadata"
+	git commit -m "chore: updated zyphor-os-release control"
 
 	git add pkg/updater/zor/DEBIAN/postinst
-	git commit -m "feat: improved zor post-installation script"
+	git commit -m "chore: updated zyphor-os-release post-install script"
 
 	git add pkg/updater/zwn/DEBIAN/control
-	git commit -m "chore: updated zwn package metadata"
+	git commit -m "chore: updated zyphor-whats-new control"
 
 	git add pkg/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
-	git commit -m "docs: updated release notes"
-
-	git add pkg/zcli/DEBIAN/control
-	git commit -m "chore: updated zyphor-cli package metadata"
-
-	git add pkg/zcli/usr/lib/zyphor/core/help
-	git commit -m "docs: updated zyphor CLI help information"
-
-	git add pkg/zcli/usr/local/bin/zyphor
-	git commit -m "feat: added theme management commands"
-
-	git add pkg/zcli/usr/lib/zyphor/setup/theme
-	git commit -m "feat: added zyphor setup theme module"
+	git commit -m "chore: updated zyphor-whats-new release notes"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -55,10 +46,10 @@ release:
 	zyphor build package pkg/updater/zwn
 	mv pkg/updater/zwn.deb zyphor-whats-new.deb
 
-# 	---
+	zyphor build package pkg/updater/updates
+	mv pkg/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/zcli
-	mv pkg/zcli.deb zyphor-cli.deb
+# 	---
 
 	mv ./*.deb ../zyphor-os.github.io/pool/main/z --verbose
 
