@@ -6,26 +6,20 @@ status:
 	git status
 
 add:
-	git add assets-xfce4/default/fastfetch/config.jsonc
-	git commit -m "chore: updated default Fastfetch configuration"
+	git add assets-xfce4/default/kali-finish-install
+	git commit -m "chore: updated default kali-finish-install"
 
-	git add assets-xfce4/horizon/fastfetch/config.jsonc
-	git commit -m "chore: updated Horizon Fastfetch configuration"
+	git add assets-xfce4/horizon/kali-finish-install
+	git commit -m "chore: updated Horizon kali-finish-install"
 
-	git add os-config/variant-xfce/includes.chroot/etc/fastfetch/config.jsonc
-	git commit -m "chore: updated system Fastfetch configuration"
+	git add os-config/common/includes.installer/kali-finish-install
+	git commit -m "chore: updated installer kali-finish-install"
 
-	git add os-config/variant-xfce/includes.chroot/etc/skel/.config/fastfetch/config.jsonc
-	git commit -m "chore: updated skeleton Fastfetch configuration"
+	git add os-config/variant-xfce/includes.chroot/etc/skel/.face
+	git commit -m "chore: updated default user profile image"
 
-	git add pkg/zou/fastfetch-config-1/DEBIAN/control
-	git commit -m "chore: updated fastfetch-config-1 control"
-
-	git add pkg/zou/fastfetch-config-1/etc/fastfetch/config.jsonc
-	git commit -m "chore: updated fastfetch-config-1 system configuration"
-
-	git add pkg/zou/fastfetch-config-1/etc/skel/.config/fastfetch/config.jsonc
-	git commit -m "chore: updated fastfetch-config-1 skeleton configuration"
+	git add os-config/variant-xfce/includes.chroot/etc/skel/.panel-logo
+	git commit -m "chore: added default panel logo"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
