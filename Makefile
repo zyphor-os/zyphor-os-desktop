@@ -6,20 +6,41 @@ status:
 	git status
 
 add:
-	git add assets-xfce4/default/kali-finish-install
-	git commit -m "chore: updated default kali-finish-install"
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/backgrounds.png
+	git commit -m "chore: Update backgrounds.png"
 
-	git add assets-xfce4/horizon/kali-finish-install
-	git commit -m "chore: updated Horizon kali-finish-install"
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/backgrounds2.png
+	git commit -m "chore: Update backgrounds2.png"
 
-	git add os-config/common/includes.installer/kali-finish-install
-	git commit -m "chore: updated installer kali-finish-install"
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/backgrounds3.png
+	git commit -m "chore: Update backgrounds3.png"
 
-	git add os-config/variant-xfce/includes.chroot/etc/skel/.face
-	git commit -m "chore: updated default user profile image"
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/backgrounds4.png
+	git commit -m "chore: Update backgrounds4.png"
 
-	git add os-config/variant-xfce/includes.chroot/etc/skel/.panel-logo
-	git commit -m "chore: added default panel logo"
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/zyphor-grub-bootloader-screensavers/grub-bootloader-screen-saver.png
+	git commit -m "chore: Update grub bootloader screen saver"
+
+	git add pkg/zou/grub-screensaver-1/DEBIAN/control
+	git commit -m "chore: Update grub-screensaver package control"
+
+	git add pkg/zou/grub-screensaver-1/boot/zyphor/splash.png
+	git commit -m "chore: Update grub splash image"
+
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/backgrounds5.png
+	git commit -m "chore: Add backgrounds5.png"
+
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/backgrounds6.png
+	git commit -m "chore: Add backgrounds6.png"
+
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/backgrounds7.png
+	git commit -m "chore: Add backgrounds7.png"
+
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/backgrounds8.png
+	git commit -m "chore: Add backgrounds8.png"
+
+	git add os-config/variant-xfce/includes.chroot/usr/share/backgrounds/zyphor-os-v1/
+	git commit -m "chore: Add Zyphor OS v1 wallpapers"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -49,8 +70,8 @@ release:
 # 	zyphor build package pkg/updater/updates
 # 	mv pkg/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/zou/fastfetch-config-1
-	mv pkg/zou/fastfetch-config-1.deb fastfetch-config-1.deb
+	zyphor build package pkg/zou/grub-screensaver-1
+	mv pkg/zou/grub-screensaver-1.deb grub-screensaver-1.deb
 
 # 	---
 
