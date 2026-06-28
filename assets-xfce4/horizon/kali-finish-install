@@ -39,7 +39,7 @@ configure_zyphor() {
     update-grub
 
     # Redmond 7 Configuration
-    cp /etc/skel/.face /usr/share/pixmaps/zyphor-logo.png
+    cp /etc/skel/.panel-logo /usr/share/pixmaps/zyphor-logo.png
     gtk-update-icon-cache /usr/share/icons/hicolor/ -f -t
 
     chmod +x /usr/local/bin/zyphor-firstboot
