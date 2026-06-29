@@ -97,3 +97,10 @@ This will be updated daily.
 2026-06-27
 - submit a contributors and founder rights on the community group chat.
 - release of 7.0.0-r1-stable-release (remove zyphor-display-mac-v1 by default)
+
+2026-06-28
+- preparation of the v2.0.0-r6 release
+- windows like theme and icon (planning for new theme)
+- fastfetch config fix blue color keys
+- profle pic .face - changed to human icon placeholder instead of zyphor os logo
+- added 8 default wallpapers 1 grub screen saver (4 from Mark Jason Espelita and 4 fron Jenalyn Iso)
