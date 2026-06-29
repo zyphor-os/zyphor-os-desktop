@@ -4,7 +4,7 @@
 
 Download the latest **Zyphor OS ISO** and get started in minutes.
 
-👉 **[Click Here To Download Zyphor Operating System ISO (v1.13.0-2026.06.16-r5)](https://drive.google.com/uc?export=download&id=1CAUJLU0N_lXVSSejHHethg9BlYOVDi5r)** - Main lightweight desktop release 
+👉 **[Click Here To Download Zyphor Operating System ISO (v2.0.0-2026.06.30-r6)](https://drive.google.com/uc?export=download&id=xxx)** - Main lightweight desktop release 
 
 👉 **[Click Here To Download Zyphor Horizon ISO (v1.0.0-beta-2026.06.14-r1)](https://drive.google.com/uc?export=download&id=1eRYZQN7W-4aB1hp6SXclQwdO8Qzh31Ko)** - Experimental / futuristic preview release
 
@@ -24,7 +24,8 @@ zyphor help
 **Creator:** Mark Jason Penote Espelita, the Zyphor OS Community, and Contributors  
 **Facebook Account:** https://www.facebook.com/mark.jason.penote.espelita  
 **Facebook Page:** https://www.facebook.com/profile.php?id=61573426796629  
-**Email:** markjasonespelita@gmail.com  
+**Website:** https://zyphor-os.github.io  
+**Email:** markjasonespelita02@gmail.com  
 **Contact:** 09978972884 | 09203454006  
 **Our Philosophy:** [ZyphorOSPhilosophy.docx](https://github.com/markjasonespelita/zyphor_os/blob/master/DOCUMENTATION/ZyphorOSPhilosophy.docx)  
 **Date Created:** March 30, 2026
@@ -32,13 +33,13 @@ zyphor help
 ---
 **Other projects under Zyphor OS**
 
-Zyphor Server - https://github.com/markjasonespelita/zyphor_server
+Zyphor OS Server - https://github.com/zyphor-os/zyphor-os-server
 
-Zyphor Minimal - https://github.com/markjasonespelita/zyphor_minimal
+Zyphor OS Minimal - https://github.com/zyphor-os/zyphor-os-minimal
 
-Zyphor Packages - https://github.com/markjasonespelita/zyphor_packages
+Zyphor OS Documentation - https://github.com/zyphor-os/zyphor-os.github.io
 
-Zyphor Repo - https://github.com/markjasonespelita/zyphor_repo
+Website - https://zyphor-os.github.io
 
 ---
 
@@ -57,6 +58,7 @@ Contributors are not limited to software developers. Some collaborators contribu
 | <img src="https://github.com/fen-lowcode.png?size=60" width="60" height="60"> | [Dan Stephen Blanco](https://github.com/fen-lowcode) | Security Tester |
 | <img src="https://github.com/NicoleHonradoErvas.png?size=60" width="60" height="60"> | [Nicole Honrado Ervas](https://github.com/NicoleHonradoErvas) | Graphic Artist |
 | <img src="https://github.com/isojenalyn14.png?size=60" width="60" height="60"> | [Jenalyn Iso](https://github.com/isojenalyn14) | Graphic Artist |
+| <img src="https://github.com/JanRey36.png?size=60" width="60" height="60"> | [John Rey A. Castillo](https://github.com/JanRey36) | Full Stack Web Developer |
 
 ---
 
@@ -92,6 +94,11 @@ One of **Zyphor OS**’s core goals is to provide a Windows-like user experience
 
 <p align="center">
   <img src="showcase/image9.jpg" width="45%" />
+  <img src="showcase/image10.jpg" width="45%" />
+</p>
+
+<p align="center">
+  <img src="showcase/image11.jpg" width="45%" />
 </p>
 
 ---
@@ -258,5 +265,4 @@ Contributions, suggestions, and improvements are welcome! 😊
 
 ---
 
-## 🏷️ #hobby_project
 ## 🏷️ #open_source
