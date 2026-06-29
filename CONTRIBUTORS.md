@@ -57,7 +57,7 @@ https://github.com/isojenalyn14
 ---
 
 **John Rey A. Castillo**  
-https://github.com/JanRey36 
+https://github.com/JanRey36  
 **Full Stack Web Developer**
 
 ### Contributions
