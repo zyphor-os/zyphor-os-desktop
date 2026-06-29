@@ -52,6 +52,6 @@ https://github.com/isojenalyn14
 - Wallpaper Link: wallpapers/v2/jenalyn-3.png  
 - Wallpaper Link: wallpapers/v2/jenalyn-5.png  
 - Wallpaper Link: wallpapers/v2/jenalyn-6.png  
-- Wallpaper Link: wallpapers/v2/jenalyn-6.png  
+- Wallpaper Link: wallpapers/v2/jenalyn-7.png  
 
 ---
