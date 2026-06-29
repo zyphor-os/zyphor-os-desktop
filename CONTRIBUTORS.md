@@ -55,3 +55,14 @@ https://github.com/isojenalyn14
 - Wallpaper Link: wallpapers/v2/jenalyn-7.png  
 
 ---
+
+**John Rey A. Castillo**  
+https://github.com/JanRey36 
+**Full Stack Web Developer**
+
+### Contributions
+
+- Removed AI image watermark in /usr/share/backgrounds/zyphor-grub-bootloader-screensavers/zyphor-full.png
+- Removed AI image watermark in https://zyphor-os.github.io/assets/images/logo.png
+
+---
