@@ -6,38 +6,41 @@ status:
 	git status
 
 add:
-	git add CONTRIBUTORS.md
-	git commit -m "chore: updated CONTRIBUTORS"
+	git add README.md
+	git commit -m "docs: updated README"
 
-	git add DEVLOG
-	git commit -m "chore: updated DEVLOG"
+	git add showcase/image1.jpg
+	git commit -m "docs: updated showcase image1"
 
-	git rm wallpapers/wallpapers-jenalyn-iso-2026/DEBIAN/control
-	git commit -m "chore: removed Jenalyn wallpaper package control"
+	git add showcase/image2.jpg
+	git commit -m "docs: updated showcase image2"
 
-	git rm wallpapers/wallpapers-jenalyn-iso-2026/DEBIAN/postinst
-	git commit -m "chore: removed Jenalyn wallpaper package post-install script"
+	git add showcase/image3.jpg
+	git commit -m "docs: updated showcase image3"
 
-	git rm wallpapers/wallpapers-jenalyn-iso-2026/DEBIAN/postrm
-	git commit -m "chore: removed Jenalyn wallpaper package post-remove script"
+	git add showcase/image4.jpg
+	git commit -m "docs: updated showcase image4"
 
-	git rm -r wallpapers/wallpapers-jenalyn-iso-2026/usr/share/backgrounds/wallpaper-jenalyn
-	git commit -m "chore: removed Jenalyn wallpaper collection"
+	git add showcase/image5.jpg
+	git commit -m "docs: updated showcase image5"
 
-	git rm wallpapers/wallpapers-nicole-ervas-2026/DEBIAN/control
-	git commit -m "chore: removed Nicole Ervas wallpaper package control"
+	git add showcase/image6.jpg
+	git commit -m "docs: updated showcase image6"
 
-	git rm wallpapers/wallpapers-nicole-ervas-2026/DEBIAN/postinst
-	git commit -m "chore: removed Nicole Ervas wallpaper package post-install script"
+	git add showcase/image7.jpg
+	git commit -m "docs: updated showcase image7"
 
-	git rm wallpapers/wallpapers-nicole-ervas-2026/DEBIAN/postrm
-	git commit -m "chore: removed Nicole Ervas wallpaper package post-remove script"
+	git add showcase/image8.jpg
+	git commit -m "docs: updated showcase image8"
 
-	git rm -r wallpapers/wallpapers-nicole-ervas-2026/usr/share/backgrounds/wallpaper-nicole
-	git commit -m "chore: removed Nicole Ervas wallpaper collection"
+	git add showcase/image9.jpg
+	git commit -m "docs: updated showcase image9"
 
-	git add wallpapers/v2
-	git commit -m "feat: added Zyphor OS v2 wallpaper collection"
+	git add showcase/image10.jpg
+	git commit -m "docs: added showcase image10"
+
+	git add showcase/image11.jpg
+	git commit -m "docs: added showcase image11"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
