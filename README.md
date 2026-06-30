@@ -22,7 +22,7 @@ zyphor help
 
 Old Versions  
 
-[v1.13.0-r5]((https://drive.google.com/uc?export=download&id=1CAUJLU0N_lXVSSejHHethg9BlYOVDi5r))  
+[v1.13.0-r5](https://drive.google.com/uc?export=download&id=1CAUJLU0N_lXVSSejHHethg9BlYOVDi5r)   
 
 ---
 
