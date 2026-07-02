@@ -1,0 +1,58 @@
+#!/bin/sh
+set -e
+
+echo "[zysh] Installing system prompt..."
+
+SKEL="/etc/skel/.zshrc"
+
+# detect current user (best effort)
+REAL_USER=$(logname 2>/dev/null || echo "")
+
+# -------------------------
+# 1. PATCH /etc/skel
+# -------------------------
+if [ -f /usr/share/zysh/prompt.zsh ]; then
+
+    if ! grep -q "source /usr/share/zysh/prompt.zsh" "$SKEL" 2>/dev/null; then
+
+        cat <<'EOF' >> "$SKEL"
+
+# Zysh (Zyphor OS shell enhancements)
+if [ -f /usr/share/zysh/prompt.zsh ]; then
+    source /usr/share/zysh/prompt.zsh
+fi
+EOF
+
+    fi
+fi
+
+# -------------------------
+# 2. PATCH CURRENT USER
+# -------------------------
+if [ -n "$REAL_USER" ] && [ -d "/home/$REAL_USER" ]; then
+
+    USER_ZSHRC="/home/$REAL_USER/.zshrc"
+
+    if [ -f "$USER_ZSHRC" ]; then
+
+        # backup with timestamp
+        cp "$USER_ZSHRC" "$USER_ZSHRC.bak.$(date +%Y%m%d%H%M%S)"
+
+        # avoid duplicate injection
+        if ! grep -q "source /usr/share/zysh/prompt.zsh" "$USER_ZSHRC" 2>/dev/null; then
+
+            cat <<'EOF' >> "$USER_ZSHRC"
+
+# Zysh (Zyphor OS shell enhancements)
+if [ -f /usr/share/zysh/prompt.zsh ]; then
+    source /usr/share/zysh/prompt.zsh
+fi
+EOF
+
+        fi
+
+        chown "$REAL_USER:$REAL_USER" "$USER_ZSHRC" 2>/dev/null || true
+    fi
+fi
+
+exit 0

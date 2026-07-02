@@ -1,0 +1,106 @@
+#!/bin/bash
+
+# ==================================================
+# Zyphor pkg search (registry-aware v4)
+# Clean + resilient + deb-aware
+# ==================================================
+
+# Safe defaults (prevents curl -o crash)
+REGISTRY_URL="${REGISTRY_URL:-https://zyphor-os.github.io/v2-ada-lovelace/registry/registry.json}"
+CACHE_FILE="${CACHE_FILE:-/tmp/zyphor_registry.json}"
+
+zyphor_pkg_search() {
+
+  KEYWORD="$3"
+
+  # ==================================================
+  # VALIDATE INPUT
+  # ==================================================
+  if [ -z "$KEYWORD" ]; then
+    echo ""
+    echo "Zyphor: ✖ Missing search keyword"
+    echo "Usage: zyphor pkg search <keyword>"
+    echo ""
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: Searching registry for '$KEYWORD'..."
+  echo ""
+
+  # ==================================================
+  # VALIDATE CONFIG (prevents curl bug)
+  # ==================================================
+  if [ -z "$REGISTRY_URL" ] || [ -z "$CACHE_FILE" ]; then
+    echo "Zyphor: ✖ Internal error (missing registry config)"
+    return 1
+  fi
+
+  # ==================================================
+  # FETCH REGISTRY
+  # ==================================================
+  if ! curl -fsSL "$REGISTRY_URL" -o "$CACHE_FILE"; then
+    echo "Zyphor: ⚠ Failed to fetch registry"
+
+    if [ ! -f "$CACHE_FILE" ]; then
+      echo "Zyphor: ✖ No cached registry available"
+      return 1
+    fi
+
+    echo "Zyphor: Using cached registry..."
+  fi
+
+  # ==================================================
+  # BUILD MATCHES (robust search)
+  # ==================================================
+  MATCHES=$(jq -r --arg kw "$(echo "$KEYWORD" | tr '[:upper:]' '[:lower:]')" '
+    .apps
+    | to_entries[]
+    | select(
+        (.key | ascii_downcase | contains($kw)) or
+        ((.value.package // "") | ascii_downcase | contains($kw)) or
+        ((.value.type // "") | ascii_downcase | contains($kw)) or
+        ((.value.channel // "") | ascii_downcase | contains($kw)) or
+        ((.value.url // "") | ascii_downcase | contains($kw))
+      )
+    | .key
+  ' "$CACHE_FILE")
+
+  # ==================================================
+  # NO RESULTS
+  # ==================================================
+  if [ -z "$MATCHES" ]; then
+    echo "Zyphor: ⚠ No apps found for '$KEYWORD'"
+    echo ""
+    return 0
+  fi
+
+  echo "Results:"
+  echo ""
+
+  COUNT=0
+
+  # ==================================================
+  # DISPLAY RESULTS
+  # ==================================================
+  for app in $MATCHES; do
+
+    TYPE=$(jq -r ".apps.\"$app\".type // \"unknown\"" "$CACHE_FILE")
+    PACKAGE=$(jq -r ".apps.\"$app\".package // \"-\"" "$CACHE_FILE")
+    CHANNEL=$(jq -r ".apps.\"$app\".channel // \"-\"" "$CACHE_FILE")
+    URL=$(jq -r ".apps.\"$app\".url // \"\"" "$CACHE_FILE")
+
+    if [ "$TYPE" = "deb" ]; then
+      printf " - %-28s [%-6s] → %s\n" "$app" "$TYPE" "$URL"
+    else
+      printf " - %-28s [%-6s | %-7s] → %s\n" "$app" "$TYPE" "$CHANNEL" "$PACKAGE"
+    fi
+
+    COUNT=$((COUNT + 1))
+
+  done
+
+  echo ""
+  echo "Zyphor: ✔ Found $COUNT app(s)"
+  echo ""
+}

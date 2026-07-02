@@ -1,0 +1,31 @@
+#!/bin/bash
+
+zyphor_smb_ensure() {
+
+  MISSING=()
+
+  command -v smbclient >/dev/null 2>&1 || MISSING+=("smbclient")
+  command -v mount.cifs >/dev/null 2>&1 || MISSING+=("cifs-utils")
+  command -v ntfs-3g >/dev/null 2>&1 || MISSING+=("ntfs-3g")
+
+  if [ ${#MISSING[@]} -gt 0 ]; then
+    echo ""
+    echo "Zyphor: Missing dependencies → ${MISSING[*]}"
+    echo "Zyphor: Installing..."
+
+    if [ "$EUID" -ne 0 ]; then
+      sudo apt update -qq
+      sudo apt install -y "${MISSING[@]}"
+    else
+      apt update -qq
+      apt install -y "${MISSING[@]}"
+    fi
+
+    if [ $? -ne 0 ]; then
+      echo "Zyphor: ✖ Failed installing dependencies"
+      return 1
+    fi
+
+    echo "Zyphor: ✔ Dependencies ready"
+  fi
+}
