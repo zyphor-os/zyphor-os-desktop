@@ -1,0 +1,18 @@
+#!/bin/bash
+
+zyphor_ssh_cmd() {
+
+  read -p "User@Host: " TARGET
+  read -p "Command: " CMD
+
+  if [ -z "$TARGET" ] || [ -z "$CMD" ]; then
+    echo "Zyphor: ✖ Missing input"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: Running command on $TARGET"
+  echo ""
+
+  ssh "$TARGET" "$CMD"
+}

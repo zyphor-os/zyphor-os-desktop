@@ -1,1 +1,1 @@
-deb [trusted=yes] https://zyphor-os.github.io stable main
+deb [trusted=yes] https://zyphor-os.github.io/v2 stable main

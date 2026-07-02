@@ -1,0 +1,24 @@
+#!/bin/bash
+
+zyphor_ftp_list() {
+
+  read -p "FTP Host: " HOST
+  read -p "Username: " USER
+
+  if [ -z "$HOST" ] || [ -z "$USER" ]; then
+    echo "Zyphor: ✖ Missing input"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: Listing files → $HOST"
+  echo ""
+
+  ftp -inv "$HOST" <<EOF
+user $USER
+ls
+bye
+EOF
+
+  echo ""
+}

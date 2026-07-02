@@ -1,0 +1,107 @@
+#!/bin/bash
+
+zyphor_pkg_list() {
+
+  echo ""
+  echo "Zyphor: Fetching registry + installed apps..."
+  echo ""
+
+  # ==================================================
+  # SAFE CONFIG
+  # ==================================================
+  REGISTRY_URL="${REGISTRY_URL:-https://zyphor-os.github.io/v2-ada-lovelace/registry/registry.json}"
+  CACHE_FILE="${CACHE_FILE:-/tmp/zyphor_registry.json}"
+
+  # ==================================================
+  # LOAD REGISTRY
+  # ==================================================
+  if ! curl -fsSL "$REGISTRY_URL" -o "$CACHE_FILE"; then
+    echo "Zyphor: ⚠ Failed to fetch registry"
+
+    if [ ! -f "$CACHE_FILE" ]; then
+      echo "Zyphor: ✖ No registry available"
+      return 1
+    fi
+
+    echo "Zyphor: Using cached registry..."
+  fi
+
+  # ==================================================
+  # GET APPS
+  # ==================================================
+  APPS=$(jq -r '.apps | keys[]' "$CACHE_FILE")
+
+  if [ -z "$APPS" ]; then
+    echo "Zyphor: ⚠ No apps found in registry"
+    return 0
+  fi
+
+  COUNT=0
+
+  # ==================================================
+  # PROCESS APPS
+  # ==================================================
+  for app in $APPS; do
+
+    TYPE=$(jq -r ".apps.\"$app\".type // \"unknown\"" "$CACHE_FILE")
+    PACKAGE=$(jq -r ".apps.\"$app\".package // empty" "$CACHE_FILE")
+
+    INSTALLED=0
+
+    case "$TYPE" in
+
+      # --------------------------
+      # APT + DEB (UNIFIED LOGIC)
+      # --------------------------
+      apt|deb)
+
+        # Primary check: registry package
+        if [ -n "$PACKAGE" ] && dpkg -s "$PACKAGE" >/dev/null 2>&1; then
+          INSTALLED=1
+        else
+          # fallback: detect by app name (important for broken entries)
+          if dpkg -l 2>/dev/null | awk '{print $2}' | grep -qi "^$app"; then
+            INSTALLED=1
+          fi
+        fi
+        ;;
+
+      # --------------------------
+      # SNAP
+      # --------------------------
+      snap)
+        if [ -n "$PACKAGE" ] && snap list 2>/dev/null | awk '{print $1}' | grep -qx "$PACKAGE"; then
+          INSTALLED=1
+        fi
+        ;;
+
+      # --------------------------
+      # INTERNAL MODULE
+      # --------------------------
+      internal)
+        if [ -d "/usr/lib/zyphor/modules/$app" ]; then
+          INSTALLED=1
+        fi
+        ;;
+
+    esac
+
+    # ==================================================
+    # OUTPUT
+    # ==================================================
+    if [ "$INSTALLED" -eq 1 ]; then
+      printf " ✔ %-30s [%s]\n" "$app" "$TYPE"
+      COUNT=$((COUNT + 1))
+    else
+      # Show deb entries even if not installed (visibility fix)
+      if [ "$TYPE" = "deb" ]; then
+        printf "   %-30s [%s - not installed]\n" "$app" "$TYPE"
+      fi
+    fi
+
+  done
+
+  echo ""
+  echo "Zyphor: ✔ TOTAL ZYPHOR APPS INSTALLED: $COUNT"
+  echo ""
+}
