@@ -1,0 +1,8 @@
+Package: zyphor-os-release
+Version: 22.0.0-r6-stable-release
+Section: utils
+Priority: optional
+Architecture: all
+Depends: bash
+Maintainer: Mark Jason P. Espelita
+Description: Zyphor OS Release

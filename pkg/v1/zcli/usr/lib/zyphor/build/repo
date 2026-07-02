@@ -1,0 +1,23 @@
+#!/bin/bash
+
+zyphor_build_repo() {
+  echo "[zyphor] Generating repository metadata..."
+
+  if [ ! -d "pool" ]; then
+    echo "[error] pool directory not found"
+    exit 1
+  fi
+
+  mkdir -p dists/stable/main/binary-amd64
+
+  dpkg-scanpackages pool /dev/null > dists/stable/main/binary-amd64/Packages
+
+  if [ $? -ne 0 ]; then
+    echo "[error] Failed to generate Packages file"
+    exit 1
+  fi
+
+  gzip -k dists/stable/main/binary-amd64/Packages
+
+  echo "[zyphor] Repository metadata generated"
+}
