@@ -6,41 +6,50 @@ status:
 	git status
 
 add:
-	git add README.md
-	git commit -m "docs: updated README"
+	git add os-config/variant-xfce/includes.chroot/etc/apt/sources.list.d/zyphor.list
+	git commit -m "chore: updated Zyphor repository configuration"
 
-	git add showcase/image1.jpg
-	git commit -m "docs: updated showcase image1"
+	git rm -r pkg/updater/updates
+	git commit -m "chore: removed zyphor-updates package source"
 
-	git add showcase/image2.jpg
-	git commit -m "docs: updated showcase image2"
+	git rm -r pkg/updater/zor
+	git commit -m "chore: removed zyphor-os-release package source"
 
-	git add showcase/image3.jpg
-	git commit -m "docs: updated showcase image3"
+	git rm -r pkg/updater/zwn
+	git commit -m "chore: removed zyphor-whats-new package source"
 
-	git add showcase/image4.jpg
-	git commit -m "docs: updated showcase image4"
+	git rm -r pkg/zcc
+	git commit -m "chore: removed zyphor-command-center package source"
 
-	git add showcase/image5.jpg
-	git commit -m "docs: updated showcase image5"
+	git rm -r pkg/zcli
+	git commit -m "chore: removed zyphor-cli package source"
 
-	git add showcase/image6.jpg
-	git commit -m "docs: updated showcase image6"
+	git rm -r pkg/zou/fastfetch-config-1
+	git commit -m "chore: removed fastfetch-config-1 package source"
 
-	git add showcase/image7.jpg
-	git commit -m "docs: updated showcase image7"
+	git rm -r pkg/zou/grub-screensaver-1
+	git commit -m "chore: removed grub-screensaver-1 package source"
 
-	git add showcase/image8.jpg
-	git commit -m "docs: updated showcase image8"
+	git rm -r pkg/zou/zyphor-display-mac-v1
+	git commit -m "chore: removed zyphor-display-mac-v1 package source"
 
-	git add showcase/image9.jpg
-	git commit -m "docs: updated showcase image9"
+	git rm -r pkg/zrc
+	git commit -m "chore: removed zyphor-repo-config package source"
 
-	git add showcase/image10.jpg
-	git commit -m "docs: added showcase image10"
+	git rm -r pkg/zylearn
+	git commit -m "chore: removed zylearn package source"
 
-	git add showcase/image11.jpg
-	git commit -m "docs: added showcase image11"
+	git rm -r pkg/zysh
+	git commit -m "chore: removed zysh package source"
+
+	git rm -r pkg/zyshell
+	git commit -m "chore: removed zyshell package source"
+
+	git add pkg/v1
+	git commit -m "feat: added v1 package sources"
+
+	git add pkg/v2
+	git commit -m "feat: added v2 package sources"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -61,21 +70,21 @@ switch:
 
 release:
 
-# 	zyphor build package pkg/updater/zor
-# 	mv pkg/updater/zor.deb zyphor-os-release.deb
+	zyphor build package pkg/v2/updater/zor
+	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
 
-# 	zyphor build package pkg/updater/zwn
-# 	mv pkg/updater/zwn.deb zyphor-whats-new.deb
+	zyphor build package pkg/v2/updater/zwn
+	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
 
 # 	zyphor build package pkg/updater/updates
 # 	mv pkg/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/zou/grub-screensaver-1
-	mv pkg/zou/grub-screensaver-1.deb grub-screensaver-1.deb
+	zyphor build package pkg/v2/zcli
+	mv pkg/v2/zcli.deb zyphor-cli.deb
 
 # 	---
 
-	mv ./*.deb ../zyphor-os.github.io/pool/main/z --verbose
+	mv ./*.deb ../zyphor-os.github.io/v2-ada-lovelace/pool/main/z --verbose
 
 # BUILD AUTOMATION
 
