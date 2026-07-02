@@ -1,8 +1,0 @@
-Package: zyphor-command-center
-Version: 6.0.0-r2-stable-release
-Section: utils
-Priority: optional
-Architecture: all
-Depends: python3,python3-pyqt6,curl,jq,python3-pyqt6.qtwebengine,zyphor-whats-new
-Maintainer: Zyphor OS Team
-Description: Zyphor command center GUI control panel for Zyphor OS tools
