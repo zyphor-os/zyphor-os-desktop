@@ -9,47 +9,17 @@ add:
 	git add os-config/variant-xfce/includes.chroot/etc/apt/sources.list.d/zyphor.list
 	git commit -m "chore: updated Zyphor repository configuration"
 
-	git rm -r pkg/updater/updates
-	git commit -m "chore: removed zyphor-updates package source"
+	git add pkg/v2/updater/zor/DEBIAN/control
+	git commit -m "chore: updated v2 zyphor-os-release control"
 
-	git rm -r pkg/updater/zor
-	git commit -m "chore: removed zyphor-os-release package source"
+	git add pkg/v2/updater/zor/DEBIAN/postinst
+	git commit -m "chore: updated v2 zyphor-os-release post-install script"
 
-	git rm -r pkg/updater/zwn
-	git commit -m "chore: removed zyphor-whats-new package source"
+	git add pkg/v2/updater/zwn/DEBIAN/control
+	git commit -m "chore: updated v2 zyphor-whats-new control"
 
-	git rm -r pkg/zcc
-	git commit -m "chore: removed zyphor-command-center package source"
-
-	git rm -r pkg/zcli
-	git commit -m "chore: removed zyphor-cli package source"
-
-	git rm -r pkg/zou/fastfetch-config-1
-	git commit -m "chore: removed fastfetch-config-1 package source"
-
-	git rm -r pkg/zou/grub-screensaver-1
-	git commit -m "chore: removed grub-screensaver-1 package source"
-
-	git rm -r pkg/zou/zyphor-display-mac-v1
-	git commit -m "chore: removed zyphor-display-mac-v1 package source"
-
-	git rm -r pkg/zrc
-	git commit -m "chore: removed zyphor-repo-config package source"
-
-	git rm -r pkg/zylearn
-	git commit -m "chore: removed zylearn package source"
-
-	git rm -r pkg/zysh
-	git commit -m "chore: removed zysh package source"
-
-	git rm -r pkg/zyshell
-	git commit -m "chore: removed zyshell package source"
-
-	git add pkg/v1
-	git commit -m "feat: added v1 package sources"
-
-	git add pkg/v2
-	git commit -m "feat: added v2 package sources"
+	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
+	git commit -m "chore: updated v2 zyphor-whats-new release notes"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -79,8 +49,8 @@ release:
 # 	zyphor build package pkg/updater/updates
 # 	mv pkg/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/v2/zcli
-	mv pkg/v2/zcli.deb zyphor-cli.deb
+# 	zyphor build package pkg/v2/zcli
+# 	mv pkg/v2/zcli.deb zyphor-cli.deb
 
 # 	---
 

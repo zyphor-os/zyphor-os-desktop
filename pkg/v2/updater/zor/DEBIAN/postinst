@@ -3,10 +3,10 @@ set -e
 
 # Write Zyphor identity file
 cat > /usr/lib/os-release << 'EOF'
-PRETTY_NAME="Zyphor OS v2.0.0-ada-lovelace-lts-u23"
+PRETTY_NAME="Zyphor OS v2.1.0-ada-lovelace-lts-u24"
 NAME="Zyphor OS GNU/Linux"
-VERSION_ID="2.0.0-ada-lovelace-lts"
-VERSION="2.0.0-ada-lovelace-lts"
+VERSION_ID="2.1.0-ada-lovelace-lts"
+VERSION="2.1.0-ada-lovelace-lts"
 VERSION_CODENAME=zyphor-os
 ID=zyphor-os
 ID_LIKE=debian
