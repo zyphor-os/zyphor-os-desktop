@@ -1,5 +1,5 @@
 Package: zyphor-os-release
-Version: 24.0.0-r8-stable-release
+Version: 25.0.0-r9-stable-release
 Section: utils
 Priority: optional
 Architecture: all

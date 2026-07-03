@@ -6,20 +6,20 @@ status:
 	git status
 
 add:
-	git add os-config/variant-xfce/includes.chroot/etc/apt/sources.list.d/zyphor.list
-	git commit -m "chore: updated Zyphor repository configuration"
-
 	git add pkg/v2/updater/zor/DEBIAN/control
-	git commit -m "chore: updated v2 zyphor-os-release control"
+	git commit -m "chore: update v2 zyphor-os-release control"
 
 	git add pkg/v2/updater/zor/DEBIAN/postinst
-	git commit -m "chore: updated v2 zyphor-os-release post-install script"
+	git commit -m "chore: update v2 zyphor-os-release post-install script"
 
 	git add pkg/v2/updater/zwn/DEBIAN/control
-	git commit -m "chore: updated v2 zyphor-whats-new control"
+	git commit -m "chore: update v2 zyphor-whats-new control"
 
 	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
-	git commit -m "chore: updated v2 zyphor-whats-new release notes"
+	git commit -m "chore: update v2 zyphor-whats-new release notes"
+
+	git add README.md
+	git commit -m "docs: update README"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
