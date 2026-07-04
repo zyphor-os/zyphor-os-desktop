@@ -31,3 +31,7 @@ vmInit
 
 # debian packages
 /*.deb
+
+# ISO files
+
+/*.iso
