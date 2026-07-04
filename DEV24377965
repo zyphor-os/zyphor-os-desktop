@@ -1,0 +1,161 @@
+Clean
+
+sudo rm -rf mount/README
+sudo rm -rf iso/README
+sudo rm -rf extract/README
+sudo rm -rf new-iso/README
+
+# =========================================================
+# 1. Create working directories (ESC!!!)
+# =========================================================
+
+mkdir -p {mount,iso,extract,new-iso}
+
+# =========================================================
+# 2. Mount ISO
+# =========================================================
+
+sudo mount -o loop ./*.iso mount
+
+# =========================================================
+# 3. Copy ISO contents to writable directory
+# =========================================================
+
+rsync -aH mount/ iso/ --verbose
+
+# =========================================================
+# 4. Extract squashfs filesystem
+# =========================================================
+
+sudo unsquashfs -d extract mount/live/filesystem.squashfs
+
+# =========================================================
+# 5. Prepare chroot environment
+# =========================================================
+
+sudo mount --bind /dev extract/dev
+sudo mount --bind /proc extract/proc
+sudo mount --bind /sys extract/sys
+sudo mount --bind /run extract/run
+sudo mount -t devpts devpts extract/dev/pts
+
+# DNS fix
+sudo cp /etc/resolv.conf extract/etc/resolv.conf
+
+# =========================================================
+# 6. Enter chroot
+# =========================================================
+
+sudo chroot extract /bin/zsh
+
+# =========================================================
+# 7. INSIDE CHROOT
+# =========================================================
+
+# Fix repositories if needed
+nano /etc/apt/sources.list
+
+# Example Kali repo:
+# deb http://http.kali.org/kali kali-rolling main contrib non-free non-free-firmware
+
+# Clean broken apt lists
+apt clean
+rm -rf /var/lib/apt/lists/*
+
+# Update package database
+apt update
+
+# Install packages
+apt install htop ufw
+
+# Edit system files
+nano /etc/os-release
+
+# Optional cleanup
+apt clean
+rm -rf /tmp/*
+history -c
+rm -f ~/.bash_history
+
+# =========================================================
+# 8. EXIT CHROOT
+# =========================================================
+
+exit
+
+# =========================================================
+# 9. Unmount chroot filesystems
+# =========================================================
+
+sudo umount extract/dev/pts
+sudo umount extract/dev
+sudo umount extract/proc
+sudo umount extract/sys
+sudo umount extract/run
+
+# =========================================================
+# 10. Remove old squashfs
+# =========================================================
+
+sudo rm -rf iso/live/filesystem.squashfs
+
+# =========================================================
+# 11. Rebuild squashfs
+# =========================================================
+
+sudo mksquashfs extract iso/live/filesystem.squashfs -comp xz
+
+# =========================================================
+# 12. Rebuild ISO
+# =========================================================
+
+cd iso
+
+sudo xorriso -as mkisofs \
+  -iso-level 3 \
+  -full-iso9660-filenames \
+  -volid "Kali Live" \
+  -o ../new-iso/zyphor-custom.iso \
+  -eltorito-boot isolinux/isolinux.bin \
+    -eltorito-catalog isolinux/boot.cat \
+    -no-emul-boot \
+    -boot-load-size 4 \
+    -boot-info-table \
+  -isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
+  -eltorito-alt-boot \
+    -e boot/grub/efi.img \
+    -no-emul-boot \
+  -isohybrid-gpt-basdat \
+  .
+  
+
+  
+Installer
+
+INITRD
+======
+
+mkdir initrd
+cd initrd
+
+gzip -dc ../iso/install/initrd.gz | cpio -idmv
+
+GTK
+===
+
+mkdir initrd-gtk
+cd initrd-gtk
+
+gzip -dc ../iso/install/gtk/initrd.gz | cpio -idmv
+
+RE-PACKAGE
+==========
+cd initrd
+
+find . | cpio --create --format='newc' | gzip -9 > ../iso/install/initrd.gz
+
+----
+
+cd initrd-gtk
+
+find . | cpio --create --format='newc' | gzip -9 > ../iso/install/gtk/initrd.gz
