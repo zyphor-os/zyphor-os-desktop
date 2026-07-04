@@ -2,24 +2,79 @@ CC = gcc
 
 # DEV AUTOMATION
 
+# start...
+
+deldev:
+# 	sudo umount mount
+	sudo rm -rf mount --verbose
+	sudo rm -rf iso --verbose
+	sudo rm -rf extract --verbose
+	sudo rm -rf new-iso --verbose
+	sudo rm -rf initrd--verbose
+	sudo rm -rf initrd-gtk --verbose
+
+restoredev:
+	mkdir -p mount
+	mkdir -p iso
+	mkdir -p extract
+	mkdir -p new-iso
+	mkdir -p initrd
+	mkdir -p initrd-gtk
+
+	touch mount/README
+	touch iso/README
+	touch extract/README
+	touch new-iso/README
+	touch initrd/README
+	touch initrd-gtk/README
+
+	echo "iso mouting point" > mount/README
+	echo "writable iso dir" > iso/README
+	echo "extracted iso writable (workspace)" > extract/README
+	echo "new iso dir." > new-iso/README
+	echo "initial ram disk for installer" > initrd/README
+	echo "initial ram disk for installer gtk" > initrd-gtk/README
+
+vmcreate:
+	rm -rf new-iso/*.qcow2 --verbose
+	rm -rf new-iso/*.iso --verbose
+	sudo qemu-img create -f qcow2 new-iso/zyphor.qcow2 15G
+
+install-cdrom:
+	sudo qemu-system-x86_64 --enable-kvm --cdrom new-iso/*.iso -m 4028 --hda new-iso/zyphor.qcow2 --boot d
+
+run-hdd:
+	sudo qemu-system-x86_64 --enable-kvm -m 4028 --hda new-iso/zyphor.qcow2 --boot c
+
+# end...
+
 status:
 	git status
 
 add:
-	git add pkg/v2/updater/zor/DEBIAN/control
-	git commit -m "chore: update v2 zyphor-os-release control"
+	git add DEV24377965
+	git commit -m "chore: add DEV24377965"
 
-	git add pkg/v2/updater/zor/DEBIAN/postinst
-	git commit -m "chore: update v2 zyphor-os-release post-install script"
+	git add extract
+	git commit -m "chore: add extract directory"
 
-	git add pkg/v2/updater/zwn/DEBIAN/control
-	git commit -m "chore: update v2 zyphor-whats-new control"
+	git add initrd
+	git commit -m "chore: add initrd directory"
 
-	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
-	git commit -m "chore: update v2 zyphor-whats-new release notes"
+	git add initrd-gtk
+	git commit -m "chore: add initrd-gtk directory"
 
-	git add README.md
-	git commit -m "docs: update README"
+	git add iso
+	git commit -m "chore: add iso directory"
+
+	git add mount
+	git commit -m "chore: add mount directory"
+
+	git add new-iso
+	git commit -m "chore: add new-iso directory"
+
+	git add .gitignore
+	git commit -m "chore: update gitignore"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
