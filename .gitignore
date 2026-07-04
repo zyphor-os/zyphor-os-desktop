@@ -35,3 +35,7 @@ vmInit
 # ISO files
 
 /*.iso
+/new-iso/*.iso
+
+# virtual machines
+/new-iso/*.qcow2
