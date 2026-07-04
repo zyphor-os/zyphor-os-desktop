@@ -46,6 +46,8 @@ GTK
 
 cd ../initrd-gtk && gzip -dc ../iso/install/gtk/initrd.gz | cpio -idmv
 
+cd ..
+
 RE-PACKAGE
 ==========
 
@@ -158,3 +160,16 @@ sudo xorriso -as mkisofs \
     -no-emul-boot \
   -isohybrid-gpt-basdat \
   .
+
+KERNEL UPDATE
+=============
+
+installing new kernel...
+
+apt install linux-image-amd64 linux-headers-amd64 linux-base-amd64
+
+removing old kernel...
+
+apt purge linux-image-6.19.14+kali-amd64
+apt purge linux-headers-6.19.14+kali-amd64
+apt autoremove --purge
