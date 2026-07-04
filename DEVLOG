@@ -116,3 +116,11 @@ This will be updated daily.
 2026-07-01
 - lead os maintainer leave day.
 
+2026-07-02
+- separated the v1 and v2-ada-lovelace package repository
+
+2026-07-03
+- changed development approach by manualy using squashfs and xorriso.
+
+2026-07-04
+- 
