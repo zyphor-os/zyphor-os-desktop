@@ -29,6 +29,37 @@ rsync -aH mount/ iso/ --verbose
 
 sudo unsquashfs -d extract mount/live/filesystem.squashfs
 
+
+
+
+
+INSTALLER EXTRACT -------------------------
+=================
+
+INITRD
+======
+
+cd initrd && gzip -dc ../iso/install/initrd.gz | cpio -idmv
+
+GTK
+===
+
+cd ../initrd-gtk && gzip -dc ../iso/install/gtk/initrd.gz | cpio -idmv
+
+RE-PACKAGE
+==========
+
+cd initrd && find . | cpio --create --format=newc | gzip -9 | sudo tee ../iso/install/initrd.gz > /dev/null
+----
+cd ../initrd-gtk && find . | cpio --create --format=newc | gzip -9 | sudo tee ../iso/install/gtk/initrd.gz > /dev/null
+
+END INSTALLER EXTRACT --------------------
+=====================
+
+
+
+
+
 # =========================================================
 # 5. Prepare chroot environment
 # =========================================================
@@ -127,35 +158,3 @@ sudo xorriso -as mkisofs \
     -no-emul-boot \
   -isohybrid-gpt-basdat \
   .
-  
-
-  
-Installer
-
-INITRD
-======
-
-mkdir initrd
-cd initrd
-
-gzip -dc ../iso/install/initrd.gz | cpio -idmv
-
-GTK
-===
-
-mkdir initrd-gtk
-cd initrd-gtk
-
-gzip -dc ../iso/install/gtk/initrd.gz | cpio -idmv
-
-RE-PACKAGE
-==========
-cd initrd
-
-find . | cpio --create --format='newc' | gzip -9 > ../iso/install/initrd.gz
-
-----
-
-cd initrd-gtk
-
-find . | cpio --create --format='newc' | gzip -9 > ../iso/install/gtk/initrd.gz

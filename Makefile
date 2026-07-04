@@ -5,12 +5,19 @@ CC = gcc
 # start...
 
 deldev:
-# 	sudo umount mount
+	@if mountpoint -q mount; then \
+		echo "Unmounting mount..."; \
+		sudo umount mount; \
+	else \
+		echo "mount is not mounted. Skipping unmount."; \
+	fi
+	@echo "Removing mount directory..."
+	
 	sudo rm -rf mount --verbose
 	sudo rm -rf iso --verbose
 	sudo rm -rf extract --verbose
 	sudo rm -rf new-iso --verbose
-	sudo rm -rf initrd--verbose
+	sudo rm -rf initrd --verbose
 	sudo rm -rf initrd-gtk --verbose
 
 restoredev:
@@ -28,7 +35,7 @@ restoredev:
 	touch initrd/README
 	touch initrd-gtk/README
 
-	echo "iso mouting point" > mount/README
+	echo "iso mounting point" > mount/README
 	echo "writable iso dir" > iso/README
 	echo "extracted iso writable (workspace)" > extract/README
 	echo "new iso dir." > new-iso/README
