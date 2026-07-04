@@ -44,7 +44,7 @@ restoredev:
 
 vmcreate:
 	rm -rf new-iso/*.qcow2 --verbose
-	rm -rf new-iso/*.iso --verbose
+# 	rm -rf new-iso/*.iso --verbose
 	sudo qemu-img create -f qcow2 new-iso/zyphor.qcow2 15G
 
 install-cdrom:
