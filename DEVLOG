@@ -123,4 +123,5 @@ This will be updated daily.
 - changed development approach by manualy using squashfs and xorriso.
 
 2026-07-04
-- 
+- release of v2.2.0-2026.07.04-r9.
+- linux kernel 7.0.x by default
