@@ -4,6 +4,8 @@ sudo rm -rf mount/README
 sudo rm -rf iso/README
 sudo rm -rf extract/README
 sudo rm -rf new-iso/README
+sudo rm -rf initrd/README
+sudo rm -rf initrd-gtk/README
 
 # =========================================================
 # 1. Create working directories (ESC!!!)
