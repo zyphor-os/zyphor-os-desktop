@@ -59,29 +59,17 @@ status:
 	git status
 
 add:
-	git add DEV24377965
-	git commit -m "chore: add DEV24377965"
+	git add pkg/v2/updater/zor/DEBIAN/control
+	git commit -m "chore: updated v2 zyphor-os-release control"
 
-	git add extract
-	git commit -m "chore: add extract directory"
+	git add pkg/v2/updater/zor/DEBIAN/postinst
+	git commit -m "chore: updated v2 zyphor-os-release post-install script"
 
-	git add initrd
-	git commit -m "chore: add initrd directory"
+	git add pkg/v2/updater/zwn/DEBIAN/control
+	git commit -m "chore: updated v2 zyphor-whats-new control"
 
-	git add initrd-gtk
-	git commit -m "chore: add initrd-gtk directory"
-
-	git add iso
-	git commit -m "chore: add iso directory"
-
-	git add mount
-	git commit -m "chore: add mount directory"
-
-	git add new-iso
-	git commit -m "chore: add new-iso directory"
-
-	git add .gitignore
-	git commit -m "chore: update gitignore"
+	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
+	git commit -m "chore: updated v2 zyphor-whats-new release notes"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
