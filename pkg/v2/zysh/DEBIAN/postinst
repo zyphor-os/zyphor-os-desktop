@@ -55,4 +55,12 @@ EOF
     fi
 fi
 
+# Set ownership
+
+chown root:root /usr/share/zysh/prompt.zsh
+
+# Executable file
+
+chmod 555 /usr/share/zysh/prompt.zsh
+
 exit 0
