@@ -199,6 +199,80 @@ zyphor_pkg_install() {
 
         return $SNAP_EXIT
         ;;
+      # --------------------------
+      # FLATPAK INSTALL (FIXED + BOOTSTRAP SAFE)
+      # --------------------------
+      flatpak)
+
+        if [ -z "$PACKAGE" ]; then
+          echo "Zyphor: ✖ Missing flatpak package (app ID)"
+          return 1
+        fi
+
+        echo "Zyphor: Flatpak install → $PACKAGE"
+
+        # ==================================================
+        # INSTALL FLATPAK IF MISSING
+        # ==================================================
+        if ! command -v flatpak >/dev/null 2>&1; then
+          echo "Zyphor: flatpak not found → installing..."
+
+          apt update -qq
+          apt install -y flatpak
+        fi
+
+        # ==================================================
+        # ENSURE FLATHUB REMOTE
+        # ==================================================
+        echo "Zyphor: Checking Flathub remote..."
+
+        if ! flatpak remote-list | grep -q '^flathub'; then
+          echo "Zyphor: Adding Flathub remote..."
+          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        fi
+
+        # ==================================================
+        # DEFAULT BRANCH
+        # ==================================================
+        if [ -z "$CHANNEL" ] || [ "$CHANNEL" = "null" ]; then
+          CHANNEL="stable"
+        fi
+
+        echo "Zyphor: Branch → $CHANNEL"
+
+        # ==================================================
+        # INSTALL FLATPAK PACKAGE (RETRY SAFE)
+        # ==================================================
+        flatpak install -y --noninteractive flathub "$PACKAGE" $FLAGS
+        FLATPAK_EXIT=$?
+
+        if [ "$FLATPAK_EXIT" -ne 0 ]; then
+          echo "Zyphor: flatpak install failed → refreshing remote and retrying..."
+
+          flatpak update --appstream flathub >/dev/null 2>&1
+          sleep 2
+
+          flatpak install -y --noninteractive flathub "$PACKAGE" $FLAGS
+          FLATPAK_EXIT=$?
+        fi
+
+        # ==================================================
+        # CREATE CLI SHIM (so `zyphor pkg install wechat` → `wechat` works)
+        # ==================================================
+        if [ "$FLATPAK_EXIT" -eq 0 ]; then
+          SHIM_PATH="/usr/local/bin/${APP}"
+          if [ ! -f "$SHIM_PATH" ]; then
+            echo "Zyphor: Creating CLI shim → $SHIM_PATH"
+            cat > "$SHIM_PATH" <<EOF
+#!/bin/bash
+exec flatpak run $PACKAGE "\$@"
+EOF
+          chmod +x "$SHIM_PATH"
+        fi
+      fi
+
+      return $FLATPAK_EXIT
+      ;;
     # --------------------------
     # INTERNAL MODULE
     # --------------------------
