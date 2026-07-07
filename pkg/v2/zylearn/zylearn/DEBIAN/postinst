@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+# Set ownership
+
+chown root:root /usr/bin/zylearn
+
+# Executable file
+
+chmod 555 /usr/bin/zylearn
+
+exit 0
