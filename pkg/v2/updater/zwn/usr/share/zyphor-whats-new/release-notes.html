@@ -160,17 +160,16 @@ sections: [
 
 const releaseNotes = {
     distro: "Zyphor OS",
-    version: "2.2.1-ada-lovelace-lts-u26",
-    date: "Updated On: July 03, 2026 @ 08:27PM",
+    version: "2.2.1-ada-lovelace-lts-u27",
+    date: "Updated On: July 07, 2026 @ 09:35PM",
 
     sections: [
         {
-            "title": "Changes & Improvements",
+            "title": "Package Manager",
             "items": [
-                "Removed the Live Mode boot option from the initial GRUB menu temporarily.",
-                "Removed the GRUB installation prompt ('Keep the local version currently installed') to simplify the installation process.",
-                "Removed Zyphor CLI and Zyphor Command Center installation from the kali-finish-install script to reduce installation time.",
-                "Refreshed the installation ISO with the latest package updates and improvements."
+                "Added Flatpak support to 'zyphor pkg install', 'zyphor pkg list', and 'zyphor pkg remove', including automatic Flathub remote setup and retry-on-failure handling.",
+                "Installing a Flatpak app now creates a CLI shim (e.g. 'wechat') so it can be launched by name instead of requiring 'flatpak run <app-id>'.",
+                "Removing a Flatpak app now also cleans up its associated CLI shim."
             ]
         }
     ]

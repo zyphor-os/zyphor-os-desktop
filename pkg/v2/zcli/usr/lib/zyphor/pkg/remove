@@ -152,6 +152,37 @@ zyphor_pkg_remove() {
       ;;
 
     # --------------------------
+    # FLATPAK
+    # --------------------------
+    flatpak)
+
+      if [ -z "$PACKAGE" ]; then
+        echo "Zyphor: ✖ Missing flatpak package (app ID)"
+        return 1
+      fi
+
+      if ! command -v flatpak >/dev/null 2>&1; then
+        echo "Zyphor: ✖ flatpak is not installed on this system"
+        return 1
+      fi
+
+      echo "Zyphor: Removing Flatpak → $PACKAGE"
+
+      if flatpak list --app --columns=application 2>/dev/null | grep -qx "$PACKAGE"; then
+        flatpak uninstall -y --noninteractive "$PACKAGE"
+      else
+        echo "Zyphor: ⚠ Flatpak not installed → $PACKAGE"
+      fi
+
+      # ----- REMOVE CLI SHIM IF PRESENT -----
+      SHIM_PATH="/usr/local/bin/${APP}"
+      if [ -f "$SHIM_PATH" ]; then
+        echo "Zyphor: Removing CLI shim → $SHIM_PATH"
+        rm -f "$SHIM_PATH"
+      fi
+      ;;
+
+    # --------------------------
     # INTERNAL MODULE
     # --------------------------
     internal)

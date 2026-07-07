@@ -59,11 +59,29 @@ status:
 	git status
 
 add:
-	git add pkg/v2/zrc/DEBIAN/control
-	git commit -m "chore: updated v2 zyphor-repo-config control"
+	git add pkg/v2/updater/zor/DEBIAN/control
+	git commit -m "chore: updated v2 zyphor-os-release control"
 
-	git add pkg/v2/zrc/DEBIAN/postinst
-	git commit -m "chore: updated v2 zyphor-repo-config post-install script"
+	git add pkg/v2/updater/zor/DEBIAN/postinst
+	git commit -m "chore: updated v2 zyphor-os-release post-install script"
+
+	git add pkg/v2/updater/zwn/DEBIAN/control
+	git commit -m "chore: updated v2 zyphor-whats-new control"
+
+	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
+	git commit -m "chore: updated v2 zyphor-whats-new release notes"
+
+	git add pkg/v2/zcli/DEBIAN/control
+	git commit -m "chore: updated v2 zyphor-cli control"
+
+	git add pkg/v2/zcli/usr/lib/zyphor/pkg/install
+	git commit -m "chore: updated v2 zyphor-cli package install command"
+
+	git add pkg/v2/zcli/usr/lib/zyphor/pkg/list
+	git commit -m "chore: updated v2 zyphor-cli package list command"
+
+	git add pkg/v2/zcli/usr/lib/zyphor/pkg/remove
+	git commit -m "chore: updated v2 zyphor-cli package remove command"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -84,17 +102,17 @@ switch:
 
 release:
 
-# 	zyphor build package pkg/v2/updater/zor
-# 	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
+	zyphor build package pkg/v2/updater/zor
+	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
 
-# 	zyphor build package pkg/v2/updater/zwn
-# 	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
+	zyphor build package pkg/v2/updater/zwn
+	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
 
 # 	zyphor build package pkg/updater/updates
 # 	mv pkg/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/v2/zrc
-	mv pkg/v2/zrc.deb zyphor-repo-config.deb
+	zyphor build package pkg/v2/zcli
+	mv pkg/v2/zcli.deb zyphor-cli.deb
 
 # 	zyphor build package pkg/v2/zysh
 # 	mv pkg/v2/zysh.deb zysh.deb
