@@ -76,6 +76,15 @@ zyphor_pkg_list() {
         ;;
 
       # --------------------------
+      # FLATPAK
+      # --------------------------
+      flatpak)
+        if [ -n "$PACKAGE" ] && command -v flatpak >/dev/null 2>&1 && flatpak list --app --columns=application 2>/dev/null | grep -qx "$PACKAGE"; then
+          INSTALLED=1
+        fi
+        ;;
+
+      # --------------------------
       # INTERNAL MODULE
       # --------------------------
       internal)
