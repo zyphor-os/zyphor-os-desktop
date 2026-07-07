@@ -1,5 +1,5 @@
 Package: zysh
-Version: 3.0.0-r2-stable-release
+Version: 3.0.1-r3-stable-release
 Section: utils
 Architecture: all
 Replaces: zyshell
