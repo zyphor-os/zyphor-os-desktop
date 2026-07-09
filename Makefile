@@ -42,6 +42,69 @@ restoredev:
 	echo "initial ram disk for installer" > initrd/README
 	echo "initial ram disk for installer gtk" > initrd-gtk/README
 
+devinit:
+	@echo "\n--- INITIALIZING DEV ENVIRONMENT ---\n";
+	make deldev
+	make restoredev
+	sudo rm -rf mount/README
+	sudo rm -rf iso/README
+	sudo rm -rf extract/README
+	sudo rm -rf new-iso/README
+	sudo rm -rf initrd/README
+	sudo rm -rf initrd-gtk/README
+	@echo "\n--- MOUNTING ISO FILE READ ONLY MODE ---\n";
+	sudo mount -o loop $(iso) mount
+	@echo "\n--- Copy ISO contents to writable directory ---\n";
+	rsync -aH mount/ iso/ --verbose
+	@echo "\n--- Extract squashfs filesystem ---\n";
+	sudo unsquashfs -d extract mount/live/filesystem.squashfs
+	@echo "\n--- EXTRACTING INSTALLER ---\n";
+	@(cd initrd && gzip -dc ../iso/install/initrd.gz | cpio -idmv)
+	@(cd initrd-gtk && gzip -dc ../iso/install/gtk/initrd.gz | cpio -idmv)
+	@echo "\n--- MOUNTING CHROOT ENVIRONMENT ---\n";
+	sudo mount --bind /dev extract/dev
+	sudo mount --bind /proc extract/proc
+	sudo mount --bind /sys extract/sys
+	sudo mount --bind /run extract/run
+	sudo mount -t devpts devpts extract/dev/pts
+	@echo "\n--- FIX DNS ---\n";
+	sudo cp /etc/resolv.conf extract/etc/resolv.conf
+	@echo "\n--- ENTER CHROOT ---\n";
+	sudo chroot extract /bin/zsh
+
+devbuild:
+	@echo "\n--- UNMOUNTING ISO FILE READ ONLY MODE ---\n";
+	sudo umount extract/dev/pts
+	sudo umount extract/dev
+	sudo umount extract/proc
+	sudo umount extract/sys
+	sudo umount extract/run
+	@echo "\n--- REMOVING OLD SQUASHFS FILE ---\n";
+	sudo rm -rf iso/live/filesystem.squashfs --verbose
+	@echo "\n--- REPACKAGING THE INITRD INSTALLERS ---\n";
+	@(cd initrd && find . | cpio --create --format=newc | gzip -9 | sudo tee ../iso/install/initrd.gz > /dev/null)
+	@(cd initrd-gtk && find . | cpio --create --format=newc | gzip -9 | sudo tee ../iso/install/gtk/initrd.gz > /dev/null)
+	@echo "\n--- REBUILDING NEW SQUASHFS FILE ---\n";
+	sudo mksquashfs extract iso/live/filesystem.squashfs -comp xz
+	@echo "\n--- REBUILDING NEW ISO FILE ---\n";
+	@(cd iso && \
+	sudo xorriso -as mkisofs \
+	  -iso-level 3 \
+	  -full-iso9660-filenames \
+	  -volid "Kali Live" \
+	  -o ../new-iso/zyphor-custom.iso \
+	  -eltorito-boot isolinux/isolinux.bin \
+	    -eltorito-catalog isolinux/boot.cat \
+	    -no-emul-boot \
+	    -boot-load-size 4 \
+	    -boot-info-table \
+	  -isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
+	  -eltorito-alt-boot \
+	    -e boot/grub/efi.img \
+	    -no-emul-boot \
+	  -isohybrid-gpt-basdat \
+	  .)
+
 vmcreate:
 	rm -rf new-iso/*.qcow2 --verbose
 # 	rm -rf new-iso/*.iso --verbose
