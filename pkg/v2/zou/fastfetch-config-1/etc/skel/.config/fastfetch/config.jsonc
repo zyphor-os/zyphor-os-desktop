@@ -11,6 +11,7 @@
       "left": 2
     }
   },
+
   "display": {
     "color": {
       "keys": "cyan",
@@ -24,22 +25,100 @@
       }
     }
   },
+
   "modules": [
-    {
-      "type": "title"
-    },
+    "title",
     "separator",
+
     {
       "type": "os",
       "key": "OS"
     },
-    "kernel",
-    "uptime",
-    "packages",
-    "shell",
-    "cpu",
-    "gpu",
-    "memory",
+    {
+      "type": "host",
+      "key": "Host"
+    },
+    {
+      "type": "kernel",
+      "key": "Kernel"
+    },
+    {
+      "type": "bios",
+      "key": "BIOS"
+    },
+    {
+      "type": "bootmgr",
+      "key": "Boot"
+    },
+    {
+      "type": "uptime",
+      "key": "Uptime"
+    },
+    {
+      "type": "packages",
+      "key": "Packages"
+    },
+    {
+      "type": "shell",
+      "key": "Shell"
+    },
+    {
+      "type": "terminal",
+      "key": "Terminal"
+    },
+    {
+      "type": "de",
+      "key": "Desktop"
+    },
+    {
+      "type": "wm",
+      "key": "Window Manager"
+    },
+    {
+      "type": "theme",
+      "key": "Theme"
+    },
+    {
+      "type": "icons",
+      "key": "Icons"
+    },
+    {
+      "type": "font",
+      "key": "Font"
+    },
+    {
+      "type": "display",
+      "key": "Display"
+    },
+    {
+      "type": "cpu",
+      "key": "CPU"
+    },
+    {
+      "type": "gpu",
+      "key": "GPU"
+    },
+    {
+      "type": "memory",
+      "key": "Memory"
+    },
+    {
+      "type": "swap",
+      "key": "Swap"
+    },
+    {
+      "type": "disk",
+      "key": "Disk (/)"
+    },
+    {
+      "type": "localip",
+      "key": "IP"
+    },
+    {
+      "type": "locale",
+      "key": "Locale"
+    },
+
     "colors"
   ]
 }
