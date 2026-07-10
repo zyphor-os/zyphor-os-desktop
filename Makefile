@@ -5,20 +5,26 @@ CC = gcc
 # start...
 
 deldev:
-	@if mountpoint -q mount; then \
-		echo "Unmounting mount..."; \
-		sudo umount mount; \
-	else \
-		echo "mount is not mounted. Skipping unmount."; \
-	fi
-	@echo "Removing mount directory..."
-	
-	sudo rm -rf mount --verbose
-	sudo rm -rf iso --verbose
-	sudo rm -rf extract --verbose
-	sudo rm -rf new-iso --verbose
-	sudo rm -rf initrd --verbose
-	sudo rm -rf initrd-gtk --verbose
+	@echo "\n--- CLEANING DEVELOPMENT ENVIRONMENT ---\n"
+
+	@for dir in \
+		extract/dev/pts \
+		extract/dev \
+		extract/proc \
+		extract/sys \
+		extract/run \
+		mount; do \
+		if mountpoint -q $$dir; then \
+			echo "Unmounting $$dir..."; \
+			sudo umount $$dir || exit 1; \
+		else \
+			echo "$$dir is not mounted. Skipping."; \
+		fi; \
+	done
+
+	@echo "Removing directories..."
+
+	sudo rm -rf mount iso extract new-iso initrd initrd-gtk --verbose
 
 restoredev:
 	mkdir -p mount
