@@ -161,9 +161,17 @@ sections: [
 const releaseNotes = {
     distro: "Zyphor OS",
     version: "2.2.1-ada-lovelace-lts-u27",
-    date: "Updated On: July 07, 2026 @ 09:35PM",
+    date: "Updated On: July 11, 2026 @ 09:14PM",
 
     sections: [
+        {
+            "title": "Repository Configuration - Latest",
+            "items": [
+                "Updated the default Zyphor OS repository configuration to use the 'arch=amd64' filter.",
+                "APT will now only fetch Zyphor packages for the AMD64 architecture, reducing unnecessary package index downloads.",
+                "This change improves repository consistency and prepares the package manager for future multi-architecture support."
+            ]
+        },
         {
             "title": "Package Manager",
             "items": [
