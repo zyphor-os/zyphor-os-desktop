@@ -2,7 +2,7 @@
 set -e
 
 cat > /etc/apt/sources.list.d/zyphor.list <<EOF
-deb [trusted=yes] https://zyphor-os.github.io/v2-ada-lovelace stable main
+deb [arch=amd64 trusted=yes] https://zyphor-os.github.io/v2-ada-lovelace stable main
 EOF
 
 chown root:root /etc/apt/sources.list.d/zyphor.list
