@@ -17,6 +17,8 @@ class Sidebar(QFrame):
     pkg_install_clicked = pyqtSignal()
     pkg_remove_clicked = pyqtSignal()
 
+    profile_clicked = pyqtSignal()
+
     def __init__(self):
         super().__init__()
         self.setFixedWidth(220)
@@ -39,6 +41,8 @@ class Sidebar(QFrame):
         btn_pkg_search = QPushButton("Search Packages/Apps")
         btn_pkg_install = QPushButton("Install Packages/Apps")
         btn_pkg_remove = QPushButton("Uninstall Packages/Apps")
+        # profile
+        btn_profile = QPushButton("Profile")
 
         btn_home.clicked.connect(self.home_clicked)
         # system
@@ -54,6 +58,8 @@ class Sidebar(QFrame):
         btn_pkg_search.clicked.connect(self.pkg_search_clicked)
         btn_pkg_install.clicked.connect(self.pkg_install_clicked)
         btn_pkg_remove.clicked.connect(self.pkg_remove_clicked)
+        # profile
+        btn_profile.clicked.connect(self.profile_clicked)
 
         layout.addWidget(btn_home)
         # system
@@ -69,5 +75,7 @@ class Sidebar(QFrame):
         layout.addWidget(btn_pkg_search)
         layout.addWidget(btn_pkg_install)
         layout.addWidget(btn_pkg_remove)
+        # profile
+        layout.addWidget(btn_profile)
 
         layout.addStretch()
