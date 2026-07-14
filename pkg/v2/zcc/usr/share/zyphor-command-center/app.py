@@ -15,6 +15,8 @@ from ui.pkg.list import PkgListPage
 from ui.pkg.search import PkgSearchPage
 from ui.pkg.install import PkgInstallPage
 from ui.pkg.remove import PkgRemovePage
+# profile
+from ui.profile.profile import ProfilePage
 
 
 class MainWindow(QMainWindow):
@@ -50,7 +52,8 @@ class MainWindow(QMainWindow):
             "pkg_list": PkgListPage(),
             "pkg_search": PkgSearchPage(),
             "pkg_install": PkgInstallPage(),
-            "pkg_remove": PkgRemovePage()
+            "pkg_remove": PkgRemovePage(),
+            "profile_page": ProfilePage()
         }
 
         # Signals
@@ -68,6 +71,8 @@ class MainWindow(QMainWindow):
         self.sidebar.pkg_search_clicked.connect(lambda: self.switch("pkg_search"))
         self.sidebar.pkg_install_clicked.connect(lambda: self.switch("pkg_install"))
         self.sidebar.pkg_remove_clicked.connect(lambda: self.switch("pkg_remove"))
+        # profile
+        self.sidebar.profile_clicked.connect(lambda: self.switch("profile_page"))
 
         layout.addWidget(self.sidebar)
         layout.addWidget(self.wrapper)

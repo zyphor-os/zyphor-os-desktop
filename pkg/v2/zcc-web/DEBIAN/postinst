@@ -1,0 +1,50 @@
+#!/bin/sh
+set -e
+
+APP_DIR="/usr/share/zyphor-command-center-web"
+
+if [ -d "$APP_DIR" ]; then
+    cd "$APP_DIR"
+
+    echo "Installing Laravel dependencies..."
+
+    composer install \
+        --no-dev \
+        --optimize-autoloader \
+        --no-interaction \
+        --prefer-dist
+
+    # Create .env only if it doesn't exist
+    if [ ! -f ".env" ] && [ -f ".env.example" ]; then
+        cp .env.example .env
+    fi
+
+    # Generate APP_KEY only if missing
+    if ! grep -q "^APP_KEY=base64:" .env 2>/dev/null; then
+        php artisan key:generate --force || true
+    fi
+
+    # Ensure database directory exists
+    mkdir -p database
+
+    # Create SQLite database only if it doesn't exist
+    if [ ! -f "database/database.sqlite" ]; then
+        echo "Creating SQLite database..."
+        touch database/database.sqlite
+    else
+        echo "Existing SQLite database found. Preserving data."
+    fi
+
+    # Ensure required directories exist
+    mkdir -p storage bootstrap/cache
+
+    # Set permissions
+    chmod -R 775 storage bootstrap/cache database || true
+
+    # Cache Laravel configuration
+    php artisan config:cache || true
+    php artisan route:cache || true
+    php artisan view:cache || true
+fi
+
+exit 0

@@ -1,0 +1,28 @@
+Package: zyphor-command-center-web
+Version: 1.0.0-r1-beta-release
+Section: admin
+Priority: optional
+Architecture: all
+Maintainer: Mark Jason Penote Espelita <markjasonespelita@gmail.com>
+Homepage: https://zyphoros.github.io
+Depends:
+ composer,
+ php-cli (>= 8.2),
+ php-sqlite3,
+ php-mbstring,
+ php-xml,
+ php-curl,
+ php-zip,
+ php-bcmath,
+ php-intl,
+ php-tokenizer,
+ php-fileinfo
+Recommends:
+ sqlite3
+Description: Zyphor Command Center Web
+ A Laravel-based web interface for Zyphor Command Center.
+ .
+ Provides the graphical management interface used by the
+ Zyphor Command Center desktop application, including
+ user management, dashboards, release notes, package
+ management, analytics, and system configuration pages.

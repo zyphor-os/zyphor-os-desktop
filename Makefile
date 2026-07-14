@@ -128,20 +128,71 @@ status:
 	git status
 
 add:
-	git add pkg/v2/updater/zor/DEBIAN/control
-	git commit -m "chore: updated v2 zyphor-os-release control"
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/app.py
+	git commit -m "feat: updated zyphor command center application"
 
-	git add pkg/v2/updater/zor/DEBIAN/postinst
-	git commit -m "chore: updated v2 zyphor-os-release post-install script"
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/main.py
+	git commit -m "feat: updated zyphor command center main entry"
 
-	git add pkg/v2/updater/zwn/DEBIAN/control
-	git commit -m "chore: updated v2 zyphor-whats-new control"
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/core/__pycache__/__init__.cpython-313.pyc
+	git commit -m "chore: updated zyphor command center core cache"
 
-	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
-	git commit -m "chore: updated v2 zyphor-whats-new release notes"
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/core/__pycache__/process.cpython-313.pyc
+	git commit -m "chore: updated zyphor command center process cache"
 
-	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat: added v2 zyphor-whats-new release script"
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/sidebar.py
+	git commit -m "feat: updated zyphor command center sidebar"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/__pycache__/app.cpython-313.pyc
+	git commit -m "chore: updated zyphor command center app cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/__pycache__/__init__.cpython-313.pyc
+	git commit -m "chore: updated zyphor command center ui cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/__pycache__/home.cpython-313.pyc
+	git commit -m "chore: updated zyphor command center home cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/__pycache__/sidebar.cpython-313.pyc
+	git commit -m "chore: updated zyphor command center sidebar cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/components/__pycache__/loading.cpython-313.pyc
+	git commit -m "chore: updated zyphor command center loading cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/doctor/__pycache__/fix.cpython-313.pyc
+	git commit -m "chore: updated zyphor doctor fix cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/doctor/__pycache__/report.cpython-313.pyc
+	git commit -m "chore: updated zyphor doctor report cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/doctor/__pycache__/scan.cpython-313.pyc
+	git commit -m "chore: updated zyphor doctor scan cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/pkg/__pycache__/install.cpython-313.pyc
+	git commit -m "chore: updated zyphor package install cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/pkg/__pycache__/list.cpython-313.pyc
+	git commit -m "chore: updated zyphor package list cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/pkg/__pycache__/remove.cpython-313.pyc
+	git commit -m "chore: updated zyphor package remove cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/pkg/__pycache__/search.cpython-313.pyc
+	git commit -m "chore: updated zyphor package search cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/system/__pycache__/clean.cpython-313.pyc
+	git commit -m "chore: updated zyphor system clean cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/system/__pycache__/info.cpython-313.pyc
+	git commit -m "chore: updated zyphor system info cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/system/__pycache__/upgrade.cpython-313.pyc
+	git commit -m "chore: updated zyphor system upgrade cache"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/
+	git commit -m "feat: added zyphor command center profile module"
+
+	git add pkg/v2/zcc-web/
+	git commit -m "feat: added zyphor command center web interface"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
