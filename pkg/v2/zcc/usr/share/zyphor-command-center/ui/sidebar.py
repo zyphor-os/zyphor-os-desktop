@@ -28,6 +28,8 @@ class Sidebar(QFrame):
         self.setLayout(layout)
 
         btn_home = QPushButton("Home")
+        # profile
+        btn_profile = QPushButton("User Management")
         # system
         btn_upgrade = QPushButton("System Upgrade")
         btn_clean = QPushButton("System Clean")
@@ -41,10 +43,10 @@ class Sidebar(QFrame):
         btn_pkg_search = QPushButton("Search Packages/Apps")
         btn_pkg_install = QPushButton("Install Packages/Apps")
         btn_pkg_remove = QPushButton("Uninstall Packages/Apps")
-        # profile
-        btn_profile = QPushButton("Profile")
 
         btn_home.clicked.connect(self.home_clicked)
+        # profile
+        btn_profile.clicked.connect(self.profile_clicked)
         # system
         btn_upgrade.clicked.connect(self.upgrade_clicked)
         btn_clean.clicked.connect(self.clean_clicked)
@@ -58,10 +60,10 @@ class Sidebar(QFrame):
         btn_pkg_search.clicked.connect(self.pkg_search_clicked)
         btn_pkg_install.clicked.connect(self.pkg_install_clicked)
         btn_pkg_remove.clicked.connect(self.pkg_remove_clicked)
-        # profile
-        btn_profile.clicked.connect(self.profile_clicked)
 
         layout.addWidget(btn_home)
+        # profile
+        layout.addWidget(btn_profile)
         # system
         layout.addWidget(btn_upgrade)
         layout.addWidget(btn_clean)
@@ -75,7 +77,5 @@ class Sidebar(QFrame):
         layout.addWidget(btn_pkg_search)
         layout.addWidget(btn_pkg_install)
         layout.addWidget(btn_pkg_remove)
-        # profile
-        layout.addWidget(btn_profile)
 
         layout.addStretch()
