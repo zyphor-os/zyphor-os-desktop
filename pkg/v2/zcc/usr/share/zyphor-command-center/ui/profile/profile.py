@@ -13,4 +13,4 @@ class ProfilePage(QWebEngineView):
         server.start()
 
         # Load the Laravel page
-        self.load(QUrl("http://127.0.0.1:2437"))
+        self.load(QUrl("http://127.0.0.1:2437/profile"))
