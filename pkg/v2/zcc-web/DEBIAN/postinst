@@ -15,8 +15,20 @@ if [ -d "$APP_DIR" ]; then
     # already has files, those belong to the user
     mkdir -p assets/uploads/avatars
 
-    # Permissions: web server needs to read/write uploads
-    chmod -R 775 assets/uploads || true
+    # Ownership: app tree is root-owned so the PHP runtime user (whatever
+    # it is) can't modify the app's own source, even if compromised.
+    chown -R root:root "$APP_DIR"
+
+    # Lock down everything to read+execute only (555), EXCEPT
+    # assets/uploads which PHP needs write access to at runtime.
+    find "$APP_DIR" -path "$APP_DIR/assets/uploads" -prune -o -type d -exec chmod 555 {} \;
+    find "$APP_DIR" -path "$APP_DIR/assets/uploads" -prune -o -type f -exec chmod 555 {} \;
+
+    # assets/uploads: must stay writable by whichever user actually runs
+    # the PHP process (php -S as the desktop user, php-fpm as www-data,
+    # etc). Adjust the group below to match that user/group on your system.
+    chown -R root:zyphor assets/uploads || true
+    chmod -R 2775 assets/uploads || true
 fi
 
 exit 0
