@@ -128,41 +128,14 @@ status:
 	git status
 
 add:
-	git add pkg/v2/zcc-web/DEBIAN/control
-	git commit -m "chore: updated command center web control"
-
-	git add pkg/v2/zcc-web/DEBIAN/postinst
-	git commit -m "chore: updated command center web post-install script"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/app/Models/User.php
-	git commit -m "chore: updated command center web user model"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/app/Http/Controllers/ProfileController.php
-	git commit -m "feat: added command center web profile controller"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/app/Smark
-	git commit -m "feat: added command center web Smark module"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/database/migrations/0001_01_01_000000_create_users_table.php
-	git commit -m "chore: updated users table migration"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/database/migrations/2026_07_16_020644_add_profile_fields_to_users_table.php
-	git commit -m "feat: added profile fields migration"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/resources/views/profile.blade.php
-	git commit -m "chore: updated profile view"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/routes/web.php
-	git commit -m "chore: updated command center web routes"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/public/assets
-	git commit -m "feat: added command center web assets"
-
 	git add pkg/v2/zcc/DEBIAN/control
 	git commit -m "chore: updated command center control"
 
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/profile.py
+	git commit -m "chore: updated profile module"
+
 	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/server.py
-	git commit -m "chore: updated command center profile server"
+	git commit -m "chore: updated profile server"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
