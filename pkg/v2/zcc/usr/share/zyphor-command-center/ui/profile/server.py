@@ -23,10 +23,8 @@ def start():
     _laravel_process = subprocess.Popen(
         [
             "php",
-            "artisan",
-            "serve",
-            "--host=127.0.0.1",
-            "--port=2437",
+            "-S",
+            "localhost:2437"
         ],
         cwd="/usr/share/zyphor-command-center-web", #prod
         # cwd="/home/programmer/zyphor-os-desktop/pkg/v2/zcc-web/usr/share/zyphor-command-center-web", # dev
