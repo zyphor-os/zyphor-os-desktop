@@ -128,14 +128,11 @@ status:
 	git status
 
 add:
-	git add pkg/v2/zcc/DEBIAN/control
-	git commit -m "chore: updated command center control"
+	git add pkg/v2/zcc-web/DEBIAN/control
+	git commit -m "chore: updated command center web control"
 
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/profile.py
-	git commit -m "chore: updated profile module"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/server.py
-	git commit -m "chore: updated profile server"
+	git add pkg/v2/zcc-web/DEBIAN/postinst
+	git commit -m "chore: updated command center web post-install script"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
