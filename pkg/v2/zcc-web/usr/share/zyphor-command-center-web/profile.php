@@ -45,7 +45,8 @@ if ($profile === null) {
     JSON::jsonPush($jsonFile, $profile);
 }
 
-$initials = strtoupper(substr($profile['name'] !== '' ? $profile['name'] : $profile['username'], 0, 2));
+$initials  = strtoupper(substr($profile['name'] !== '' ? $profile['name'] : $profile['username'], 0, 2));
+$avatarSrc = $profile['avatar'] !== '' ? 'process/avatar.php?file=' . rawurlencode($profile['avatar']) : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -194,7 +195,7 @@ textarea.form-control{ resize:vertical; min-height:80px; }
     <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
   </div>
   <div class="brand">
-    <div class="brand-word">ZYPHOR<span>OS</span></div>
+    <div class="brand-word">ZYPHOR<span>OS</span> - Test</div>
   </div>
   <div class="crumb mono">settings<span class="path">profile</span></div>
 </div>
@@ -215,8 +216,8 @@ textarea.form-control{ resize:vertical; min-height:80px; }
         <div class="panel-desc">PNG or JPG, square, up to 2MB.</div>
         <div class="avatar-row">
           <div class="avatar-big mono" id="avatarPreview">
-            <?php if (!empty($profile['avatar'])): ?>
-              <img src="<?= htmlspecialchars($profile['avatar']) ?>" alt="avatar">
+            <?php if ($avatarSrc !== ''): ?>
+              <img src="<?= htmlspecialchars($avatarSrc) ?>" alt="avatar">
             <?php else: ?>
               <?= htmlspecialchars($initials) ?>
             <?php endif; ?>
@@ -224,7 +225,7 @@ textarea.form-control{ resize:vertical; min-height:80px; }
           <div class="avatar-actions">
             <input type="file" id="avatarInput" accept="image/png, image/jpeg" hidden>
             <button type="button" class="btn btn-accent" id="btnUpload">Upload</button>
-            <button type="button" class="btn btn-ghost" id="btnRemoveAvatar">Remove</button>
+            <!-- <button type="button" class="btn btn-ghost" id="btnRemoveAvatar">Remove</button> -->
           </div>
         </div>
       </div>

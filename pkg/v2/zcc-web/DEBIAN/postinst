@@ -6,29 +6,14 @@ APP_DIR="/usr/share/zyphor-command-center-web"
 if [ -d "$APP_DIR" ]; then
     cd "$APP_DIR"
 
-    # profile.json now lives in the logged-in user's home directory
-    # (~/.config/zyphor-command-center-web/profile.json), created lazily by
-    # the app on first run. Nothing to seed here — postinstall runs as root
-    # and has no reliable way to know which desktop user's $HOME to write to.
-
-    # Ensure the avatar upload directory exists — do not clear it if it
-    # already has files, those belong to the user
-    mkdir -p assets/uploads/avatars
-
-    # Ownership: app tree is root-owned so the PHP runtime user (whatever
-    # it is) can't modify the app's own source, even if compromised.
+    # profile.json AND avatar uploads now live entirely in the logged-in
+    # user's home directory (~/.config/zyphor-command-center-web/), created
+    # lazily by the app on first run. Nothing under $APP_DIR is written to
+    # at runtime anymore, so the whole tree can be locked down read-only —
+    # no exceptions needed.
     chown -R root:root "$APP_DIR"
-
-    # Lock down everything to read+execute only (555), EXCEPT
-    # assets/uploads which PHP needs write access to at runtime.
-    find "$APP_DIR" -path "$APP_DIR/assets/uploads" -prune -o -type d -exec chmod 555 {} \;
-    find "$APP_DIR" -path "$APP_DIR/assets/uploads" -prune -o -type f -exec chmod 555 {} \;
-
-    # assets/uploads: must stay writable by whichever user actually runs
-    # the PHP process (php -S as the desktop user, php-fpm as www-data,
-    # etc). Adjust the group below to match that user/group on your system.
-    chown -R root:zyphor assets/uploads || true
-    chmod -R 2775 assets/uploads || true
+    find "$APP_DIR" -type d -exec chmod 555 {} +
+    find "$APP_DIR" -type f -exec chmod 555 {} +
 fi
 
 exit 0
