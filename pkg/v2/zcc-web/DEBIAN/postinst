@@ -6,55 +6,17 @@ APP_DIR="/usr/share/zyphor-command-center-web"
 if [ -d "$APP_DIR" ]; then
     cd "$APP_DIR"
 
-    echo "Installing Laravel dependencies..."
-    composer install \
-        --no-dev \
-        --optimize-autoloader \
-        --no-interaction \
-        --prefer-dist
+    # profile.json now lives in the logged-in user's home directory
+    # (~/.config/zyphor-command-center-web/profile.json), created lazily by
+    # the app on first run. Nothing to seed here — postinstall runs as root
+    # and has no reliable way to know which desktop user's $HOME to write to.
 
-    # Create .env only if it doesn't exist
-    if [ ! -f ".env" ] && [ -f ".env.example" ]; then
-        cp .env.example .env
-    fi
+    # Ensure the avatar upload directory exists — do not clear it if it
+    # already has files, those belong to the user
+    mkdir -p assets/uploads/avatars
 
-    # Generate APP_KEY only if missing
-    if ! grep -q "^APP_KEY=base64:" .env 2>/dev/null; then
-        php artisan key:generate --force || true
-    fi
-
-    # Ensure database directory exists
-    mkdir -p database
-
-    # Create SQLite database only if it doesn't exist
-    if [ ! -f "database/database.sqlite" ]; then
-        echo "Creating SQLite database..."
-        touch database/database.sqlite
-    else
-        echo "Existing SQLite database found. Preserving data."
-    fi
-
-    # Ensure required directories exist
-    mkdir -p storage bootstrap/cache
-
-    # Set permissions
-    chmod -R 775 storage bootstrap/cache database || true
-
-    # Clear any stale cached config before migrating, so migrate
-    # reads live .env values (e.g. a freshly generated APP_KEY)
-    php artisan config:clear || true
-
-    # Run migrations — fail the install if this fails, don't swallow it
-    echo "Running database migrations..."
-    php artisan migrate --force
-
-    # Link storage so uploaded avatars are web-accessible
-    php artisan storage:link || true
-
-    # Cache Laravel configuration (do this last)
-    php artisan config:cache || true
-    php artisan route:cache || true
-    php artisan view:cache || true
+    # Permissions: web server needs to read/write uploads
+    chmod -R 775 assets/uploads || true
 fi
 
 exit 0
