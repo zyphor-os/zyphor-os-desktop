@@ -128,47 +128,41 @@ status:
 	git status
 
 add:
-	git rm pkg/v2/zcc-web/usr/share/zyphor-command-center-web/resources/views/welcome.blade.php
-	git commit -m "chore: removed command center web welcome view"
+	git add pkg/v2/zcc-web/DEBIAN/control
+	git commit -m "chore: updated command center web control"
+
+	git add pkg/v2/zcc-web/DEBIAN/postinst
+	git commit -m "chore: updated command center web post-install script"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/app/Models/User.php
+	git commit -m "chore: updated command center web user model"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/app/Http/Controllers/ProfileController.php
+	git commit -m "feat: added command center web profile controller"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/app/Smark
+	git commit -m "feat: added command center web Smark module"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/database/migrations/0001_01_01_000000_create_users_table.php
+	git commit -m "chore: updated users table migration"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/database/migrations/2026_07_16_020644_add_profile_fields_to_users_table.php
+	git commit -m "feat: added profile fields migration"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/resources/views/profile.blade.php
+	git commit -m "chore: updated profile view"
 
 	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/routes/web.php
 	git commit -m "chore: updated command center web routes"
 
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/resources/views/profile.blade.php
-	git commit -m "feat: added command center web profile view"
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/public/assets
+	git commit -m "feat: added command center web assets"
 
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/profile.py
-	git commit -m "chore: updated command center profile page"
+	git add pkg/v2/zcc/DEBIAN/control
+	git commit -m "chore: updated command center control"
 
 	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/server.py
-	git commit -m "chore: updated command center server profile"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/sidebar.py
-	git commit -m "chore: updated command center sidebar"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/__pycache__
-	git commit -m "chore: updated command center bytecode cache"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/core/__pycache__
-	git commit -m "chore: updated command center core bytecode cache"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/__pycache__
-	git commit -m "chore: updated command center UI bytecode cache"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/components/__pycache__
-	git commit -m "chore: updated command center component bytecode cache"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/doctor/__pycache__
-	git commit -m "chore: updated command center doctor bytecode cache"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/pkg/__pycache__
-	git commit -m "chore: updated command center package manager bytecode cache"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/__pycache__
-	git commit -m "chore: updated command center profile bytecode cache"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/system/__pycache__
-	git commit -m "chore: updated command center system bytecode cache"
+	git commit -m "chore: updated command center profile server"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -189,11 +183,11 @@ switch:
 
 release:
 
-	zyphor build package pkg/v2/updater/zor
-	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
+	zyphor build package pkg/v2/zcc
+	mv pkg/v2/zcc.deb zyphor-command-center.deb
 
-	zyphor build package pkg/v2/updater/zwn
-	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
+	zyphor build package pkg/v2/zcc-web
+	mv pkg/v2/zcc-web.deb zyphor-command-center-web.deb
 
 # 	zyphor build package pkg/updater/updates
 # 	mv pkg/updater/updates.deb zyphor-updates.deb
@@ -206,7 +200,7 @@ release:
 
 # 	---
 
-	mv ./*.deb ../zyphor-os.github.io/v2-ada-lovelace/pool/main/z --verbose
+# 	mv ./*.deb ../zyphor-os.github.io/v2-ada-lovelace/pool/main/z --verbose
 
 # BUILD AUTOMATION
 
