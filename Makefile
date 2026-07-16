@@ -133,6 +133,24 @@ add:
 
 	git add pkg/v2/zcc-web/DEBIAN/postinst
 	git commit -m "chore: updated command center web post-install script"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/process/profile.php
+	git commit -m "chore: updated profile process"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/process/avatar.php
+	git commit -m "feat: added avatar upload process"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/profile.php
+	git commit -m "chore: updated profile page"
+
+	git add pkg/v2/zcc/DEBIAN/control
+	git commit -m "chore: updated command center control"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/profile.py
+	git commit -m "chore: updated profile module"
+
+	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/server.py
+	git commit -m "chore: updated profile server"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
