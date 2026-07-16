@@ -28,8 +28,8 @@ def start():
             "--host=127.0.0.1",
             "--port=2437",
         ],
-        # cwd="/usr/share/zyphor-command-center-web", #prod
-        cwd="/home/programmer/zyphor-os-desktop/pkg/v2/zcc-web/usr/share/zyphor-command-center-web", # dev
+        cwd="/usr/share/zyphor-command-center-web", #prod
+        # cwd="/home/programmer/zyphor-os-desktop/pkg/v2/zcc-web/usr/share/zyphor-command-center-web", # dev
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
