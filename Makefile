@@ -128,29 +128,14 @@ status:
 	git status
 
 add:
-	git add README.md
-	git commit -m "docs: updated README"
+	git rm playground/cpp/data
+	git commit -m "chore: removed sample data file"
 
-	git add playground/cpp/Makefile
-	git commit -m "build: updated C++ playground Makefile"
+	git add playground/cpp/gui.cpp
+	git commit -m "feat: updated Qt GUI example"
 
 	git add playground/cpp/init
 	git commit -m "chore: updated C++ playground init script"
-
-	git add playground/cpp/main.cpp
-	git commit -m "feat: updated C++ playground main example"
-
-	git add playground/cpp/argument.cpp
-	git commit -m "feat: added command-line arguments example"
-
-	git add playground/cpp/data.cpp
-	git commit -m "feat: added file data example"
-
-	git add playground/cpp/data
-	git commit -m "test: added sample data file"
-
-	git add playground/cpp/gui.cpp
-	git commit -m "feat: added Qt GUI example"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
