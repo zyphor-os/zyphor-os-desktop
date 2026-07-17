@@ -195,7 +195,7 @@ textarea.form-control{ resize:vertical; min-height:80px; }
     <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
   </div>
   <div class="brand">
-    <div class="brand-word">ZYPHOR<span>OS</span> - Test</div>
+    <div class="brand-word">ZYPHOR<span>OS</span></div>
   </div>
   <div class="crumb mono">settings<span class="path">profile</span></div>
 </div>
