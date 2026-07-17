@@ -128,29 +128,26 @@ status:
 	git status
 
 add:
+	git add pkg/v2/updater/zor/DEBIAN/control
+	git commit -m "chore: updated zyphor updater package control"
+
+	git add pkg/v2/updater/zor/DEBIAN/postinst
+	git commit -m "chore: updated zyphor updater postinst script"
+
+	git add pkg/v2/updater/zwn/DEBIAN/control
+	git commit -m "chore: updated zyphor whats new package control"
+
+	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release.js
+	git commit -m "feat: updated zyphor whats new release notes"
+
 	git add pkg/v2/zcc-web/DEBIAN/control
-	git commit -m "chore: updated command center web control"
-
-	git add pkg/v2/zcc-web/DEBIAN/postinst
-	git commit -m "chore: updated command center web post-install script"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/process/profile.php
-	git commit -m "chore: updated profile process"
-
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/process/avatar.php
-	git commit -m "feat: added avatar upload process"
+	git commit -m "chore: updated zyphor command center web package control"
 
 	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/profile.php
-	git commit -m "chore: updated profile page"
+	git commit -m "feat: added profile feature support in zyphor command center web"
 
 	git add pkg/v2/zcc/DEBIAN/control
-	git commit -m "chore: updated command center control"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/profile.py
-	git commit -m "chore: updated profile module"
-
-	git add pkg/v2/zcc/usr/share/zyphor-command-center/ui/profile/server.py
-	git commit -m "chore: updated profile server"
+	git commit -m "chore: updated zyphor command center package control"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -171,8 +168,14 @@ switch:
 
 release:
 
-	zyphor build package pkg/v2/zcc
-	mv pkg/v2/zcc.deb zyphor-command-center.deb
+# 	zyphor build package pkg/v2/updater/zor
+# 	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
+
+# 	zyphor build package pkg/v2/updater/zwn
+# 	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
+
+# 	zyphor build package pkg/v2/zcc
+# 	mv pkg/v2/zcc.deb zyphor-command-center.deb
 
 	zyphor build package pkg/v2/zcc-web
 	mv pkg/v2/zcc-web.deb zyphor-command-center-web.deb
@@ -188,7 +191,7 @@ release:
 
 # 	---
 
-# 	mv ./*.deb ../zyphor-os.github.io/v2-ada-lovelace/pool/main/z --verbose
+	mv ./*.deb ../zyphor-os.github.io/v2-ada-lovelace/pool/main/z --verbose
 
 # BUILD AUTOMATION
 
