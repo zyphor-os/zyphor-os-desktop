@@ -1,5 +1,5 @@
 Package: zyphor-os-release
-Version: 29.0.0-r13-stable-release
+Version: 30.0.0-r14-stable-release
 Section: utils
 Priority: optional
 Architecture: all
