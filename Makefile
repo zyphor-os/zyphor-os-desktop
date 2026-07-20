@@ -128,17 +128,27 @@ status:
 	git status
 
 add:
-	git add playground/cpp/Makefile
-	git commit -m "build: updated C++ playground Makefile"
 
-	git add playground/cpp/init
-	git commit -m "chore: updated C++ playground init script"
+	git add pkg/v2/zylearn/Makefile
+	git commit -m "build: updated zylearn package Makefile"
 
-	git add playground/cpp/webview.cpp
-	git commit -m "feat: added Qt WebView example"
+	git rm pkg/v2/zylearn/main.c
+	git commit -m "refactor: removed old zylearn C source"
 
-	git add playground/cpp/webserverwebview.cpp
-	git commit -m "feat: added web server WebView example"
+	git add pkg/v2/zylearn/zylearn/DEBIAN/control
+	git commit -m "chore: updated zylearn package control"
+
+	git add pkg/v2/zylearn/zylearn/usr/bin/zylearn
+	git commit -m "feat: updated zylearn executable"
+
+	git add pkg/v2/zylearn/Makefile-Backup
+	git commit -m "chore: added zylearn Makefile backup"
+
+	git add pkg/v2/zylearn/main-backup.c
+	git commit -m "chore: added zylearn C source backup"
+
+	git add pkg/v2/zylearn/main.cpp
+	git commit -m "feat: migrated zylearn to C++"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -168,8 +178,8 @@ release:
 # 	zyphor build package pkg/v2/zcc
 # 	mv pkg/v2/zcc.deb zyphor-command-center.deb
 
-	zyphor build package pkg/v2/zcc-web
-	mv pkg/v2/zcc-web.deb zyphor-command-center-web.deb
+	zyphor build package pkg/v2/zylearn/zylearn
+	mv pkg/v2/zylearn/zylearn.deb zylearn.deb
 
 # 	zyphor build package pkg/updater/updates
 # 	mv pkg/updater/updates.deb zyphor-updates.deb
