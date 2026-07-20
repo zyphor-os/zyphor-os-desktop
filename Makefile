@@ -128,14 +128,17 @@ status:
 	git status
 
 add:
-	git rm playground/cpp/data
-	git commit -m "chore: removed sample data file"
-
-	git add playground/cpp/gui.cpp
-	git commit -m "feat: updated Qt GUI example"
+	git add playground/cpp/Makefile
+	git commit -m "build: updated C++ playground Makefile"
 
 	git add playground/cpp/init
 	git commit -m "chore: updated C++ playground init script"
+
+	git add playground/cpp/webview.cpp
+	git commit -m "feat: added Qt WebView example"
+
+	git add playground/cpp/webserverwebview.cpp
+	git commit -m "feat: added web server WebView example"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
