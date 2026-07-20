@@ -25,3 +25,6 @@ weberView:
 
 weberViewProject:
 	g++ webserverwebview.cpp helpers/markjason.cpp -o init $(QTFLAGSWEB)
+
+weberViewProjectWin:
+	g++ webserverwebview.cpp helpers/markjason.cpp -o ZyphorCommandCenter.exe $(QTFLAGSWEB)
