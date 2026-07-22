@@ -8,3 +8,8 @@ compile:
 clean:
 	sudo rm -rf zywelcome/usr/bin/zywelcome
 	sudo rm -rf init
+
+# samples
+
+apters:
+	g++ apter.cpp -o zywelcome/usr/local/bin/zyphor-apter
