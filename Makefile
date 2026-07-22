@@ -128,26 +128,17 @@ status:
 	git status
 
 add:
-	git add pkg/v2/zywelcome/Makefile
-	git commit -m "build: updated zywelcome package Makefile"
+	git add pkg/v2/zcc-web/DEBIAN/control
+	git commit -m "chore: updated zyphor command center web package control"
+
+	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/profile.php
+	git commit -m "feat: updated zyphor command center web profile"
 
 	git add pkg/v2/zywelcome/init
 	git commit -m "chore: updated zywelcome init script"
 
-	git add pkg/v2/zywelcome/main.cpp
-	git commit -m "feat: updated zywelcome application"
-
-	git add pkg/v2/zywelcome/zywelcome/DEBIAN/control
-	git commit -m "chore: updated zywelcome package control"
-
-	git add pkg/v2/zywelcome/zywelcome/DEBIAN/postinst
-	git commit -m "chore: updated zywelcome postinst script"
-
 	git add pkg/v2/zywelcome/zywelcome/usr/bin/zywelcome
 	git commit -m "feat: updated zywelcome executable"
-
-	git add pkg/v2/zywelcome/zywelcome/usr/share/zywelcome/assets/
-	git commit -m "feat: added zywelcome assets"
 	
 	git add Makefile
 	git commit -m "build: update repository automation"
@@ -174,11 +165,11 @@ release:
 # 	zyphor build package pkg/v2/updater/zwn
 # 	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
 
-# 	zyphor build package pkg/v2/zcc
-# 	mv pkg/v2/zcc.deb zyphor-command-center.deb
+	zyphor build package pkg/v2/zcc-web
+	mv pkg/v2/zcc-web.deb zyphor-command-center-web.deb
 
-	zyphor build package pkg/v2/zylearn/zylearn
-	mv pkg/v2/zylearn/zylearn.deb zylearn.deb
+# 	zyphor build package pkg/v2/zylearn/zylearn
+# 	mv pkg/v2/zylearn/zylearn.deb zylearn.deb
 
 # 	zyphor build package pkg/updater/updates
 # 	mv pkg/updater/updates.deb zyphor-updates.deb
