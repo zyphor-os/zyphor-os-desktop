@@ -161,12 +161,20 @@ textarea.form-control{ resize:vertical; min-height:80px; }
 .field-ok{ border-color:#3ecf8e !important; }
 .field-bad{ border-color:var(--danger) !important; }
 
-.btn-accent{
-  background:linear-gradient(120deg, var(--accent-blue), var(--accent));
-  border:1px solid transparent; color:#080a14; font-weight:700; font-size:13px;
-  padding:8px 18px; border-radius:8px; transition:filter .15s ease;
+.btn-accent {
+  background: var(--accent);
+  border: 1px solid transparent;
+  color: #080a14;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 18px;
+  border-radius: 8px;
 }
-.btn-accent:hover{ filter:brightness(1.1); color:#080a14; }
+
+.btn-accent:hover {
+  background: var(--accent);
+  color: #080a14;
+}
 .btn-accent:disabled{ opacity:.6; cursor:not-allowed; }
 .btn-ghost{
   background:transparent; border:1px solid var(--stroke); color:var(--muted);
