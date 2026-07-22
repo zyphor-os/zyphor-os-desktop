@@ -1,7 +1,18 @@
 Package: zywelcome
-Version: 1.0.0-r1-test-release
+Version: 1.0.0-r1-test-release-t13
 Section: utils
 Priority: optional
 Architecture: all
+Depends: composer,
+ php-cli,
+ php-sqlite3,
+ php-mbstring,
+ php-xml,
+ php-curl,
+ php-zip,
+ php-bcmath,
+ php-intl,
+ php-tokenizer,
+ php-fileinfo
 Maintainer: Mark Jason Espelita & Zyphor OS Team
 Description: Zyphor OS Welcomer
