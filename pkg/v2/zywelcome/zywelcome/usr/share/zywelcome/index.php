@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>Hello World</h1>
+    <a href="https://zyphor-os.github.io">View our offline docs</a>
 </body>
 </html>
