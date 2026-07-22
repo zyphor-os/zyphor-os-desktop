@@ -4,7 +4,9 @@
 - windows file icons optional (maybe on welcome message)
 - welcome message on first boot
 - Plymouth
-- 
+- documentation
+    - flameshot
+    - utils
 
 working
 - zywelcome
