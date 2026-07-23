@@ -1,0 +1,70 @@
+#!/bin/sh
+set -e
+
+FIRSTBOOT_CMD="/usr/local/bin/zyphor-firstboot"
+WELCOME_CMD="/usr/local/bin/zyphor-welcome"
+
+SKEL_XPROFILE="/etc/skel/.xprofile"
+
+
+# --------------------------------------------------
+# Function to remove Zyphor Welcome
+# --------------------------------------------------
+
+remove_welcome() {
+    XPROFILE="$1"
+
+    if [ -f "$XPROFILE" ]; then
+
+        # Change:
+        # /usr/local/bin/zyphor-firstboot && /usr/local/bin/zyphor-welcome
+        #
+        # Back to:
+        # /usr/local/bin/zyphor-firstboot
+
+        sed -i "s|^${FIRSTBOOT_CMD} && ${WELCOME_CMD}$|${FIRSTBOOT_CMD}|" "$XPROFILE"
+
+        # Remove standalone welcome command if it exists
+        sed -i "\|^${WELCOME_CMD}$|d" "$XPROFILE"
+
+    fi
+}
+
+
+# --------------------------------------------------
+# Remove from /etc/skel/.xprofile
+# --------------------------------------------------
+
+remove_welcome "$SKEL_XPROFILE"
+
+
+# --------------------------------------------------
+# Find the actual non-root user
+# --------------------------------------------------
+
+CURRENT_USER=$(logname 2>/dev/null || true)
+
+# Fallback: find the first non-root user with a home directory
+if [ -z "$CURRENT_USER" ] || [ "$CURRENT_USER" = "root" ]; then
+    CURRENT_USER=$(awk -F: '$3 >= 1000 && $3 < 65534 {print $1; exit}' /etc/passwd)
+fi
+
+
+# --------------------------------------------------
+# Remove from the actual user's ~/.xprofile
+# --------------------------------------------------
+
+if [ -n "$CURRENT_USER" ]; then
+
+    CURRENT_USER_HOME=$(getent passwd "$CURRENT_USER" | cut -d: -f6)
+
+    if [ -n "$CURRENT_USER_HOME" ]; then
+
+        USER_XPROFILE="$CURRENT_USER_HOME/.xprofile"
+
+        remove_welcome "$USER_XPROFILE"
+
+    fi
+fi
+
+exit 0
