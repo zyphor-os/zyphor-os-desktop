@@ -1,5 +1,75 @@
 #!/bin/sh
 set -e
 
+FIRSTBOOT_CMD="/usr/local/bin/zyphor-firstboot"
+WELCOME_CMD="/usr/local/bin/zyphor-welcome"
+SKEL_XPROFILE="/etc/skel/.xprofile"
+
+
+# --------------------------------------------------
+# Function to update .xprofile
+# --------------------------------------------------
+
+update_xprofile() {
+    XPROFILE="$1"
+
+    if [ ! -f "$XPROFILE" ]; then
+        touch "$XPROFILE"
+    fi
+
+    # If zyphor-firstboot exists as a standalone line,
+    # append the welcome command to the same line.
+    if grep -Fxq "$FIRSTBOOT_CMD" "$XPROFILE"; then
+
+        sed -i "s|^${FIRSTBOOT_CMD}$|${FIRSTBOOT_CMD} \&\& ${WELCOME_CMD}|" "$XPROFILE"
+
+    # If the combined command does not exist,
+    # and firstboot does not exist, add firstboot + welcome.
+    elif ! grep -Fxq "${FIRSTBOOT_CMD} && ${WELCOME_CMD}" "$XPROFILE"; then
+
+        printf '\n%s && %s\n' "$FIRSTBOOT_CMD" "$WELCOME_CMD" >> "$XPROFILE"
+
+    fi
+}
+
+
+# --------------------------------------------------
+# Add to /etc/skel/.xprofile
+# --------------------------------------------------
+
+update_xprofile "$SKEL_XPROFILE"
+
+
+# --------------------------------------------------
+# Find the actual non-root user
+# --------------------------------------------------
+
+CURRENT_USER=$(logname 2>/dev/null || true)
+
+# Fallback: find the first non-root user with a home directory
+if [ -z "$CURRENT_USER" ] || [ "$CURRENT_USER" = "root" ]; then
+    CURRENT_USER=$(awk -F: '$3 >= 1000 && $3 < 65534 {print $1; exit}' /etc/passwd)
+fi
+
+
+# --------------------------------------------------
+# Add to the actual user's ~/.xprofile
+# --------------------------------------------------
+
+if [ -n "$CURRENT_USER" ]; then
+
+    CURRENT_USER_HOME=$(getent passwd "$CURRENT_USER" | cut -d: -f6)
+
+    if [ -n "$CURRENT_USER_HOME" ]; then
+
+        USER_XPROFILE="$CURRENT_USER_HOME/.xprofile"
+
+        update_xprofile "$USER_XPROFILE"
+
+        # Ensure user's permissions remain correct
+        chown "$CURRENT_USER:$CURRENT_USER" "$USER_XPROFILE"
+
+    fi
+fi
 
 exit 0
