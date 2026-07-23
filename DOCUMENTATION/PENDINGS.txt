@@ -1,8 +1,7 @@
 - bootable iso livemode
 - zywin-installer
-- remove gradients in buttons
+OK - remove gradients in buttons
 - windows file icons optional (maybe on welcome message)
-- welcome message on first boot
 - Plymouth
 - documentation
     - flameshot
