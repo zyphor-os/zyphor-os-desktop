@@ -9,3 +9,30 @@ OK - remove gradients in buttons
 
 working
 - zywelcome
+
+packages
+
+- updater
+	- zyphor-updates
+	- zyphor-os-release
+	- zyphor whats new
+- zyphor-command-center-web
+- zyphor-command-center
+- zyphor-cli
+- zyphor-os-updates (mini-updates)
+- zyphor-repo-config
+- zylearn
+- zysh
+- zyshell
+- zywelcome
+
+Other notes
+
+- dmg
+- discover
+- gui/cli version win support
+- lutris
+- catchy OS method 
+- fedora installer method 
+
+LISTA ko lang para di maka limutan
