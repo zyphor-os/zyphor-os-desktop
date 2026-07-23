@@ -12,6 +12,8 @@ int main()
     int num2;
     int result;
 
+    cout << "Hello" << endl;
+
     cout << "What is your name?: ";
     getline(cin, name);
 

@@ -1,0 +1,7 @@
+Package: utility
+Version: 0.0.0
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Mark Jason Espelita & Zyphor OS Team
+Description: Zyphor OS Utility Application
