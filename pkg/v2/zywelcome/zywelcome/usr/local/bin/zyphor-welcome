@@ -1,0 +1,18 @@
+#!/bin/bash
+
+FLAG="$HOME/.zyphor-welcome-done"
+
+# Exit if Zyphor Welcome has already been shown
+[ -f "$FLAG" ] && exit 0
+
+echo "INFO: Launching Zyphor Welcome..."
+
+# Launch Zyphor Welcome
+if [ -x "/usr/bin/zywelcome" ]; then
+    /usr/bin/zywelcome
+fi
+
+# Mark Zyphor Welcome as completed
+touch "$FLAG"
+
+echo "INFO: Zyphor Welcome completed."
