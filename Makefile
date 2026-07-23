@@ -128,18 +128,36 @@ status:
 	git status
 
 add:
-	git add pkg/v2/zcc-web/DEBIAN/control
-	git commit -m "chore: updated zyphor command center web package control"
+	git add DOCUMENTATION/PENDINGS.txt
+	git commit -m "docs: updated pending documentation"
 
-	git add pkg/v2/zcc-web/usr/share/zyphor-command-center-web/profile.php
-	git commit -m "feat: updated zyphor command center web profile"
+	git add Makefile
+	git commit -m "chore: modified Makefile"
 
 	git add pkg/v2/zywelcome/init
 	git commit -m "chore: updated zywelcome init script"
 
+	git add pkg/v2/zywelcome/main.cpp
+	git commit -m "feat: updated zywelcome application"
+
+	git add pkg/v2/zywelcome/zywelcome/DEBIAN/control
+	git commit -m "chore: updated zywelcome package control"
+
+	git add pkg/v2/zywelcome/zywelcome/DEBIAN/postinst
+	git commit -m "chore: updated zywelcome postinst script"
+
 	git add pkg/v2/zywelcome/zywelcome/usr/bin/zywelcome
 	git commit -m "feat: updated zywelcome executable"
-	
+
+	git add pkg/v2/zywelcome/zywelcome/usr/share/zywelcome/index.php
+	git commit -m "feat: updated zywelcome welcome page"
+
+	git add pkg/v2/zywelcome/zywelcome/DEBIAN/postrm
+	git commit -m "feat: added zywelcome postrm script"
+
+	git add pkg/v2/zywelcome/zywelcome/usr/local/
+	git commit -m "feat: added zywelcome local resources"
+
 	git add Makefile
 	git commit -m "build: update repository automation"
 
@@ -165,8 +183,8 @@ release:
 # 	zyphor build package pkg/v2/updater/zwn
 # 	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
 
-	zyphor build package pkg/v2/zcc-web
-	mv pkg/v2/zcc-web.deb zyphor-command-center-web.deb
+	zyphor build package pkg/v2/zywelcome/zywelcome
+	mv pkg/v2/zywelcome/zywelcome.deb zywelcome.deb
 
 # 	zyphor build package pkg/v2/zylearn/zylearn
 # 	mv pkg/v2/zylearn/zylearn.deb zylearn.deb
@@ -182,7 +200,7 @@ release:
 
 # 	---
 
-	mv ./*.deb ../zyphor-os.github.io/v2-ada-lovelace/pool/main/z --verbose
+# 	mv ./*.deb ../zyphor-os.github.io/v2-ada-lovelace/pool/main/z --verbose
 
 # BUILD AUTOMATION
 

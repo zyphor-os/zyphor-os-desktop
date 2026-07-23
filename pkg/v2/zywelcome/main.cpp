@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
     QProcess server;
 
     // Change this to your PHP project's directory
-    // server.setWorkingDirectory("/usr/share/zywelcome"); // production
-    server.setWorkingDirectory("zywelcome/usr/share/zywelcome"); // development
+    server.setWorkingDirectory("/usr/share/zywelcome"); // production
+    // server.setWorkingDirectory("zywelcome/usr/share/zywelcome"); // development
 
     // Start PHP
     server.start("php", QStringList()

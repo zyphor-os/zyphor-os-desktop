@@ -3,41 +3,39 @@ set -e
 
 FIRSTBOOT_CMD="/usr/local/bin/zyphor-firstboot"
 WELCOME_CMD="/usr/local/bin/zyphor-welcome"
+
 SKEL_XPROFILE="/etc/skel/.xprofile"
 
 
 # --------------------------------------------------
-# Function to update .xprofile
+# Function to remove Zyphor Welcome
 # --------------------------------------------------
 
-update_xprofile() {
+remove_welcome() {
     XPROFILE="$1"
 
-    if [ ! -f "$XPROFILE" ]; then
-        touch "$XPROFILE"
-    fi
+    if [ -f "$XPROFILE" ]; then
 
-    # If zyphor-firstboot exists as a standalone line,
-    # append the welcome command to the same line.
-    if grep -Fxq "$FIRSTBOOT_CMD" "$XPROFILE"; then
+        # Change:
+        # /usr/local/bin/zyphor-firstboot && /usr/local/bin/zyphor-welcome
+        #
+        # Back to:
+        # /usr/local/bin/zyphor-firstboot
 
-        sed -i "s|^${FIRSTBOOT_CMD}$|${FIRSTBOOT_CMD} \&\& ${WELCOME_CMD}|" "$XPROFILE"
+        sed -i "s|^${FIRSTBOOT_CMD} && ${WELCOME_CMD}$|${FIRSTBOOT_CMD}|" "$XPROFILE"
 
-    # If the combined command does not exist,
-    # and firstboot does not exist, add firstboot + welcome.
-    elif ! grep -Fxq "${FIRSTBOOT_CMD} && ${WELCOME_CMD}" "$XPROFILE"; then
-
-        printf '\n%s && %s\n' "$FIRSTBOOT_CMD" "$WELCOME_CMD" >> "$XPROFILE"
+        # Remove standalone welcome command if it exists
+        sed -i "\|^${WELCOME_CMD}$|d" "$XPROFILE"
 
     fi
 }
 
 
 # --------------------------------------------------
-# Add to /etc/skel/.xprofile
+# Remove from /etc/skel/.xprofile
 # --------------------------------------------------
 
-update_xprofile "$SKEL_XPROFILE"
+remove_welcome "$SKEL_XPROFILE"
 
 
 # --------------------------------------------------
@@ -53,7 +51,7 @@ fi
 
 
 # --------------------------------------------------
-# Add to the actual user's ~/.xprofile
+# Remove from the actual user's ~/.xprofile
 # --------------------------------------------------
 
 if [ -n "$CURRENT_USER" ]; then
@@ -64,10 +62,7 @@ if [ -n "$CURRENT_USER" ]; then
 
         USER_XPROFILE="$CURRENT_USER_HOME/.xprofile"
 
-        update_xprofile "$USER_XPROFILE"
-
-        # Ensure user's permissions remain correct
-        chown "$CURRENT_USER:$CURRENT_USER" "$USER_XPROFILE"
+        remove_welcome "$USER_XPROFILE"
 
     fi
 fi
