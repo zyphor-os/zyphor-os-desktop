@@ -3,12 +3,13 @@ CXXFLAGS = -std=c++17 -O2
 
 BUILD = build
 TARGET = $(BUILD)/zywin
+SRC := src/*.cpp
 
 all: $(TARGET)
 
-$(TARGET): main.cpp
+$(TARGET): 
 	mkdir -p $(BUILD)
-	$(COMPILER) $(CXXFLAGS) $< -o $@
+	$(COMPILER) $(CXXFLAGS) $(SRC) -o $@
 
 install: $(TARGET)
 	install -Dm755 $(TARGET) zywin/usr/bin/zywin
