@@ -4,7 +4,7 @@ set -e
 THEME_FILE="/boot/grub/themes/kali/theme.txt"
 
 cat > "$THEME_FILE" <<'EOF'
-# Zyphor OS GRUB BOOTLOADER CONFIG 09/02/2026 at 04:36 PM
+# Zyphor OS GRUB BOOTLOADER CONFIG 09/03/2026 at 07:41 AM
 
 # Global Property
 title-text: ""
