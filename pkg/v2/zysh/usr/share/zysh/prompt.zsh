@@ -28,7 +28,7 @@ configure_prompt() {
 configure_prompt
 
 OS_NAME="$(grep '^PRETTY_NAME=' /etc/os-release | cut -d= -f2- | tr -d '"')"
-BUILD="2026.09.01-r44"
+BUILD="2026.09.02-r45"
 
 echo ""
 figlet -f term "$OS_NAME" | lolcat
