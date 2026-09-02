@@ -131,14 +131,11 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add README.md
-	git commit -m "docs: update README"
+	git add pkg/v2/zyphor-grub-theme/DEBIAN/control
+	git commit -m "chore: update zyphor grub theme package control"
 
-	git add pkg/v2/zysh/DEBIAN/control
-	git commit -m "chore: update zysh package control"
-
-	git add pkg/v2/zysh/usr/share/zysh/prompt.zsh
-	git commit -m "feat: update zysh prompt"
+	git add pkg/v2/zyphor-grub-theme/DEBIAN/postinst
+	git commit -m "chore: update zyphor grub theme postinst"
 
 push:
 	git push origin $(branch)
@@ -189,8 +186,8 @@ release:
 # 	zyphor build package pkg/v2/zyphor-archive-keyring
 # 	mv pkg/v2/zyphor-archive-keyring.deb zyphor-archive-keyring.deb
 
-	zyphor build package pkg/v2/zysh
-	mv pkg/v2/zysh.deb zysh.deb
+# 	zyphor build package pkg/v2/zysh
+# 	mv pkg/v2/zysh.deb zysh.deb
 		
 # 	zyphor build package pkg/v2/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v2/zycamera-launcher/zycamera-launcher.deb zycamera-launcher.deb
@@ -198,8 +195,8 @@ release:
 # 	zyphor build package pkg/v2/zou/grub-screensaver-1
 # 	mv pkg/v2/zou/grub-screensaver-1.deb grub-screensaver-1.deb
 
-# 	zyphor build package pkg/v2/zyphor-grub-theme
-# 	mv pkg/v2/zyphor-grub-theme.deb zyphor-grub-theme.deb
+	zyphor build package pkg/v2/zyphor-grub-theme
+	mv pkg/v2/zyphor-grub-theme.deb zyphor-grub-theme.deb
 
 # 	---
 
