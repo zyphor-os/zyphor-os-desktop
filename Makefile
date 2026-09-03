@@ -129,8 +129,6 @@ status:
 
 add:
 
-# 	add Makefile
-
 	git add Makefile
 	git commit -m "build: update repository automation"
 
