@@ -1,5 +1,5 @@
 Package: zysh
-Version: 9.0.0-r10-stable-release
+Version: 10.0.0-r11-stable-release
 Section: utils
 Architecture: all
 Replaces: zyshell
