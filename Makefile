@@ -132,11 +132,14 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add pkg/v2/zysh/DEBIAN/control
-	git commit -m "chore: update zysh package control"
+	git add pkg/v2/zycamera-launcher/init
+	git commit -m "chore: update zycamera launcher init"
 
-	git add pkg/v2/zysh/usr/share/zysh/prompt.zsh
-	git commit -m "feat: update zysh prompt"
+	git add pkg/v2/zycamera-launcher/zycamera-launcher/DEBIAN/control
+	git commit -m "chore: update zycamera launcher package control"
+
+	git add pkg/v2/zycamera-launcher/zycamera-launcher/usr/bin/zycamera-launcher
+	git commit -m "feat: update zycamera launcher"
 
 push:
 	git push origin $(branch)
