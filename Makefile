@@ -187,14 +187,14 @@ release:
 # 	zyphor build package pkg/v2/zyphor-archive-keyring
 # 	mv pkg/v2/zyphor-archive-keyring.deb zyphor-archive-keyring.deb
 
-	zyphor build package pkg/v2/zysh
-	mv pkg/v2/zysh.deb zysh.deb
+# 	zyphor build package pkg/v2/zysh
+# 	mv pkg/v2/zysh.deb zysh.deb
 
 # 	zyphor build package pkg/v2/zcc-web
 # 	mv pkg/v2/zcc-web.deb zyphor-command-center-web.deb
 		
-# 	zyphor build package pkg/v2/zycamera-launcher/zycamera-launcher
-# 	mv pkg/v2/zycamera-launcher/zycamera-launcher.deb zycamera-launcher.deb
+	zyphor build package pkg/v2/zycamera-launcher/zycamera-launcher
+	mv pkg/v2/zycamera-launcher/zycamera-launcher.deb zycamera-launcher.deb
 
 # 	zyphor build package pkg/v2/zou/grub-screensaver-1
 # 	mv pkg/v2/zou/grub-screensaver-1.deb grub-screensaver-1.deb
