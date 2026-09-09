@@ -1,13 +1,59 @@
 #!/bin/bash
 
 # ==================================================
-# Zyphor pkg search (registry-aware v4)
-# Clean + resilient + deb-aware
+# Zyphor pkg search (registry-aware v5)
+# Clean + resilient + deb-aware + live-fallback
 # ==================================================
 
 # Safe defaults (prevents curl -o crash)
 REGISTRY_URL="${REGISTRY_URL:-https://zyphor-os.github.io/ada-lovelace-lts/registry/registry.json}"
 CACHE_FILE="${CACHE_FILE:-/tmp/zyphor_registry.json}"
+
+# ==================================================
+# Spinner helper — animates while a background job
+# (given by PID) runs, supports Ctrl+C cancel.
+# Usage: _zyphor_spinner "$PID" "Message..."
+# ==================================================
+_zyphor_spinner() {
+  local pid="$1"
+  local msg="${2:-Working...}"
+  local frames='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
+  local i=0
+
+  # Hide cursor while spinning
+  tput civis 2>/dev/null
+
+  trap '
+    kill "'"$pid"'" 2>/dev/null
+    printf "\r\033[K"
+    tput cnorm 2>/dev/null
+    echo "Zyphor: ✖ Cancelled"
+    trap - INT
+    return 130
+  ' INT
+
+  while kill -0 "$pid" 2>/dev/null; do
+    printf "\r%s %s (Ctrl+C to cancel)" "${frames:i++%${#frames}:1}" "$msg"
+    sleep 0.1
+  done
+
+  printf "\r\033[K"
+  tput cnorm 2>/dev/null
+  trap - INT
+}
+
+# ==================================================
+# Run a command in the background behind the spinner.
+# Usage: _zyphor_run_with_spinner "Message..." cmd arg1 arg2
+# ==================================================
+_zyphor_run_with_spinner() {
+  local msg="$1"; shift
+  ("$@") &
+  local pid=$!
+  _zyphor_spinner "$pid" "$msg"
+  wait "$pid"
+  return $?
+}
 
 zyphor_pkg_search() {
 
@@ -50,10 +96,12 @@ zyphor_pkg_search() {
     echo "Zyphor: Using cached registry..."
   fi
 
+  LC_KEYWORD=$(echo "$KEYWORD" | tr '[:upper:]' '[:lower:]')
+
   # ==================================================
   # BUILD MATCHES (robust search)
   # ==================================================
-  MATCHES=$(jq -r --arg kw "$(echo "$KEYWORD" | tr '[:upper:]' '[:lower:]')" '
+  MATCHES=$(jq -r --arg kw "$LC_KEYWORD" '
     .apps
     | to_entries[]
     | select(
@@ -66,41 +114,108 @@ zyphor_pkg_search() {
     | .key
   ' "$CACHE_FILE")
 
+  # Set of package identifiers already known to the registry, used later to
+  # avoid re-listing the same app as "unregistered" in the live fallback.
+  KNOWN_NAMES=$(jq -r '
+    .apps | to_entries[]
+    | (.key), (.value.package // empty)
+  ' "$CACHE_FILE" | tr '[:upper:]' '[:lower:]')
+
+  REGISTRY_COUNT=0
+
+  if [ -n "$MATCHES" ]; then
+    echo "Registry results:"
+    echo ""
+
+    for app in $MATCHES; do
+
+      TYPE=$(jq -r ".apps.\"$app\".type // \"unknown\"" "$CACHE_FILE")
+      PACKAGE=$(jq -r ".apps.\"$app\".package // \"-\"" "$CACHE_FILE")
+      CHANNEL=$(jq -r ".apps.\"$app\".channel // \"-\"" "$CACHE_FILE")
+      URL=$(jq -r ".apps.\"$app\".url // \"\"" "$CACHE_FILE")
+
+      if [ "$TYPE" = "deb" ]; then
+        printf " - %-28s [%-6s] → %s\n" "$app" "$TYPE" "$URL"
+      else
+        printf " - %-28s [%-6s | %-7s] → %s\n" "$app" "$TYPE" "$CHANNEL" "$PACKAGE"
+      fi
+
+      REGISTRY_COUNT=$((REGISTRY_COUNT + 1))
+
+    done
+
+    echo ""
+  else
+    echo "Zyphor: ⚠ No registry matches for '$KEYWORD'"
+    echo ""
+  fi
+
   # ==================================================
-  # NO RESULTS
+  # LIVE FALLBACK — apt / snap / flatpak
+  # Anything found here that isn't already a known
+  # registry name gets flagged as unregistered.
+  # Runs in the background behind a spinner.
   # ==================================================
-  if [ -z "$MATCHES" ]; then
-    echo "Zyphor: ⚠ No apps found for '$KEYWORD'"
+  LIVE_TMP=$(mktemp)
+
+  (
+    export KNOWN_NAMES KEYWORD
+
+    # ---- apt ----
+    if command -v apt-cache >/dev/null 2>&1; then
+      while IFS=' - ' read -r name desc; do
+        [ -z "$name" ] && continue
+        lc_name=$(echo "$name" | tr '[:upper:]' '[:lower:]')
+        if ! echo "$KNOWN_NAMES" | grep -qxF "$lc_name"; then
+          printf " - %-28s [apt     | unregistered] → %s\n" "$name" "$desc"
+        fi
+      done < <(apt-cache search "$KEYWORD" 2>/dev/null | head -n 15)
+    fi
+
+    # ---- snap ----
+    if command -v snap >/dev/null 2>&1; then
+      while read -r name rest; do
+        [ -z "$name" ] || [ "$name" = "Name" ] && continue
+        lc_name=$(echo "$name" | tr '[:upper:]' '[:lower:]')
+        if ! echo "$KNOWN_NAMES" | grep -qxF "$lc_name"; then
+          printf " - %-28s [snap    | unregistered]\n" "$name"
+        fi
+      done < <(snap find "$KEYWORD" 2>/dev/null | tail -n +2 | head -n 15)
+    fi
+
+    # ---- flatpak ----
+    if command -v flatpak >/dev/null 2>&1; then
+      while IFS=$'\t' read -r name appid rest; do
+        [ -z "$appid" ] || [ "$appid" = "Application ID" ] && continue
+        lc_appid=$(echo "$appid" | tr '[:upper:]' '[:lower:]')
+        if ! echo "$KNOWN_NAMES" | grep -qxF "$lc_appid"; then
+          printf " - %-28s [flatpak | unregistered] → %s\n" "$appid" "$name"
+        fi
+      done < <(flatpak search "$KEYWORD" 2>/dev/null | tail -n +2 | head -n 15)
+    fi
+  ) > "$LIVE_TMP" 2>/dev/null &
+
+  LIVE_PID=$!
+  _zyphor_spinner "$LIVE_PID" "Looking for other related packages..."
+  wait "$LIVE_PID" 2>/dev/null
+
+  LIVE_RESULTS=$(cat "$LIVE_TMP")
+  LIVE_COUNT=$(grep -c '^ -' "$LIVE_TMP" 2>/dev/null || echo 0)
+  rm -f "$LIVE_TMP"
+
+  if [ "$LIVE_COUNT" -gt 0 ]; then
+    echo "Also found (not registered in app registry):"
+    echo ""
+    printf "%s" "$LIVE_RESULTS"
+    echo ""
+  fi
+
+  if [ "$REGISTRY_COUNT" -eq 0 ] && [ "$LIVE_COUNT" -eq 0 ]; then
+    echo "Zyphor: ⚠ No apps found for '$KEYWORD' (registry or system package managers)"
     echo ""
     return 0
   fi
 
-  echo "Results:"
-  echo ""
-
-  COUNT=0
-
-  # ==================================================
-  # DISPLAY RESULTS
-  # ==================================================
-  for app in $MATCHES; do
-
-    TYPE=$(jq -r ".apps.\"$app\".type // \"unknown\"" "$CACHE_FILE")
-    PACKAGE=$(jq -r ".apps.\"$app\".package // \"-\"" "$CACHE_FILE")
-    CHANNEL=$(jq -r ".apps.\"$app\".channel // \"-\"" "$CACHE_FILE")
-    URL=$(jq -r ".apps.\"$app\".url // \"\"" "$CACHE_FILE")
-
-    if [ "$TYPE" = "deb" ]; then
-      printf " - %-28s [%-6s] → %s\n" "$app" "$TYPE" "$URL"
-    else
-      printf " - %-28s [%-6s | %-7s] → %s\n" "$app" "$TYPE" "$CHANNEL" "$PACKAGE"
-    fi
-
-    COUNT=$((COUNT + 1))
-
-  done
-
-  echo ""
-  echo "Zyphor: ✔ Found $COUNT app(s)"
+  echo "Zyphor: ✔ Found $REGISTRY_COUNT registered app(s), $LIVE_COUNT unregistered match(es)"
   echo ""
 }
