@@ -3,6 +3,7 @@
 zyphor_pkg_remove() {
 
   APP="$3"
+  PREFERRED_MGR="$4"   # optional: apt | snap | flatpak (used only for unregistered apps)
 
   # ==================================================
   # SAFE DEFAULTS (prevents curl issues)
@@ -16,7 +17,7 @@ zyphor_pkg_remove() {
   if [ -z "$APP" ]; then
     echo ""
     echo "Zyphor: ✖ Missing app name"
-    echo "Usage: zyphor pkg remove <app>"
+    echo "Usage: zyphor pkg remove <app> [apt|snap|flatpak]"
     echo ""
     return 1
   fi
@@ -51,7 +52,8 @@ zyphor_pkg_remove() {
         echo "Zyphor: ✖ No registry available"
         return 1
       fi
-    fi  fi
+    fi
+  fi
 
   # ==================================================
   # RESOLVE APP
@@ -60,14 +62,174 @@ zyphor_pkg_remove() {
   PACKAGE=$(jq -r ".apps.\"$APP\".package // empty" "$CACHE_FILE")
   MODULE=$(jq -r ".apps.\"$APP\".module // empty" "$CACHE_FILE")
 
-  if [ -z "$TYPE" ]; then
+  # ==================================================
+  # UNREGISTERED APP → LIVE DETECTION FALLBACK
+  # Looks for a currently-installed match via apt/snap/
+  # flatpak so unregistered apps can still be removed.
+  # ==================================================
+  if [ -z "$TYPE" ] || [ "$TYPE" = "null" ]; then
+
     echo ""
-    echo "Zyphor: ✖ App not found → $APP"
-    return 1
+    echo "Zyphor: ⚠ '$APP' is not registered in the app registry"
+    echo "Zyphor: Checking installed packages directly..."
+    echo ""
+
+    APT_MATCH=""
+    SNAP_MATCH=""
+    FLATPAK_MATCH=""
+
+    # ---- apt: prefer exact match, fall back to loose match ----
+    if command -v dpkg >/dev/null 2>&1; then
+      APT_MATCH=$(dpkg -l | awk '$1=="ii"{print $2}' | grep -ix "$APP" | head -n 1)
+      if [ -z "$APT_MATCH" ]; then
+        APT_MATCH=$(dpkg -l | awk '$1=="ii"{print $2}' | grep -i "$APP" | head -n 1)
+      fi
+    fi
+
+    # ---- snap ----
+    if command -v snap >/dev/null 2>&1; then
+      SNAP_MATCH=$(snap list 2>/dev/null | awk '{print $1}' | grep -ix "$APP" | head -n 1)
+    fi
+
+    # ---- flatpak ----
+    if command -v flatpak >/dev/null 2>&1; then
+      FLATPAK_MATCH=$(flatpak list --app --columns=application 2>/dev/null | grep -ix "$APP" | head -n 1)
+      if [ -z "$FLATPAK_MATCH" ]; then
+        FLATPAK_MATCH=$(flatpak list --app --columns=application 2>/dev/null | grep -i "$APP" | head -n 1)
+      fi
+    fi
+
+    # Build the list of managers that actually have a match
+    FOUND_MGRS=()
+    [ -n "$APT_MATCH" ]     && FOUND_MGRS+=("apt")
+    [ -n "$SNAP_MATCH" ]    && FOUND_MGRS+=("snap")
+    [ -n "$FLATPAK_MATCH" ] && FOUND_MGRS+=("flatpak")
+
+    if [ "${#FOUND_MGRS[@]}" -eq 0 ]; then
+      echo "Zyphor: ✖ '$APP' is not installed via apt, snap, or flatpak"
+      echo ""
+      return 1
+    fi
+
+    # Resolve which manager to use
+    if [ -n "$PREFERRED_MGR" ]; then
+      case "$PREFERRED_MGR" in
+        apt|snap|flatpak) ;;
+        *)
+          echo "Zyphor: ✖ Unsupported manager '$PREFERRED_MGR' (use apt, snap, or flatpak)"
+          return 1
+          ;;
+      esac
+
+      FOUND=0
+      for m in "${FOUND_MGRS[@]}"; do
+        [ "$m" = "$PREFERRED_MGR" ] && FOUND=1
+      done
+      if [ "$FOUND" -eq 0 ]; then
+        echo "Zyphor: ✖ '$APP' is not installed via $PREFERRED_MGR"
+        return 1
+      fi
+
+    elif [ "${#FOUND_MGRS[@]}" -eq 1 ]; then
+      PREFERRED_MGR="${FOUND_MGRS[0]}"
+
+    else
+      echo "Zyphor: '$APP' was found installed via multiple managers:"
+      i=1
+      for m in "${FOUND_MGRS[@]}"; do
+        case "$m" in
+          apt)     echo "  $i) apt     → $APT_MATCH" ;;
+          snap)    echo "  $i) snap    → $SNAP_MATCH" ;;
+          flatpak) echo "  $i) flatpak → $FLATPAK_MATCH" ;;
+        esac
+        i=$((i + 1))
+      done
+      echo "  $i) cancel"
+      read -rp "Zyphor: Choose [1-$i]: " CHOICE
+
+      if ! [[ "$CHOICE" =~ ^[0-9]+$ ]] || [ "$CHOICE" -lt 1 ] || [ "$CHOICE" -gt "${#FOUND_MGRS[@]}" ]; then
+        echo "Zyphor: ✖ Cancelled"
+        return 1
+      fi
+      PREFERRED_MGR="${FOUND_MGRS[$((CHOICE - 1))]}"
+    fi
+
+    case "$PREFERRED_MGR" in
+      apt)     TARGET="$APT_MATCH" ;;
+      snap)    TARGET="$SNAP_MATCH" ;;
+      flatpak) TARGET="$FLATPAK_MATCH" ;;
+    esac
+
+    echo ""
+    echo "Zyphor: You are about to remove (unregistered):"
+    echo "  App   : $APP"
+    echo "  Via   : $PREFERRED_MGR"
+    echo "  Target: $TARGET"
+    echo ""
+
+    read -p "Continue? [y/N]: " CONFIRM
+    case "$CONFIRM" in
+      y|Y) ;;
+      *)
+        echo "Zyphor: Cancelled."
+        echo ""
+        return 0
+        ;;
+    esac
+
+    echo ""
+    echo "Zyphor: Removing '$TARGET' via $PREFERRED_MGR (unregistered)..."
+    echo ""
+
+    case "$PREFERRED_MGR" in
+
+      apt)
+        apt remove -y "$TARGET"
+        MGR_EXIT=$?
+        ;;
+
+      snap)
+        snap remove "$TARGET"
+        MGR_EXIT=$?
+        ;;
+
+      flatpak)
+        flatpak uninstall -y --noninteractive "$TARGET"
+        MGR_EXIT=$?
+
+        SHIM_PATH="/usr/local/bin/${APP}"
+        if [ -f "$SHIM_PATH" ]; then
+          echo "Zyphor: Removing CLI shim → $SHIM_PATH"
+          rm -f "$SHIM_PATH"
+        fi
+        ;;
+    esac
+
+    if [ "$MGR_EXIT" -eq 0 ]; then
+      echo ""
+      echo "Zyphor: ✔ Removed '$TARGET' via $PREFERRED_MGR (unregistered)"
+    else
+      echo ""
+      echo "Zyphor: ✖ Failed removing '$TARGET' via $PREFERRED_MGR"
+      echo ""
+      return 1
+    fi
+
+    echo ""
+    read -p "Zyphor: Run autoremove (cleanup dependencies)? [y/N]: " AUTO
+    if [[ "$AUTO" =~ ^[yY]$ ]]; then
+      apt autoremove -y
+      echo "Zyphor: ✔ Cleanup complete"
+    fi
+
+    echo ""
+    echo "Zyphor: ✔ Successfully processed removal of '$APP'"
+    echo ""
+    return 0
   fi
 
   # ==================================================
-  # SAFETY CONFIRMATION
+  # SAFETY CONFIRMATION (REGISTERED APP)
   # ==================================================
   echo ""
   echo "Zyphor: You are about to remove:"
