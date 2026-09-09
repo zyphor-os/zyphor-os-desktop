@@ -1,8 +1,13 @@
-#!/bin/bash
+# ==================================================
+# Zyphor pkg install (registry-aware v5)
+# Falls back to a direct apt/snap/flatpak install
+# when the app isn't in the registry.
+# ==================================================
 
 zyphor_pkg_install() {
 
   APP="$3"
+  PREFERRED_MGR="$4"   # optional: apt | snap | flatpak
 
   # ==================================================
   # VALIDATE INPUT
@@ -10,7 +15,7 @@ zyphor_pkg_install() {
   if [ -z "$APP" ]; then
     echo ""
     echo "Zyphor: ✖ Missing app name"
-    echo "Usage: zyphor pkg install <app>"
+    echo "Usage: zyphor pkg install <app> [apt|snap|flatpak]"
     echo ""
     return 1
   fi
@@ -46,39 +51,142 @@ zyphor_pkg_install() {
   # ==================================================
   # RESOLVE APP
   # ==================================================
-  TYPE=$(jq -r ".apps.\"$APP\".type" "$CACHE_FILE")
+  TYPE=$(jq -r ".apps.\"$APP\".type // empty" "$CACHE_FILE")
   PACKAGE=$(jq -r ".apps.\"$APP\".package // empty" "$CACHE_FILE")
   URL=$(jq -r ".apps.\"$APP\".url // empty" "$CACHE_FILE")
   MODULE=$(jq -r ".apps.\"$APP\".module // empty" "$CACHE_FILE")
-
   FLAGS=$(jq -r ".apps.\"$APP\".flags // empty" "$CACHE_FILE")
   CHANNEL=$(jq -r ".apps.\"$APP\".channel // empty" "$CACHE_FILE")
-
-  # Optional checksum
   SHA256=$(jq -r ".apps.\"$APP\".sha256 // empty" "$CACHE_FILE")
 
   # ==================================================
-  # VALIDATE APP
+  # UNREGISTERED APP → LIVE INSTALL FALLBACK
   # ==================================================
-  if [ "$TYPE" = "null" ] || [ -z "$TYPE" ]; then
+  if [ -z "$TYPE" ] || [ "$TYPE" = "null" ]; then
+
     echo ""
-    echo "Zyphor: ✖ App not found → $APP"
+    echo "Zyphor: ⚠ '$APP' is not registered in the app registry"
+
+    # Resolve which manager to use: explicit $4 arg, or prompt interactively.
+    if [ -n "$PREFERRED_MGR" ]; then
+      case "$PREFERRED_MGR" in
+        apt|snap|flatpak) ;;
+        *)
+          echo "Zyphor: ✖ Unsupported manager '$PREFERRED_MGR' (use apt, snap, or flatpak)"
+          return 1
+          ;;
+      esac
+    else
+      echo "Zyphor: Install '$APP' directly via a package manager?"
+      echo "  1) apt"
+      echo "  2) snap"
+      echo "  3) flatpak"
+      echo "  4) cancel"
+      read -rp "Zyphor: Choose [1-4]: " CHOICE
+      case "$CHOICE" in
+        1) PREFERRED_MGR="apt" ;;
+        2) PREFERRED_MGR="snap" ;;
+        3) PREFERRED_MGR="flatpak" ;;
+        *)
+          echo "Zyphor: ✖ Cancelled"
+          return 1
+          ;;
+      esac
+    fi
+
+    echo "Zyphor: Installing '$APP' via $PREFERRED_MGR (unregistered)..."
     echo ""
-    return 1
+
+    case "$PREFERRED_MGR" in
+
+      apt)
+        apt update -qq
+        apt install -y "$APP"
+        MGR_EXIT=$?
+        ;;
+
+      snap)
+        if ! command -v snap >/dev/null 2>&1; then
+          echo "Zyphor: snapd not found → installing..."
+          _zyphor_run_with_spinner "Setting up snap support..." bash -c "apt update -qq && apt install -y snapd"
+        fi
+
+        systemctl enable --now snapd >/dev/null 2>&1
+        systemctl enable --now snapd.socket >/dev/null 2>&1
+        systemctl enable --now snapd.apparmor >/dev/null 2>&1
+        systemctl enable --now apparmor >/dev/null 2>&1
+        _zyphor_run_with_spinner "Waiting for snapd to be ready..." sleep 3
+
+        snap install "$APP" --channel="stable"
+        MGR_EXIT=$?
+
+        if [ "$MGR_EXIT" -ne 0 ]; then
+          echo "Zyphor: snap install failed → retrying after refresh..."
+          systemctl restart snapd >/dev/null 2>&1
+          sleep 2
+          snap install "$APP" --channel="stable"
+          MGR_EXIT=$?
+        fi
+        ;;
+
+      flatpak)
+        if ! command -v flatpak >/dev/null 2>&1; then
+          echo "Zyphor: flatpak not found → installing..."
+          _zyphor_run_with_spinner "Setting up flatpak support..." bash -c "apt update -qq && apt install -y flatpak"
+        fi
+
+        if ! flatpak remote-list | grep -q '^flathub'; then
+          echo "Zyphor: Adding Flathub remote..."
+          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        fi
+
+        flatpak install -y --noninteractive flathub "$APP"
+        MGR_EXIT=$?
+
+        if [ "$MGR_EXIT" -ne 0 ]; then
+          echo "Zyphor: flatpak install failed → refreshing remote and retrying..."
+          flatpak update --appstream flathub >/dev/null 2>&1
+          sleep 2
+          flatpak install -y --noninteractive flathub "$APP"
+          MGR_EXIT=$?
+        fi
+
+        if [ "$MGR_EXIT" -eq 0 ]; then
+          SHIM_PATH="/usr/local/bin/${APP}"
+          if [ ! -f "$SHIM_PATH" ]; then
+            echo "Zyphor: Creating CLI shim → $SHIM_PATH"
+            cat > "$SHIM_PATH" <<EOF
+#!/bin/bash
+exec flatpak run $APP "\$@"
+EOF
+            chmod +x "$SHIM_PATH"
+          fi
+        fi
+        ;;
+    esac
+
+    if [ "$MGR_EXIT" -eq 0 ]; then
+      echo ""
+      echo "Zyphor: ✔ Installed '$APP' via $PREFERRED_MGR (unregistered)"
+      echo ""
+    else
+      echo ""
+      echo "Zyphor: ✖ Failed installing '$APP' via $PREFERRED_MGR"
+      echo ""
+    fi
+
+    return $MGR_EXIT
   fi
 
+  # ==================================================
+  # REGISTERED APP → NORMAL REGISTRY-DRIVEN INSTALL
+  # ==================================================
   echo ""
   echo "Zyphor: Installing '$APP' (type: $TYPE)"
   echo ""
 
-  # ==================================================
-  # INSTALL HANDLER
-  # ==================================================
   case "$TYPE" in
 
-    # --------------------------
-    # APT INSTALL
-    # --------------------------
     apt)
       if [ -z "$PACKAGE" ]; then
         echo "Zyphor: ✖ Missing package name"
@@ -88,11 +196,9 @@ zyphor_pkg_install() {
       echo "Zyphor: APT install → $PACKAGE"
       apt update -qq
       apt install -y $FLAGS "$PACKAGE"
+      MGR_EXIT=$?
       ;;
 
-    # --------------------------
-    # DEB INSTALL
-    # --------------------------
     deb)
       if [ -z "$URL" ]; then
         echo "Zyphor: ✖ Missing .deb URL"
@@ -107,7 +213,6 @@ zyphor_pkg_install() {
         return 1
       fi
 
-      # ----- CHECKSUM VALIDATION (OPTIONAL) -----
       if [ -n "$SHA256" ] && [ "$SHA256" != "null" ]; then
         echo "Zyphor: Verifying checksum..."
         DOWNLOADED_HASH=$(sha256sum "$TMP_DEB" | awk '{print $1}')
@@ -124,146 +229,94 @@ zyphor_pkg_install() {
 
       echo "Zyphor: Fixing dependencies..."
       apt -f install -y
+      MGR_EXIT=$?
 
       echo "Zyphor: Cleaning up..."
       rm -f "$TMP_DEB"
       ;;
 
-      # --------------------------
-      # SNAP INSTALL (FIXED + BOOTSTRAP SAFE)
-      # --------------------------
-      snap)
+    snap)
+      if [ -z "$PACKAGE" ]; then
+        echo "Zyphor: ✖ Missing snap package"
+        return 1
+      fi
 
-        if [ -z "$PACKAGE" ]; then
-          echo "Zyphor: ✖ Missing snap package"
-          return 1
-        fi
+      echo "Zyphor: Snap install → $PACKAGE"
 
-        echo "Zyphor: Snap install → $PACKAGE"
+      if ! command -v snap >/dev/null 2>&1; then
+        echo "Zyphor: snapd not found → installing..."
+        _zyphor_run_with_spinner "Setting up snap support..." bash -c "apt update -qq && apt install -y snapd"
+      fi
 
-        # ==================================================
-        # INSTALL SNAPD IF MISSING
-        # ==================================================
-        if ! command -v snap >/dev/null 2>&1; then
-          echo "Zyphor: snapd not found → installing..."
+      echo "Zyphor: Initializing snapd service..."
+      systemctl enable --now snapd >/dev/null 2>&1
+      systemctl enable --now snapd.socket >/dev/null 2>&1
+      systemctl enable --now snapd.apparmor >/dev/null 2>&1
+      systemctl enable --now apparmor >/dev/null 2>&1
 
-          apt update -qq
-          apt install -y snapd
-        fi
+      _zyphor_run_with_spinner "Waiting for snapd to be ready..." sleep 3
 
-        # ==================================================
-        # ENSURE SNAP + SECURITY SERVICES
-        # ==================================================
-        echo "Zyphor: Initializing snapd service..."
+      if [ -z "$CHANNEL" ] || [ "$CHANNEL" = "null" ]; then
+        CHANNEL="stable"
+      fi
 
-        systemctl enable --now snapd >/dev/null 2>&1
-        systemctl enable --now snapd.socket >/dev/null 2>&1
+      echo "Zyphor: Channel → $CHANNEL"
 
-        # Enable AppArmor for snap confinement (NEW)
-        systemctl enable --now snapd.apparmor >/dev/null 2>&1
+      snap install "$PACKAGE" $FLAGS --channel="$CHANNEL"
+      SNAP_EXIT=$?
 
-        # (Optional but strong baseline)
-        systemctl enable --now apparmor >/dev/null 2>&1
-
-        # Wait for daemon readiness (VERY IMPORTANT)
-        echo "Zyphor: Waiting for snapd to be ready..."
-        sleep 3
-
-        # ==================================================
-        # DEFAULT CHANNEL
-        # ==================================================
-        if [ -z "$CHANNEL" ] || [ "$CHANNEL" = "null" ]; then
-          CHANNEL="stable"
-        fi
-
-        echo "Zyphor: Channel → $CHANNEL"
-
-        # ==================================================
-        # INSTALL SNAP PACKAGE (RETRY SAFE)
-        # ==================================================
+      if [ "$SNAP_EXIT" -ne 0 ]; then
+        echo "Zyphor: snap install failed → retrying after refresh..."
+        systemctl restart snapd >/dev/null 2>&1
+        sleep 2
         snap install "$PACKAGE" $FLAGS --channel="$CHANNEL"
         SNAP_EXIT=$?
+      fi
 
-        # ==================================================
-        # RETRY ON FIRST-BOOT FAILURE (common issue)
-        # ==================================================
-        if [ "$SNAP_EXIT" -ne 0 ]; then
-          echo "Zyphor: snap install failed → retrying after refresh..."
+      MGR_EXIT=$SNAP_EXIT
+      ;;
 
-          systemctl restart snapd >/dev/null 2>&1
-          sleep 2
+    flatpak)
+      if [ -z "$PACKAGE" ]; then
+        echo "Zyphor: ✖ Missing flatpak package (app ID)"
+        return 1
+      fi
 
-          snap install "$PACKAGE" $FLAGS --channel="$CHANNEL"
-          SNAP_EXIT=$?
-        fi
+      echo "Zyphor: Flatpak install → $PACKAGE"
 
-        return $SNAP_EXIT
-        ;;
-      # --------------------------
-      # FLATPAK INSTALL (FIXED + BOOTSTRAP SAFE)
-      # --------------------------
-      flatpak)
+      if ! command -v flatpak >/dev/null 2>&1; then
+        echo "Zyphor: flatpak not found → installing..."
+        _zyphor_run_with_spinner "Setting up flatpak support..." bash -c "apt update -qq && apt install -y flatpak"
+      fi
 
-        if [ -z "$PACKAGE" ]; then
-          echo "Zyphor: ✖ Missing flatpak package (app ID)"
-          return 1
-        fi
+      echo "Zyphor: Checking Flathub remote..."
+      if ! flatpak remote-list | grep -q '^flathub'; then
+        echo "Zyphor: Adding Flathub remote..."
+        flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+      fi
 
-        echo "Zyphor: Flatpak install → $PACKAGE"
+      if [ -z "$CHANNEL" ] || [ "$CHANNEL" = "null" ]; then
+        CHANNEL="stable"
+      fi
 
-        # ==================================================
-        # INSTALL FLATPAK IF MISSING
-        # ==================================================
-        if ! command -v flatpak >/dev/null 2>&1; then
-          echo "Zyphor: flatpak not found → installing..."
+      echo "Zyphor: Branch → $CHANNEL"
 
-          apt update -qq
-          apt install -y flatpak
-        fi
+      flatpak install -y --noninteractive flathub "$PACKAGE" $FLAGS
+      FLATPAK_EXIT=$?
 
-        # ==================================================
-        # ENSURE FLATHUB REMOTE
-        # ==================================================
-        echo "Zyphor: Checking Flathub remote..."
-
-        if ! flatpak remote-list | grep -q '^flathub'; then
-          echo "Zyphor: Adding Flathub remote..."
-          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-        fi
-
-        # ==================================================
-        # DEFAULT BRANCH
-        # ==================================================
-        if [ -z "$CHANNEL" ] || [ "$CHANNEL" = "null" ]; then
-          CHANNEL="stable"
-        fi
-
-        echo "Zyphor: Branch → $CHANNEL"
-
-        # ==================================================
-        # INSTALL FLATPAK PACKAGE (RETRY SAFE)
-        # ==================================================
+      if [ "$FLATPAK_EXIT" -ne 0 ]; then
+        echo "Zyphor: flatpak install failed → refreshing remote and retrying..."
+        flatpak update --appstream flathub >/dev/null 2>&1
+        sleep 2
         flatpak install -y --noninteractive flathub "$PACKAGE" $FLAGS
         FLATPAK_EXIT=$?
+      fi
 
-        if [ "$FLATPAK_EXIT" -ne 0 ]; then
-          echo "Zyphor: flatpak install failed → refreshing remote and retrying..."
-
-          flatpak update --appstream flathub >/dev/null 2>&1
-          sleep 2
-
-          flatpak install -y --noninteractive flathub "$PACKAGE" $FLAGS
-          FLATPAK_EXIT=$?
-        fi
-
-        # ==================================================
-        # CREATE CLI SHIM (so `zyphor pkg install wechat` → `wechat` works)
-        # ==================================================
-        if [ "$FLATPAK_EXIT" -eq 0 ]; then
-          SHIM_PATH="/usr/local/bin/${APP}"
-          if [ ! -f "$SHIM_PATH" ]; then
-            echo "Zyphor: Creating CLI shim → $SHIM_PATH"
-            cat > "$SHIM_PATH" <<EOF
+      if [ "$FLATPAK_EXIT" -eq 0 ]; then
+        SHIM_PATH="/usr/local/bin/${APP}"
+        if [ ! -f "$SHIM_PATH" ]; then
+          echo "Zyphor: Creating CLI shim → $SHIM_PATH"
+          cat > "$SHIM_PATH" <<EOF
 #!/bin/bash
 exec flatpak run $PACKAGE "\$@"
 EOF
@@ -271,11 +324,9 @@ EOF
         fi
       fi
 
-      return $FLATPAK_EXIT
+      MGR_EXIT=$FLATPAK_EXIT
       ;;
-    # --------------------------
-    # INTERNAL MODULE
-    # --------------------------
+
     internal)
       if [ -z "$MODULE" ]; then
         echo "Zyphor: ✖ Missing module"
@@ -284,21 +335,16 @@ EOF
 
       echo "Zyphor: Running module → $MODULE"
       bash "/usr/lib/zyphor/modules/$MODULE/install.sh"
+      MGR_EXIT=$?
       ;;
 
-    # --------------------------
-    # UNKNOWN TYPE
-    # --------------------------
     *)
       echo "Zyphor: ✖ Unknown type → $TYPE"
       return 1
       ;;
   esac
 
-  # ==================================================
-  # RESULT
-  # ==================================================
-  if [ $? -eq 0 ]; then
+  if [ "$MGR_EXIT" -eq 0 ]; then
     echo ""
     echo "Zyphor: ✔ Installed '$APP' successfully"
     echo ""
