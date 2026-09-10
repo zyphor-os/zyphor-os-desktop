@@ -129,8 +129,6 @@ status:
 
 add:
 
-# 	add makefile
-
 	git add Makefile
 	git commit -m "build: update repository automation"
 
@@ -149,14 +147,14 @@ add:
 	git add pkg/v2/zcli/DEBIAN/control
 	git commit -m "chore: update zcli package control"
 
-	git add pkg/v2/zcli/usr/lib/zyphor/pkg/install
-	git commit -m "feat: update package install command"
+	git add pkg/v2/zcli/usr/lib/zyphor/core/help
+	git commit -m "docs: update zcli help"
 
-	git add pkg/v2/zcli/usr/lib/zyphor/pkg/remove
-	git commit -m "feat: update package remove command"
+	git add pkg/v2/zcli/usr/local/bin/zyphor
+	git commit -m "feat: update zyphor cli"
 
-	git add pkg/v2/zcli/usr/lib/zyphor/pkg/search
-	git commit -m "feat: update package search command"
+	git add pkg/v2/zcli/usr/lib/zyphor/setup/web-server
+	git commit -m "feat: add web server setup command"
 
 push:
 	git push origin $(branch)
