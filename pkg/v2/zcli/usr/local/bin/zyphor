@@ -156,6 +156,7 @@ case "$CATEGORY" in
     source /usr/lib/zyphor/setup/theme
     source /usr/lib/zyphor/setup/wine
     source /usr/lib/zyphor/setup/pentest
+    source /usr/lib/zyphor/setup/web-server
     
     case "$ACTION" in
       dev)
@@ -169,6 +170,9 @@ case "$CATEGORY" in
       ;;
       pentest)
         zyphor_setup_pentest "$@"
+      ;;
+      web-server)
+        zyphor_setup_web_server
       ;;
       *)
         error "setup $ACTION"
