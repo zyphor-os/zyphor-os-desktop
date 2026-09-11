@@ -76,7 +76,8 @@ devinit:
 	@echo "\n--- FIX DNS ---\n";
 	sudo cp /etc/resolv.conf extract/etc/resolv.conf
 	@echo "\n--- ENTER CHROOT ---\n";
-	sudo chroot extract /bin/zsh
+# 	sudo chroot extract /bin/zsh
+	sudo chroot extract /bin/bash
 
 devbuild:
 	@echo "\n--- UNMOUNTING ISO FILE READ ONLY MODE ---\n";
