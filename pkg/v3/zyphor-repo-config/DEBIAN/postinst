@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+cat > /etc/apt/sources.list.d/zyphor.list <<EOF
+deb [arch=amd64 signed-by=/usr/share/keyrings/zyphor-archive-keyring.gpg] https://zyphor-os.github.io/babbage-lts babbage main
+deb http://deb.debian.org/debian trixie main contrib non-free non-free-firmware
+deb http://deb.debian.org/debian trixie-updates main contrib non-free non-free-firmware
+deb http://security.debian.org/debian-security trixie-security main contrib non-free non-free-firmware
+EOF
+
+chown root:root /etc/apt/sources.list.d/zyphor.list
+chmod 644 /etc/apt/sources.list.d/zyphor.list
+
+apt update
+
+exit 0
