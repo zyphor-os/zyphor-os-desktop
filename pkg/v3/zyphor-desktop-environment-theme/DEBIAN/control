@@ -1,0 +1,7 @@
+Package: zyphor-desktop-environment
+Version: 1.0.0-r1
+Section: admin
+Priority: optional
+Architecture: all
+Maintainer: Mark Jason P. Espelita
+Description: Zyphor OS Desktop Environment Theme
