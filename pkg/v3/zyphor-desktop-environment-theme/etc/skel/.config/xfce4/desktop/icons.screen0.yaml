@@ -12,7 +12,7 @@ configs:
       width: 1280
       height: 800
   icons:
-    "/home/markiv":
+    "/home":
       row: 0
       col: 0
     "/":
