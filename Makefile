@@ -145,17 +145,11 @@ add:
 	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release.js
 	git commit -m "feat: update zyphor whats new release data"
 
-	git add pkg/v2/zcli/DEBIAN/control
-	git commit -m "chore: update zcli package control"
+	git add pkg/v2/zyphor-grub-theme/DEBIAN/control
+	git commit -m "chore: update zyphor grub theme package control"
 
-	git add pkg/v2/zcli/usr/lib/zyphor/core/help
-	git commit -m "docs: update zcli help"
-
-	git add pkg/v2/zcli/usr/local/bin/zyphor
-	git commit -m "feat: update zyphor cli"
-
-	git add pkg/v2/zcli/usr/lib/zyphor/setup/web-server
-	git commit -m "feat: add web server setup command"
+	git add pkg/v2/zyphor-grub-theme/DEBIAN/postinst
+	git commit -m "chore: update zyphor grub theme postinst"
 
 push:
 	git push origin $(branch)
@@ -176,11 +170,11 @@ release:
 # 	zyphor build package pkg/v2/updater/updates
 # 	mv pkg/v2/updater/updates.deb zyphor-updates.deb
 
-# 	zyphor build package pkg/v2/updater/zor
-# 	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
+	zyphor build package pkg/v2/updater/zor
+	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
 
-# 	zyphor build package pkg/v2/updater/zwn
-# 	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
+	zyphor build package pkg/v2/updater/zwn
+	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
 
 # 	zyphor build package pkg/v2/zywin/zywin
 # 	mv pkg/v2/zywin/zywin.deb zywin.deb
@@ -206,8 +200,8 @@ release:
 # 	zyphor build package pkg/v3/zyphor-archive-keyring
 # 	mv pkg/v3/zyphor-archive-keyring.deb zyphor-archive-keyring.deb
 
-	zyphor build package pkg/v3/zyphor-repo-config
-	mv pkg/v3/zyphor-repo-config.deb zyphor-repo-config.deb
+# 	zyphor build package pkg/v3/zyphor-repo-config
+# 	mv pkg/v3/zyphor-repo-config.deb zyphor-repo-config.deb
 
 # 	zyphor build package pkg/v2/zysh
 # 	mv pkg/v2/zysh.deb zysh.deb
@@ -221,14 +215,14 @@ release:
 # 	zyphor build package pkg/v2/zou/grub-screensaver-1
 # 	mv pkg/v2/zou/grub-screensaver-1.deb grub-screensaver-1.deb
 
-# 	zyphor build package pkg/v2/zyphor-grub-theme
-# 	mv pkg/v2/zyphor-grub-theme.deb zyphor-grub-theme.deb
+	zyphor build package pkg/v2/zyphor-grub-theme
+	mv pkg/v2/zyphor-grub-theme.deb zyphor-grub-theme.deb
 
 # 	---
 
-# 	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
+	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
 
-	mv ./*.deb ../zyphor-os.github.io/babbage-lts/pool/main/z --verbose
+# 	mv ./*.deb ../zyphor-os.github.io/babbage-lts/pool/main/z --verbose
 
 # 	mv ./*.deb pkg/staging --verbose
 
