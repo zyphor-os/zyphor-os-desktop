@@ -176,11 +176,11 @@ release:
 # 	zyphor build package pkg/v2/updater/updates
 # 	mv pkg/v2/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/v2/updater/zor
-	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
+# 	zyphor build package pkg/v2/updater/zor
+# 	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
 
-	zyphor build package pkg/v2/updater/zwn
-	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
+# 	zyphor build package pkg/v2/updater/zwn
+# 	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
 
 # 	zyphor build package pkg/v2/zywin/zywin
 # 	mv pkg/v2/zywin/zywin.deb zywin.deb
@@ -197,14 +197,17 @@ release:
 # 	zyphor build package pkg/v2/updater/updates
 # 	mv pkg/v2/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/v2/zcli
-	mv pkg/v2/zcli.deb zyphor-cli.deb
+# 	zyphor build package pkg/v2/zcli
+# 	mv pkg/v2/zcli.deb zyphor-cli.deb
 
 # 	zyphor build package pkg/v2/zrc
 # 	mv pkg/v2/zrc.deb zyphor-repo-config.deb
 
-# 	zyphor build package pkg/v2/zyphor-archive-keyring
-# 	mv pkg/v2/zyphor-archive-keyring.deb zyphor-archive-keyring.deb
+# 	zyphor build package pkg/v3/zyphor-archive-keyring
+# 	mv pkg/v3/zyphor-archive-keyring.deb zyphor-archive-keyring.deb
+
+	zyphor build package pkg/v3/zyphor-repo-config
+	mv pkg/v3/zyphor-repo-config.deb zyphor-repo-config.deb
 
 # 	zyphor build package pkg/v2/zysh
 # 	mv pkg/v2/zysh.deb zysh.deb
@@ -223,7 +226,9 @@ release:
 
 # 	---
 
-	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
+# 	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
+
+	mv ./*.deb ../zyphor-os.github.io/babbage-lts/pool/main/z --verbose
 
 # 	mv ./*.deb pkg/staging --verbose
 
