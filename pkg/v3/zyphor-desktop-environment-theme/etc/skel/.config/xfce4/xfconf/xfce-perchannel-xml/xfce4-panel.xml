@@ -92,7 +92,7 @@
     </property>
     <property name="plugin-17" type="string" value="separator"/>
     <property name="plugin-18" type="string" value="directorymenu">
-      <property name="base-directory" type="string" value="/home/markiv"/>
+      <property name="base-directory" type="string" value="/home"/>
     </property>
   </property>
 </channel>
