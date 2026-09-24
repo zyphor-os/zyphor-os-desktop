@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    remove|purge)
+        if command -v update-grub >/dev/null 2>&1; then
+            update-grub
+        fi
+        ;;
+esac
+
+exit 0

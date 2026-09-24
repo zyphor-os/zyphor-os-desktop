@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+THEME_DIR="/boot/grub/themes/zyphor"
+GRUB_CONFIG="/etc/default/grub.d/zyphor.cfg"
+
+# Ensure Zyphor GRUB configuration has the correct ownership
+if [ -f "$GRUB_CONFIG" ]; then
+    chown root:root "$GRUB_CONFIG"
+    chmod 0644 "$GRUB_CONFIG"
+fi
+
+# Ensure Zyphor GRUB theme is protected
+if [ -d "$THEME_DIR" ]; then
+    chown -R root:root "$THEME_DIR"
+
+    # Directories: 555
+    find "$THEME_DIR" -type d -exec chmod 555 {} \;
+
+    # Files: 444
+    find "$THEME_DIR" -type f -exec chmod 444 {} \;
+fi
+
+# Regenerate GRUB configuration
+if command -v update-grub >/dev/null 2>&1; then
+    update-grub
+fi
+
+exit 0

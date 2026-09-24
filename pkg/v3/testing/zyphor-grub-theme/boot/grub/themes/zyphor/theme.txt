@@ -1,0 +1,14 @@
+title-text: "Zyphor OS"
+
+desktop-image: "background.png"
+
++ boot_menu {
+    left = 30%
+    top = 30%
+    width = 40%
+    height = 40%
+}
+
++ label {
+    text = "Zyphor OS"
+}
