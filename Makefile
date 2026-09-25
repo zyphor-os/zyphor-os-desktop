@@ -182,6 +182,12 @@ add:
 	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release.js
 	git commit -m "chore: update What's New release data"
 
+	git add pkg/v2/zyphor-grub-theme/DEBIAN/control
+	git commit -m "chore: update zyphor GRUB theme control"
+
+	git add pkg/v2/zyphor-grub-theme/DEBIAN/postinst
+	git commit -m "fix: update zyphor GRUB theme postinst"
+
 push:
 	git push origin $(branch)
 
@@ -242,8 +248,8 @@ release:
 # 	zyphor build package pkg/v2/zou/grub-screensaver-1
 # 	mv pkg/v2/zou/grub-screensaver-1.deb grub-screensaver-1.deb
 
-# 	zyphor build package pkg/v2/zyphor-grub-theme
-# 	mv pkg/v2/zyphor-grub-theme.deb zyphor-grub-theme.deb
+	zyphor build package pkg/v2/zyphor-grub-theme
+	mv pkg/v2/zyphor-grub-theme.deb zyphor-grub-theme.deb
 
 # V3 UPDATES ===========================================================
 
