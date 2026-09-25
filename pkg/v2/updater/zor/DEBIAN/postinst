@@ -3,7 +3,7 @@ set -e
 
 # Write Zyphor identity file
 cat > /usr/lib/os-release << 'EOF'
-PRETTY_NAME="Zyphor OS v2.2.1-ada-lovelace-lts-u62"
+PRETTY_NAME="Zyphor OS v2.2.1-ada-lovelace-lts-u63"
 NAME="Zyphor OS GNU/Linux"
 VERSION_ID="2.2.1-ada-lovelace-lts"
 VERSION="2.2.1-ada-lovelace-lts"
@@ -23,5 +23,31 @@ if [ -e /etc/os-release ] && [ ! -L /etc/os-release ]; then
 fi
 
 ln -sf /usr/lib/os-release /etc/os-release
+
+
+# Enable GRUB OS probing
+if [ -f /etc/default/grub ]; then
+
+    if grep -q '^#GRUB_DISABLE_OS_PROBER=false' /etc/default/grub; then
+        sed -i \
+            's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' \
+            /etc/default/grub
+
+    elif grep -q '^GRUB_DISABLE_OS_PROBER=' /etc/default/grub; then
+        sed -i \
+            's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' \
+            /etc/default/grub
+
+    else
+        echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub
+    fi
+
+fi
+
+
+# Regenerate GRUB configuration
+if command -v update-grub >/dev/null 2>&1; then
+    update-grub
+fi
 
 exit 0
