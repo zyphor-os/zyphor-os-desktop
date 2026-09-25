@@ -112,6 +112,38 @@ devbuild:
 	  -isohybrid-gpt-basdat \
 	  .)
 
+# Run after exiting the devinit chroot, before devbuild. Needs live-boot,
+# live-config and live-config-systemd installed in the chroot.
+devlive:
+	@echo "\n--- CHECKING LIVE-BOOT IN CHROOT ---\n";
+	@test -e extract/usr/share/initramfs-tools/scripts/live || \
+		{ echo "live-boot is not installed in extract/. In the chroot run:"; \
+		  echo "  apt install live-boot live-config live-config-systemd"; exit 1; }
+	@echo "\n--- REMOVING INSTALLED-SYSTEM LEFTOVERS ---\n";
+	echo "# UNCONFIGURED FSTAB FOR BASE SYSTEM" | sudo tee extract/etc/fstab
+	sudo truncate -s 0 extract/etc/machine-id
+	sudo rm -f --verbose extract/var/lib/dbus/machine-id extract/etc/initramfs-tools/conf.d/resume
+	sudo rm -rf --verbose extract/var/log/journal/*
+	@kver=$$(ls extract/boot/vmlinuz-* 2>/dev/null | sed 's|.*/vmlinuz-||' | sort -V | tail -1); \
+	test -n "$$kver" || { echo "No kernel found in extract/boot."; exit 1; }; \
+	echo "\n--- REBUILDING INITRAMFS $$kver ---\n"; \
+	for d in dev proc sys run; do \
+		mountpoint -q extract/$$d || sudo mount --bind /$$d extract/$$d || exit 1; \
+	done; \
+	sudo chroot extract update-initramfs -u -k $$kver || exit 1; \
+	echo "\n--- COPYING KERNEL $$kver TO iso/live ---\n"; \
+	sudo rm -f --verbose iso/live/vmlinuz* iso/live/initrd.img*; \
+	sudo cp --verbose extract/boot/vmlinuz-$$kver iso/live/vmlinuz; \
+	sudo cp --verbose extract/boot/initrd.img-$$kver iso/live/initrd.img
+	@echo "\n--- INSTALLING LIVE BOOT MENUS ---\n";
+	sudo cp --verbose devtools/live/isolinux-live.cfg iso/isolinux/live.cfg
+	sudo sed -i 's/^# *include live.cfg/include live.cfg/' iso/isolinux/menu.cfg
+	sudo cp --verbose devtools/live/grub-live.cfg iso/boot/grub/live.cfg
+	@grep -q '^source /boot/grub/live.cfg' iso/boot/grub/grub.cfg || \
+		sudo sed -i '/^source \/boot\/grub\/config.cfg/a source /boot/grub/live.cfg' iso/boot/grub/grub.cfg
+	@echo "\n--- EXCLUDING LIVE PACKAGES FROM INSTALLS ---\n";
+	sudo cp --verbose devtools/live/filesystem.packages-remove iso/live/filesystem.packages-remove
+
 vmcreate:
 	rm -rf new-iso/*.qcow2 --verbose
 # 	rm -rf new-iso/*.iso --verbose
@@ -122,6 +154,12 @@ install-cdrom:
 
 run-hdd:
 	sudo qemu-system-x86_64 --enable-kvm -m 4028 --hda new-iso/zyphor.qcow2 --boot c
+
+run-iso:
+	qemu-system-x86_64 -enable-kvm -m 4096 -cdrom $(or $(iso),new-iso/zyphor-custom.iso) -boot d
+
+run-iso-uefi:
+	qemu-system-x86_64 -enable-kvm -m 4096 -bios /usr/share/ovmf/OVMF.fd -cdrom $(or $(iso),new-iso/zyphor-custom.iso) -boot d
 
 # end...
 
