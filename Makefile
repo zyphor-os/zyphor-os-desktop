@@ -129,51 +129,14 @@ status:
 	git status
 
 add:
-# 
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add -u pkg/v3/zyphor-grub-theme/DEBIAN/control
-	git commit -m "chore: remove zyphor GRUB theme control"
+	git add pkg/v3/zyphor-plymouth/DEBIAN/control
+	git commit -m "chore: update zyphor Plymouth package control"
 
-	git add -u pkg/v3/zyphor-grub-theme/DEBIAN/postinst
-	git commit -m "chore: remove zyphor GRUB theme postinst"
-
-	git add -u pkg/v3/zyphor-grub-theme/DEBIAN/postrm
-	git commit -m "chore: remove zyphor GRUB theme postrm"
-
-	git add -u pkg/v3/zyphor-grub-theme/boot/grub/themes/zyphor/background.png
-	git commit -m "chore: remove zyphor GRUB theme background"
-
-	git add -u pkg/v3/zyphor-grub-theme/boot/grub/themes/zyphor/theme.txt
-	git commit -m "chore: remove zyphor GRUB theme configuration"
-
-	git add -u pkg/v3/zyphor-grub-theme/etc/default/grub.d/zyphor.cfg
-	git commit -m "chore: remove zyphor GRUB configuration"
-
-	git add -u pkg/v3/zyphor-plymouth-live/DEBIAN/control
-	git commit -m "chore: remove zyphor Plymouth live control"
-
-	git add -u pkg/v3/zyphor-plymouth-live/DEBIAN/postinst
-	git commit -m "chore: remove zyphor Plymouth live postinst"
-
-	git add -u pkg/v3/zyphor-plymouth-live/usr/share/plymouth/.gitignore
-	git commit -m "chore: remove Plymouth gitignore"
-
-	git add -u pkg/v3/zyphor-plymouth-live/usr/share/plymouth/themes/.gitignore
-	git commit -m "chore: remove Plymouth themes gitignore"
-
-	git add -u pkg/v3/zyphor-plymouth-live/usr/share/plymouth/themes/zyphor/zyphor.plymouth
-	git commit -m "chore: remove zyphor Plymouth theme definition"
-
-	git add -u pkg/v3/zyphor-plymouth-live/usr/share/plymouth/themes/zyphor/zyphor.png
-	git commit -m "chore: remove zyphor Plymouth theme image"
-
-	git add -u pkg/v3/zyphor-plymouth-live/usr/share/plymouth/themes/zyphor/zyphor.script
-	git commit -m "chore: remove zyphor Plymouth theme script"
-
-	git add pkg/v3/testing/
-	git commit -m "feat: add testing package"
+	git add pkg/v3/zyphor-plymouth/DEBIAN/postinst
+	git commit -m "fix: update zyphor Plymouth postinst"
 
 push:
 	git push origin $(branch)
@@ -267,11 +230,11 @@ release:
 # 	zyphor build package pkg/v3/zyphor-bashrc-config
 # 	mv pkg/v3/zyphor-bashrc-config.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/zyphor-plymouth
-# 	mv pkg/v3/zyphor-plymouth.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+	zyphor build package pkg/v3/zyphor-plymouth
+	mv pkg/v3/zyphor-plymouth.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
-	zyphor build package pkg/v3/zyphor-plymouth-live
-	mv pkg/v3/zyphor-plymouth-live.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+# 	zyphor build package pkg/v3/zyphor-plymouth-live
+# 	mv pkg/v3/zyphor-plymouth-live.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/zyphor-lightdm-theme
 # 	mv pkg/v3/zyphor-lightdm-theme.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
