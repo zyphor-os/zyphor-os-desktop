@@ -14,11 +14,23 @@ if [ -d "$THEME_DIR" ]; then
     find "$THEME_DIR" -type f -exec chmod 644 {} \;
 fi
 
-# Configure GRUB for Plymouth
+# Configure GRUB for Plymouth and OS probing
 if [ -f /etc/default/grub ]; then
     sed -i \
         's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/' \
         /etc/default/grub
+
+    if grep -q '^#GRUB_DISABLE_OS_PROBER=false' /etc/default/grub; then
+        sed -i \
+            's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' \
+            /etc/default/grub
+    elif grep -q '^GRUB_DISABLE_OS_PROBER=' /etc/default/grub; then
+        sed -i \
+            's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' \
+            /etc/default/grub
+    else
+        echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub
+    fi
 fi
 
 # Set Zyphor as the default Plymouth theme
