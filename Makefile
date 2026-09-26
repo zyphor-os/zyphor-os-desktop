@@ -173,12 +173,6 @@ add:
 	git add pkg/staging/zyphor-desktop-environment.deb
 	git commit -m "chore: update staged desktop environment package"
 
-	git add -u pkg/staging/zyphor-lightdm-theme.deb
-	git commit -m "chore: remove staged lightdm theme package"
-
-	git add -u pkg/staging/zywin-ui.deb
-	git commit -m "chore: remove staged zywin UI package"
-
 	git add pkg/v3/zyphor-desktop-environment/DEBIAN/control
 	git commit -m "chore: update desktop environment control"
 
