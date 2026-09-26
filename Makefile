@@ -170,11 +170,20 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "chore: update zyphor What's New package control"
+	git add pkg/staging/zyphor-desktop-environment.deb
+	git commit -m "chore: update staged desktop environment package"
 
-	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "chore: update What's New release data"
+	git add -u pkg/staging/zyphor-lightdm-theme.deb
+	git commit -m "chore: remove staged lightdm theme package"
+
+	git add -u pkg/staging/zywin-ui.deb
+	git commit -m "chore: remove staged zywin UI package"
+
+	git add pkg/v3/zyphor-desktop-environment/DEBIAN/control
+	git commit -m "chore: update desktop environment control"
+
+	git add pkg/v3/zyphor-desktop-environment/etc/skel/.icons/zyphor-os-3-icons/places/scalable/folder.svg
+	git commit -m "feat: update Zyphor folder icon"
 
 push:
 	git push origin $(branch)
@@ -250,8 +259,9 @@ release:
 # 	zyphor build package pkg/v3/zyphor-archive-keyring
 # 	mv pkg/v3/zyphor-archive-keyring.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/zyphor-desktop-environment
+	zyphor build package pkg/v3/zyphor-desktop-environment
 # 	mv pkg/v3/zyphor-desktop-environment.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+	mv pkg/v3/zyphor-desktop-environment.deb pkg/staging --verbose
 
 # 	zyphor build package pkg/v3/zyphor-os-release
 # 	mv pkg/v3/zyphor-os-release.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
@@ -300,8 +310,8 @@ release:
 # 	zyphor build package pkg/v3/apps/zyphor-command-center
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v3/apps/zyphor-whats-new
-	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v3/apps/zyphor-whats-new
+# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	---
 
