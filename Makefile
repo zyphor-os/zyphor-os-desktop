@@ -170,23 +170,11 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add pkg/v2/updater/zor/DEBIAN/control
-	git commit -m "chore: update zor package control"
+	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "chore: update zyphor What's New package control"
 
-	git add pkg/v2/updater/zor/DEBIAN/postinst
-	git commit -m "fix: update zor package postinst"
-
-	git add pkg/v2/updater/zwn/DEBIAN/control
-	git commit -m "chore: update zwn package control"
-
-	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release.js
+	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
 	git commit -m "chore: update What's New release data"
-
-	git add pkg/v2/zyphor-grub-theme/DEBIAN/control
-	git commit -m "chore: update zyphor GRUB theme control"
-
-	git add pkg/v2/zyphor-grub-theme/DEBIAN/postinst
-	git commit -m "fix: update zyphor GRUB theme postinst"
 
 push:
 	git push origin $(branch)
@@ -209,11 +197,11 @@ release:
 # 	zyphor build package pkg/v2/updater/updates
 # 	mv pkg/v2/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/v2/updater/zor
-	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
+# 	zyphor build package pkg/v2/updater/zor
+# 	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
 
-	zyphor build package pkg/v2/updater/zwn
-	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
+# 	zyphor build package pkg/v2/updater/zwn
+# 	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
 
 # 	zyphor build package pkg/v2/zywin/zywin
 # 	mv pkg/v2/zywin/zywin.deb zywin.deb
@@ -248,8 +236,8 @@ release:
 # 	zyphor build package pkg/v2/zou/grub-screensaver-1
 # 	mv pkg/v2/zou/grub-screensaver-1.deb grub-screensaver-1.deb
 
-	zyphor build package pkg/v2/zyphor-grub-theme
-	mv pkg/v2/zyphor-grub-theme.deb zyphor-grub-theme.deb
+# 	zyphor build package pkg/v2/zyphor-grub-theme
+# 	mv pkg/v2/zyphor-grub-theme.deb zyphor-grub-theme.deb
 
 # V3 UPDATES ===========================================================
 
@@ -312,12 +300,12 @@ release:
 # 	zyphor build package pkg/v3/apps/zyphor-command-center
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/apps/zyphor-whats-new
-# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-whats-new
+	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	---
 
-	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
+# 	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
 
 # 	mv ./*.deb ../zyphor-os.github.io/bethany-lts/pool/main/z --verbose
 
