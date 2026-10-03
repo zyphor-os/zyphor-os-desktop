@@ -170,17 +170,17 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add pkg/v2/updater/zor/DEBIAN/control
-	git commit -m "chore: update zyphor OS release updater control"
+	git add pkg/v2/updater/zwn/DEBIAN/control
+	git commit -m "chore: update zyphor What's New updater control"
 
-	git add pkg/v2/updater/zor/DEBIAN/postinst
-	git commit -m "chore: update zyphor OS release updater postinst"
+	git add pkg/v2/updater/zwn/usr/share/zyphor-whats-new/release-notes.html
+	git commit -m "chore: update zyphor What's New updater release notes"
 
-	git add pkg/v3/zyphor-os-release/DEBIAN/control
-	git commit -m "chore: update zyphor OS release control"
+	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "chore: update zyphor What's New control"
 
-	git add pkg/v3/zyphor-os-release/etc/os-release
-	git commit -m "chore: update zyphor OS release information"
+	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release-notes.html
+	git commit -m "chore: update zyphor What's New release notes"
 
 push:
 	git push origin $(branch)
@@ -203,11 +203,11 @@ release:
 # 	zyphor build package pkg/v2/updater/updates
 # 	mv pkg/v2/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/v2/updater/zor
-	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
+# 	zyphor build package pkg/v2/updater/zor
+# 	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
 
-# 	zyphor build package pkg/v2/updater/zwn
-# 	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
+	zyphor build package pkg/v2/updater/zwn
+	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
 
 # 	zyphor build package pkg/v2/zywin/zywin
 # 	mv pkg/v2/zywin/zywin.deb zywin.deb
@@ -259,8 +259,8 @@ release:
 # 	mv pkg/v3/zyphor-desktop-environment.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 # 	mv pkg/v3/zyphor-desktop-environment.deb pkg/staging --verbose
 
-	zyphor build package pkg/v3/zyphor-os-release
-	mv pkg/v3/zyphor-os-release.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+# 	zyphor build package pkg/v3/zyphor-os-release
+# 	mv pkg/v3/zyphor-os-release.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/zyphor-grub-theme
 # 	mv pkg/v3/zyphor-grub-theme.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
@@ -312,8 +312,8 @@ release:
 # 	zyphor build package pkg/v3/apps/zyphor-command-center
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/apps/zyphor-whats-new
-# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-whats-new
+	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	---
 
