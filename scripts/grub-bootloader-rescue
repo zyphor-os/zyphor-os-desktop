@@ -3,7 +3,7 @@ set prefix=(hd0,gpt3)/boot/grub
 insmod normal
 normal
 
-SET OSX AS BOOTLOADER
+SET OSX AS DEFAULT BOOTLOADER
 
 1. Boot into OSX
 2. sudo update-grub
