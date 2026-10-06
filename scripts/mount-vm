@@ -1,5 +1,5 @@
 sudo modprobe nbd max_part=8
-sudo qemu-nbd --connect=/dev/nbd0 debian.qcow2
+sudo qemu-nbd --connect=/dev/nbd0 zyphor.qcow2
 
 lsblk /dev/nbd0
 
@@ -8,6 +8,11 @@ sudo mkdir -p /mnt/zyphor-root
 sudo mount /dev/nbd0pX /mnt/zyphor-root
 
 ls /mnt/zyphor-root
+
+sudo mksquashfs /mnt/zyphor-root ./filesystem.squashfs \
+  -comp zstd \
+  -b 1M \
+  -noappend
 
 sudo umount /mnt/zyphor-root
 sudo qemu-nbd --disconnect /dev/nbd0
