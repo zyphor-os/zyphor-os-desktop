@@ -1,9 +1,9 @@
-userdel -r markjason
-find / -user markjason 2>/dev/null
-find / -user markjason -exec rm -rf {} + 2>/dev/null
-pkill -u markjason
+userdel -r markjasonespelita
+find / -user markjasonespelita 2>/dev/null
+find / -user markjasonespelita -exec rm -rf {} + 2>/dev/null
+pkill -u markjasonespelita
 
-rm -f /var/spool/cron/crontabs/markjason
-rm -f /etc/cron.d/markjason
+rm -f /var/spool/cron/crontabs/markjasonespelita
+rm -f /etc/cron.d/markjasonespelita
 
 zy system clean

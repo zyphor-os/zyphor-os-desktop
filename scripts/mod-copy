@@ -1,0 +1,11 @@
+cp -r /home/username/.config/xfce4 /etc/skel/.config --verbose
+cp -r /home/username/.icons /etc/skel/ --verbose
+cp -r /home/username/.themes /etc/skel/ --verbose
+cp -r /home/username/.fonts /etc/skel/ --verbose
+cp -r /home/username/Desktop /etc/skel/ --verbose
+
+chown -R root:root /etc/skel/.config/xfce4
+chown -R root:root /etc/skel/.icons
+chown -R root:root /etc/skel/.themes
+chown -R root:root /etc/skel/.fonts
+chown -R root:root /etc/skel/Desktop
