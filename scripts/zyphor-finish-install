@@ -4,80 +4,8 @@ set -e
 
 echo "INFO: Finishing Zyphor OS installation..."
 
-configure_zyphor_user() {
-    for user in $(ls /home 2>/dev/null); do
-        if ! getent passwd "$user" >/dev/null; then
-            echo "WARNING: /home/$user exists but user '$user' does not exist"
-            continue
-        fi
-
-        echo "INFO: Configuring Zyphor user '$user'"
-
-        # Add Zyphor-specific groups here if needed
-        # usermod -a -G audio,video "$user"
-    done
-}
-
-configure_root() {
-    echo "INFO: Configuring root account..."
-
-    # Finding users using home directory is fragile
-    # Instaed lets just find the user using it's UID which is 1000 or more from /etc/passwd
-
-    INSTALL_USER="$(awk -F: '$3 >= 1000 && $3 < 60000 {print $1; exit}' /etc/passwd)"
-
-    if [ -z "$INSTALL_USER" ]; then
-        echo "WARNING: Could not determine the installing user."
-        echo "WARNING: Root account will remain locked."
-        passwd -l root
-        return 0
-    fi
-
-    echo "INFO: Installing user detected: '$INSTALL_USER'"
-
-    # Get the user's existing password hash from /etc/shadow.
-    USER_PASSWORD_HASH=$(getent shadow "$INSTALL_USER" | cut -d: -f2)
-
-    if [ -z "$USER_PASSWORD_HASH" ] || \
-       [ "$USER_PASSWORD_HASH" = "!" ] || \
-       [ "$USER_PASSWORD_HASH" = "*" ]; then
-        echo "WARNING: User '$INSTALL_USER' does not have a usable password."
-        echo "WARNING: Root password will not be copied."
-        passwd -l root
-        return 0
-    fi
-
-    # Copy the user's password hash to root.
-    # The plaintext password is never exposed.
-    usermod -p "$USER_PASSWORD_HASH" root
-
-    # Force the root password to expire.
-    chage -d 0 root
-
-    # Lock root after configuring the password.
-    passwd -l root
-
-    echo "INFO: Root account configured."
-    echo "INFO: Root password is synchronized with '$INSTALL_USER'."
-    echo "INFO: Root password is expired."
-    echo "INFO: Root account is locked."
-}
-
-configure_terminal() {
-    if dpkg -s xfce4-terminal >/dev/null 2>&1; then
-        update-alternatives \
-            --set x-terminal-emulator \
-            /usr/bin/xfce4-terminal || true
-    fi
-}
-
 install_zyphor_plymouth() {
     echo "INFO: Installing Zyphor Plymouth..."
-
-    if dpkg -s zyphor-plymouth-live >/dev/null 2>&1; then
-        echo "INFO: Removing zyphor-plymouth-live..."
-        apt-get remove -y zyphor-plymouth-live
-    fi
 
     if dpkg -s zyphor-plymouth >/dev/null 2>&1; then
         echo "INFO: zyphor-plymouth is already installed."
@@ -101,9 +29,6 @@ configure_zyphor() {
     # etc.
 }
 
-configure_zyphor_user
-configure_root
-configure_terminal
 install_zyphor_plymouth
 configure_zyphor
 
