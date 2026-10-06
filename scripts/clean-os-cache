@@ -22,3 +22,4 @@ truncate -s 0 /etc/machine-id
 rm -f /var/lib/dbus/machine-id
 
 echo "Cleanup complete."
+
