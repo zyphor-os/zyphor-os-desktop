@@ -1,0 +1,10 @@
+set root=(hd0,gpt3)
+set prefix=(hd0,gpt3)/boot/grub
+insmod normal
+normal
+
+SET OSX AS BOOTLOADER
+
+1. Boot into OSX
+2. sudo update-grub
+3. sudo reboot
