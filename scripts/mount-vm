@@ -9,7 +9,7 @@ sudo mount /dev/nbd0pX /mnt/zyphor-root
 
 ls /mnt/zyphor-root
 
-sudo mksquashfs /mnt/zyphor-root ./filesystem.squashfs \
+sudo mksquashfs /mnt/zyphor-root ~/zyphor-os-desktop/filesystem.squashfs \
   -comp zstd \
   -b 1M \
   -noappend
