@@ -1,0 +1,24 @@
+#!/bin/sh
+set -e
+
+THEME="/usr/share/desktop-base/zyphor-os-theme"
+
+case "$1" in
+    configure)
+        if [ -d "$THEME" ]; then
+            update-alternatives \
+                --install \
+                /usr/share/desktop-base/active-theme \
+                desktop-theme \
+                "$THEME" \
+                100
+
+            update-alternatives \
+                --set \
+                desktop-theme \
+                "$THEME"
+        fi
+        ;;
+esac
+
+exit 0

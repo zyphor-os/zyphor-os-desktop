@@ -1,0 +1,14 @@
+<background>
+  <static>
+    <duration>8640000.0</duration>
+    <file>
+      <size width="1080" height="2160">/usr/share/desktop-base/zyphor-os-theme/wallpaper/contents/images/1080x2160.svg</size>
+      <size width="1280" height="800">/usr/share/desktop-base/zyphor-os-theme/wallpaper/contents/images/1280x800.svg</size>
+      <size width="1280" height="1024">/usr/share/desktop-base/zyphor-os-theme/wallpaper/contents/images/1280x1024.svg</size>
+      <size width="1920" height="1080">/usr/share/desktop-base/zyphor-os-theme/wallpaper/contents/images/1920x1080.svg</size>
+      <size width="1920" height="1200">/usr/share/desktop-base/zyphor-os-theme/wallpaper/contents/images/1920x1200.svg</size>
+      <size width="2520" height="1080">/usr/share/desktop-base/zyphor-os-theme/wallpaper/contents/images/2520x1080.svg</size>
+    </file>
+  </static>
+</background>
+

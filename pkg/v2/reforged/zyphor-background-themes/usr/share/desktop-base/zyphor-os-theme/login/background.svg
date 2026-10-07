@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <!-- Background Radial Gradient matching the deep blue vignette -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%" fx="80%" fy="50%">
+      <stop offset="0%" stop-color="#2c5c99"/>
+      <stop offset="40%" stop-color="#163866"/>
+      <stop offset="80%" stop-color="#0b1d36"/>
+      <stop offset="100%" stop-color="#050e1b"/>
+    </radialGradient>
+
+    <!-- Subtle texture pattern for the OS background feel -->
+    <filter id="noiseFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.08 0"/>
+    </filter>
+
+    <!-- Glow for the text -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1920" height="1080" fill="url(#bgGrad)"/>
+
+  <!-- Texture Overlay -->
+  <rect width="1920" height="1080" filter="url(#noiseFilter)" opacity="0.6"/>
+
+  <!-- Ambient Light / Vignette Accent -->
+  <circle cx="1500" cy="540" r="500" fill="#3a7ec4" opacity="0.15" filter="blur(80px)"/>
+  <circle cx="300" cy="400" r="400" fill="#1b4d85" opacity="0.2" filter="blur(100px)"/>
+
+  <!-- Subtle background stars/dust particles -->
+  <g fill="#ffffff" opacity="0.3">
+    <circle cx="200" cy="150" r="1.5" />
+    <circle cx="220" cy="140" r="1" opacity="0.5"/>
+    <circle cx="180" cy="320" r="1" />
+    <circle cx="260" cy="330" r="2" opacity="0.7"/>
+    <circle cx="1550" cy="200" r="1" />
+    <circle cx="1650" cy="680" r="1.5" opacity="0.4"/>
+    <circle cx="1300" cy="900" r="1" />
+    <circle cx="1600" cy="150" r="2" opacity="0.6"/>
+  </g>
+
+  <!-- Typography Group (Positioned on the right side where the logo used to be) -->
+  <g transform="translate(1220, 420)" filter="url(#glow)">
+    
+    <!-- Typography: Zyphor OS 2 -->
+    <text x="235" y="380" 
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+          font-size="40" 
+          font-weight="500" 
+          letter-spacing="2" 
+          fill="#ffffff" 
+          opacity="0.9" 
+          text-anchor="middle">
+      Zyphor OS 2
+    </text>
+
+    <!-- Typography: "Ada Lovelace" Reforged -->
+    <text x="235" y="422" 
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+          font-size="26" 
+          font-weight="300" 
+          letter-spacing="1" 
+          fill="#aed2ff" 
+          opacity="0.8" 
+          text-anchor="middle">
+      "Ada Lovelace" Reforged
+    </text>
+    
+    <!-- Text subtle highlight duplicate for glow -->
+    <text x="235" y="380" 
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+          font-size="40" 
+          font-weight="500" 
+          letter-spacing="2" 
+          fill="#ffffff" 
+          opacity="0.3" 
+          text-anchor="middle"
+          filter="blur(1px)">
+      Zyphor OS 2
+    </text>
+  </g>
+</svg>

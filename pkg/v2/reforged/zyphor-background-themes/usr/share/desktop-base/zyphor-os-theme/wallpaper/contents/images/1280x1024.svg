@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <!-- Deep Electric Blue and Cobalt Neon Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="80%" fx="40%" fy="40%">
+      <stop offset="0%" stop-color="#0a1128"/>
+      <stop offset="45%" stop-color="#040714"/>
+      <stop offset="85%" stop-color="#02030a"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+
+    <!-- Geometric Interlocking Hexagonal Tech Pattern -->
+    <pattern id="hexPattern" width="120" height="104" patternUnits="userSpaceOnUse" patternTransform="scale(1.2) rotate(15)">
+      <g stroke="#2670ff" stroke-width="0.5" fill="none" opacity="0.14">
+        <path d="M 60 0 L 30 51.96 L 90 51.96 L 60 103.92 Z"/>
+        <path d="M 60 103.92 L 30 51.96 L -30 51.96 L 0 103.92 Z"/>
+        <path d="M 60 0 L 30 51.96 L -30 51.96 L 0 0 Z"/>
+        <path d="M 120 0 L 90 51.96 L 30 51.96 L 60 0 Z"/>
+        <path d="M 120 103.92 L 90 51.96 L 30 51.96 L 60 103.92 Z"/>
+      </g>
+    </pattern>
+
+    <!-- Subtle texture pattern -->
+    <filter id="noiseFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.08 0"/>
+    </filter>
+
+    <!-- Intense Electric Blue Neon Glow effect -->
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur1"/>
+      <feGaussianBlur stdDeviation="18" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1920" height="1080" fill="url(#bgGrad)"/>
+
+  <!-- Geometric Hexagonal Pattern Layer -->
+  <rect width="1920" height="1080" fill="url(#hexPattern)"/>
+
+  <!-- Texture Overlay -->
+  <rect width="1920" height="1080" filter="url(#noiseFilter)" opacity="0.6"/>
+
+  <!-- Ambient Deep Electric Blue & Cobalt Light Orbs -->
+  <circle cx="960" cy="540" r="600" fill="#1a56ff" opacity="0.09" filter="blur(140px)"/>
+  <circle cx="450" cy="700" r="400" fill="#0044ff" opacity="0.1" filter="blur(110px)"/>
+
+  <!-- Subtle background cyber dust particles -->
+  <g fill="#4d88ff" opacity="0.4">
+    <circle cx="250" cy="180" r="1.5" />
+    <circle cx="270" cy="170" r="1" opacity="0.5"/>
+    <circle cx="200" cy="400" r="1" />
+    <circle cx="310" cy="410" r="2" opacity="0.7"/>
+    <circle cx="1500" cy="220" r="1" />
+    <circle cx="1600" cy="750" r="1.5" opacity="0.4"/>
+    <circle cx="1250" cy="820" r="1" />
+    <circle cx="1550" cy="180" r="2" opacity="0.6"/>
+  </g>
+
+  <!-- Typography Group (Positioned on the right side) -->
+  <g transform="translate(1220, 460)" filter="url(#neonGlow)">
+    
+    <!-- Typography: Zyphor OS 2 (Pure White to Bright Blue Glow) -->
+    <text x="235" y="380" 
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+          font-size="42" 
+          font-weight="600" 
+          letter-spacing="3" 
+          fill="#ffffff" 
+          text-anchor="middle">
+      Zyphor OS 2
+    </text>
+
+    <!-- Typography: "Ada Lovelace" Reforged (Electric Blue Neon Subtitle) -->
+    <text x="235" y="425" 
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+          font-size="26" 
+          font-weight="300" 
+          letter-spacing="1.5" 
+          fill="#99b8ff" 
+          text-anchor="middle">
+      "Ada Lovelace" Reforged
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+FILE="/usr/share/backgrounds/xfce/xfce-x.svg"
+DIVERTED="/usr/share/backgrounds/xfce/xfce-x.svg.debian"
+
+case "$1" in
+    install|upgrade)
+        dpkg-divert \
+            --package zyphor-background-themes \
+            --add \
+            --rename \
+            --divert "$DIVERTED" \
+            "$FILE"
+        ;;
+esac
+
+exit 0

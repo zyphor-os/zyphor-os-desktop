@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    remove|abort-install|abort-upgrade|disappear)
+        dpkg-divert \
+            --package zyphor-background-themes \
+            --rename \
+            --divert /usr/share/backgrounds/xfce/xfce-x.svg.debian \
+            --remove /usr/share/backgrounds/xfce/xfce-x.svg
+        ;;
+esac
+
+exit 0

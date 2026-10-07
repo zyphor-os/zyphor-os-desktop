@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Name": "Zyphor",
+        "Id": "Zyphor",
+        "License": "GPLv2+",
+        "Authors": [
+            {
+                "Name": "Mark Jason Espelita",
+                "Email": "markjasonespelita@gmail.com"
+            }
+        ]
+    }
+}
