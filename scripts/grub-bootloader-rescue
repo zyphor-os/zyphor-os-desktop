@@ -7,4 +7,4 @@ SET OSX AS DEFAULT BOOTLOADER
 
 1. Boot into OSX
 2. sudo update-grub
-3. sudo reboot
+3. sudo rebootlsls
