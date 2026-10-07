@@ -170,16 +170,8 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add scripts/clean-os-cache
-	git commit -m "chore: update clean OS cache script"
-
-	git add scripts/zyphor-finish-install
-	git commit -m "chore: update zyphor finish install script"
-
-	git add scripts/clean-test-user
-	git commit -m "chore: add clean test user script"
-
-	git add scripts/mod-copy
+	git add pkg/v2/reforged/zyphor-repo-config/
+	git commit -m "chore: add reforged zyphor repo config package"
 
 push:
 	git push origin $(branch)
@@ -248,19 +240,22 @@ release:
 
 # ADA LOVELACE MAIN
 
-	zyphor build package pkg/v2/reforged/zyphor-archive-keyring
-	mv pkg/v2/reforged/zyphor-archive-keyring.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-archive-keyring
+# 	mv pkg/v2/reforged/zyphor-archive-keyring.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+
+	zyphor build package pkg/v2/reforged/zyphor-repo-config
+	mv pkg/v2/reforged/zyphor-repo-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
 # ADA LOVELACE APPS
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-cli
-	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-cli
+# 	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
-	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
+# 	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
-	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
+# 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # V3 UPDATES ===========================================================
 
