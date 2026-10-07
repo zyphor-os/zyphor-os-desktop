@@ -170,11 +170,14 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add scripts/grub-bootloader-rescue
-	git commit -m "chore: update GRUB bootloader rescue script"
+	git add pkg/v2/reforged/zyphor-bashrc-config/
+	git commit -m "chore: add reforged zyphor bashrc config package"
 
-	git add pkg/v2/reforged/zyphor-background-themes/
-	git commit -m "chore: add reforged zyphor background themes package"
+	git add pkg/v2/reforged/zyphor-face-icon/
+	git commit -m "chore: add reforged zyphor face icon package"
+
+	git add pkg/v2/reforged/zyphor-fastfetch-config/
+	git commit -m "chore: add reforged zyphor fastfetch config package"
 
 push:
 	git push origin $(branch)
@@ -255,8 +258,17 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-plymouth
 # 	mv pkg/v2/reforged/zyphor-plymouth.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/zyphor-background-themes
-	mv pkg/v2/reforged/zyphor-background-themes.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-background-themes
+# 	mv pkg/v2/reforged/zyphor-background-themes.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+
+	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
+	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+	
+	zyphor build package pkg/v2/reforged/zyphor-face-icon
+	mv pkg/v2/reforged/zyphor-face-icon.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+	
+	zyphor build package pkg/v2/reforged/zyphor-fastfetch-config
+	mv pkg/v2/reforged/zyphor-fastfetch-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
 # ADA LOVELACE APPS
 
