@@ -1,8 +1,0 @@
-Package: zyshell
-Version: 2.0.0
-Section: utils
-Priority: optional
-Architecture: all
-Depends: zsh
-Maintainer: Mark Jason P. Espelita
-Description: Zyphor OS Default Shell
