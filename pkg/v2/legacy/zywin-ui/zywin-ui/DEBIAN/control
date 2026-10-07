@@ -1,0 +1,8 @@
+Package: zywin-ui
+Version: 1.1.2-r5-stable-release
+Section: utils
+Priority: optional
+Architecture: all
+Depends: zywin
+Maintainer: Mark Jason Espelita & Zyphor OS Team
+Description: Zyphor OS zywin-ui Application

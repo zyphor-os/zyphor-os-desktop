@@ -1,0 +1,11 @@
+Package: zysetup
+Version: 1.0.0-beta-release
+Section: admin
+Priority: optional
+Architecture: all
+Maintainer: Mark Jason P. Espelita <markjasonespelita@gmail.com>
+Depends: sudo, apt
+Description: Interactive setup utility for Zyphor OS
+ ZySetup is the official post-install setup utility for Zyphor OS.
+ It automatically minstalls recomended software, configures the system,
+ and prepares the operating system for everyday use.

@@ -1,0 +1,75 @@
+#!/bin/sh
+set -e
+
+# -------------------------
+# 1. ZyWin UI executable
+# -------------------------
+
+chown root:root /usr/bin/zywin-ui
+chmod 555 /usr/bin/zywin-ui
+
+
+# -------------------------
+# 2. ZyWin Desktop launcher
+# -------------------------
+
+DESKTOP_FILE="/usr/share/applications/zywin-ui.desktop"
+
+if [ -f "$DESKTOP_FILE" ]; then
+    chown root:root "$DESKTOP_FILE"
+    chmod 555 "$DESKTOP_FILE"
+fi
+
+
+# -------------------------
+# 3. ZyWin icons
+# -------------------------
+
+ICONS="
+/usr/share/icons/hicolor/256x256/apps/zywin.png
+/usr/share/icons/hicolor/48x48/apps/zywin.png
+/usr/share/icons/hicolor/128x128/apps/zywin.png
+"
+
+for ICON in $ICONS; do
+    if [ -f "$ICON" ]; then
+        chown root:root "$ICON"
+        chmod 555 "$ICON"
+    fi
+done
+
+
+# -------------------------
+# 4. Create Desktop launcher
+# -------------------------
+
+if [ -n "$SUDO_USER" ] && [ "$SUDO_USER" != "root" ]; then
+    USER_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+    DESKTOP_DIR="$USER_HOME/Desktop"
+    USER_DESKTOP_FILE="$DESKTOP_DIR/ZyWin-UI.desktop"
+
+    if [ -d "$DESKTOP_DIR" ] && [ -f "$DESKTOP_FILE" ]; then
+
+        if [ -f "$USER_DESKTOP_FILE" ]; then
+            echo "Refreshing existing ZyWin-UI desktop icon..."
+        else
+            echo "Creating ZyWin-UI desktop icon..."
+        fi
+
+        cp "$DESKTOP_FILE" "$USER_DESKTOP_FILE"
+
+        # Desktop copy belongs to the user
+        chown "$SUDO_USER:$SUDO_USER" "$USER_DESKTOP_FILE"
+        chmod +x "$USER_DESKTOP_FILE"
+
+        # Mark launcher as trusted
+        if command -v gio >/dev/null 2>&1; then
+            sudo -u "$SUDO_USER" gio set \
+                "$USER_DESKTOP_FILE" \
+                metadata::trusted true \
+                >/dev/null 2>&1 || true
+        fi
+    fi
+fi
+
+exit 0

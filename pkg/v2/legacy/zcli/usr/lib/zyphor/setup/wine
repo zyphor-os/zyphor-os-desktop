@@ -1,0 +1,55 @@
+#!/bin/bash
+#
+# zyphor_setup_wine — Wine (i386/32-bit Windows compatibility) bootstrapper
+#
+# Usage: zyphor setup wine
+#
+
+_zyphor_setup_wine() {
+  _zyphor_require_root "wine" || return 1
+
+  echo ""
+  echo "Zyphor: 🚀 Setting up Wine"
+  echo ""
+
+  if ! dpkg --print-foreign-architectures | grep -qx "i386"; then
+    echo "Zyphor: Adding i386 architecture..."
+    dpkg --add-architecture i386
+  else
+    echo "Zyphor: i386 architecture already enabled"
+  fi
+
+  echo "Zyphor: Updating package lists..."
+  apt update -qq
+
+  echo "Zyphor: Installing Wine (wine, wine64, wine32:i386)..."
+  apt install -y wine wine64 wine32:i386 || {
+    echo "Zyphor: ✖ Failed installing Wine packages"
+    return 1
+  }
+
+  echo ""
+  echo "Zyphor: Verifying installation..."
+  wine --version || echo "⚠ Wine missing"
+
+  echo ""
+  echo "Zyphor: ✔ Wine setup complete"
+  echo ""
+}
+
+zyphor_setup_wine() {
+  local status
+  _zyphor_setup_wine
+  status=$?
+
+  if [ "$status" -eq 0 ]; then
+    echo ""
+    echo "Zyphor: ✔ Setup 'wine' completed"
+    echo ""
+  else
+    echo ""
+    echo "Zyphor: ✖ Setup failed → wine"
+    echo ""
+    return 1
+  fi
+}

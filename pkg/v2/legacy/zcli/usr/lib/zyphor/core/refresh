@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# zyphor help (core)
+
+refresh() {
+    local current_user
+    current_user="$(logname 2>/dev/null || who am i 2>/dev/null | awk '{print $1}' || echo "$USER")"
+
+    local user_home
+    user_home="$(getent passwd "$current_user" | cut -d: -f6)"
+
+    if [[ -z "$user_home" || ! -d "$user_home" ]]; then
+        echo "Zyphor: ✖ Could not resolve home directory for user '$current_user'"
+        return 1
+    fi
+
+    local flag_file="$user_home/.zyphor_firstboot_done"
+
+    if [[ -f "$flag_file" ]]; then
+        rm -f "$flag_file"
+        echo "Zyphor: ✔ First-boot flag removed for $current_user, defaults will reset on next boot"
+    else
+        echo "Zyphor: ✔ First-boot flag not present for $current_user, nothing to remove"
+    fi
+
+    echo "Zyphor: rebooting system..."
+    sleep 2
+    systemctl reboot
+}

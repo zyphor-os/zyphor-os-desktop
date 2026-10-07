@@ -1,0 +1,216 @@
+#!/bin/bash
+#
+# zyphor_setup_web_server — Apache virtual-host bootstrapper for Zyphor OS
+#
+# Usage: zyphor setup web-server
+#
+# Enables mod_rewrite/mod_ssl, generates a self-signed cert (once),
+# opens a port in ports.conf, and creates + enables a VirtualHost
+# for a given site name.
+#
+
+# ======================================================================
+# HELPERS
+# ======================================================================
+
+_zyphor_require_root() {
+  local target="$1"
+  if [ "$EUID" -ne 0 ]; then
+    echo ""
+    echo "Zyphor: ⚠ Requires root privileges"
+    echo "Try: sudo zyphor setup $target"
+    echo ""
+    return 1
+  fi
+}
+
+_zyphor_ssl_configured() {
+  [ -f /etc/ssl/certs/apache-selfsigned.crt ] && [ -f /etc/ssl/private/apache-selfsigned.key ]
+}
+
+# ======================================================================
+# WEB-SERVER TARGET
+# ======================================================================
+
+_zyphor_setup_web_server() {
+  _zyphor_require_root "web-server" || return 1
+
+  if ! command -v apache2 >/dev/null 2>&1; then
+    echo "Zyphor: ✖ Apache2 is not installed — install it first (e.g. apt install apache2)"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: 🚀 Setting up Apache web server"
+  echo ""
+
+  # ------------------------------------------------------------------
+  # Enable required modules
+  # ------------------------------------------------------------------
+  echo "Zyphor: Enabling Apache modules (rewrite, ssl)..."
+  a2enmod rewrite >/dev/null || {
+    echo "Zyphor: ✖ Failed enabling mod_rewrite"
+    return 1
+  }
+  a2enmod ssl >/dev/null || {
+    echo "Zyphor: ✖ Failed enabling mod_ssl"
+    return 1
+  }
+  echo "Zyphor: ✔ Modules enabled"
+
+  # ------------------------------------------------------------------
+  # SSL certificate — only generate if not already configured
+  # ------------------------------------------------------------------
+  if _zyphor_ssl_configured; then
+    echo "Zyphor: ✔ SSL certificate already configured — skipping generation"
+  else
+    echo "Zyphor: Generating self-signed SSL certificate..."
+    mkdir -p /etc/ssl/private /etc/ssl/certs
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+      -keyout /etc/ssl/private/apache-selfsigned.key \
+      -out /etc/ssl/certs/apache-selfsigned.crt || {
+      echo "Zyphor: ✖ Failed generating SSL certificate"
+      return 1
+    }
+    echo "Zyphor: ✔ SSL certificate generated"
+  fi
+
+  # ------------------------------------------------------------------
+  # Port
+  # ------------------------------------------------------------------
+  local PORT
+  read -rp "Port to listen on: " PORT
+
+  if [ -z "$PORT" ]; then
+    echo "Zyphor: ✖ Port is required"
+    return 1
+  fi
+
+  if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then
+    echo "Zyphor: ✖ Port must be numeric"
+    return 1
+  fi
+
+  if [ "$PORT" = "443" ]; then
+    echo "Zyphor: ✔ Port 443 is already listened on by default (mod_ssl) — skipping ports.conf"
+  elif grep -qE "^Listen[[:space:]]+$PORT$" /etc/apache2/ports.conf 2>/dev/null; then
+    echo "Zyphor: ✔ Port $PORT already present in ports.conf — skipping"
+  else
+    echo "Listen $PORT" >> /etc/apache2/ports.conf
+    echo "Zyphor: ✔ Added 'Listen $PORT' to /etc/apache2/ports.conf"
+  fi
+
+  # ------------------------------------------------------------------
+  # Site name / VirtualHost
+  # ------------------------------------------------------------------
+  local SITE_NAME
+  read -rp "Site name (used for config file, DocumentRoot, and logs): " SITE_NAME
+
+  if [ -z "$SITE_NAME" ]; then
+    echo "Zyphor: ✖ Site name is required"
+    return 1
+  fi
+
+  local VHOST_FILE="/etc/apache2/sites-available/${SITE_NAME}.conf"
+  local DOC_ROOT="/var/www/html/${SITE_NAME}"
+
+  if [ -f "$VHOST_FILE" ]; then
+    echo ""
+    echo "Zyphor: ⚠ $VHOST_FILE already exists"
+    read -rp "Overwrite existing VirtualHost config? [y/N]: " OVERWRITE
+    case "$OVERWRITE" in
+      y|Y) ;;
+      *)
+        echo "Zyphor: Keeping existing VirtualHost config — skipping creation"
+        VHOST_FILE=""
+        ;;
+    esac
+  fi
+
+  if [ -n "$VHOST_FILE" ]; then
+    mkdir -p "$DOC_ROOT"
+
+    if [ -f "$DOC_ROOT/index.html" ]; then
+      echo "Zyphor: ✔ index.html already exists in $DOC_ROOT — skipping"
+    else
+      cat > "$DOC_ROOT/index.html" <<EOF
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${SITE_NAME}</title>
+</head>
+<body>
+    <h1>${SITE_NAME}</h1>
+    <p>This is the default page for ${SITE_NAME}, served by Zyphor OS.</p>
+</body>
+</html>
+EOF
+      echo "Zyphor: ✔ Default index.html created → $DOC_ROOT/index.html"
+    fi
+
+    cat > "$VHOST_FILE" <<EOF
+<VirtualHost *:${PORT}>
+    ServerAdmin webmaster@localhost
+    DocumentRoot ${DOC_ROOT}
+
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
+    SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+
+    <Directory ${DOC_ROOT}>
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog \${APACHE_LOG_DIR}/${SITE_NAME}_error.log
+    CustomLog \${APACHE_LOG_DIR}/${SITE_NAME}_access.log combined
+</VirtualHost>
+EOF
+    echo "Zyphor: ✔ VirtualHost config written → $VHOST_FILE"
+  fi
+
+  echo "Zyphor: Enabling site $SITE_NAME..."
+  a2ensite "${SITE_NAME}.conf" >/dev/null || {
+    echo "Zyphor: ✖ Failed enabling site $SITE_NAME"
+    return 1
+  }
+  echo "Zyphor: ✔ Site enabled"
+
+  echo "Zyphor: Restarting Apache..."
+  systemctl restart apache2 || {
+    echo "Zyphor: ✖ Failed restarting Apache — check 'apache2ctl configtest'"
+    return 1
+  }
+  echo "Zyphor: ✔ Apache restarted"
+
+  echo ""
+  echo "Zyphor: ✔ Web server ready → https://localhost:${PORT} (DocumentRoot: $DOC_ROOT)"
+  echo ""
+}
+
+# ======================================================================
+# MAIN ENTRY POINT
+# ======================================================================
+
+zyphor_setup_web_server() {
+  local status
+
+  echo ""
+  echo "Zyphor: 🚀 Setting up web server"
+  echo ""
+
+  _zyphor_setup_web_server
+  status=$?
+
+  if [ "$status" -eq 0 ]; then
+    echo ""
+    echo "Zyphor: ✔ Web server setup completed"
+    echo ""
+  else
+    echo ""
+    echo "Zyphor: ✖ Web server setup failed"
+    echo ""
+    return 1
+  fi
+}

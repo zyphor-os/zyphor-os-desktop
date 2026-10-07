@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+KEY_ASC="/usr/share/keyrings/zyphor-archive-keyring.asc"
+KEY_GPG="/usr/share/keyrings/zyphor-archive-keyring.gpg"
+
+# Set ownership
+chown root:root "$KEY_ASC"
+chown root:root "$KEY_GPG"
+
+# Set permissions
+chmod 0644 "$KEY_ASC"
+chmod 0644 "$KEY_GPG"
+
+exit 0

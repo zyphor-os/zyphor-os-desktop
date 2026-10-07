@@ -1,0 +1,66 @@
+#!/bin/bash
+zyphor_smb_share_add() {
+  source /usr/lib/zyphor/smb/ensure
+  zyphor_smb_ensure || return 1
+
+  if [ "$EUID" -ne 0 ]; then
+    echo ""
+    echo "Zyphor: ⚠ Requires root"
+    echo "Try: sudo zyphor smb share-add"
+    echo ""
+    return 1
+  fi
+
+  read -p "Folder to share (e.g. /home/user/Public): " FOLDER
+  read -p "Share name (e.g. public): " NAME
+  read -p "Samba username: " SMBUSER
+
+  if [ -z "$FOLDER" ] || [ -z "$NAME" ] || [ -z "$SMBUSER" ]; then
+    echo "Zyphor: ✖ Missing required input"
+    return 1
+  fi
+
+  if [ ! -d "$FOLDER" ]; then
+    echo "Zyphor: ✖ Folder does not exist: $FOLDER"
+    return 1
+  fi
+
+  if ! id "$SMBUSER" >/dev/null 2>&1; then
+    echo "Zyphor: ✖ System user '$SMBUSER' does not exist"
+    return 1
+  fi
+
+  if grep -q "^\[$NAME\]" /etc/samba/smb.conf 2>/dev/null; then
+    echo "Zyphor: ✖ Share '$NAME' already exists in smb.conf"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: Adding share '$NAME' → $FOLDER"
+
+  {
+    echo ""
+    echo "[$NAME]"
+    echo "   path = $FOLDER"
+    echo "   browseable = yes"
+    echo "   read only = no"
+    echo "   guest ok = no"
+    echo "   valid users = $SMBUSER"
+  } >> /etc/samba/smb.conf
+
+  if ! pdbedit -L 2>/dev/null | grep -q "^$SMBUSER:"; then
+    echo "Zyphor: Setting Samba password for $SMBUSER"
+    smbpasswd -a "$SMBUSER"
+  fi
+
+  systemctl restart smbd
+  if [ $? -eq 0 ]; then
+    IP=$(hostname -I | awk '{print $1}')
+    echo "Zyphor: ✔ Share '$NAME' is live"
+    echo "Zyphor: Windows path → \\\\$IP\\$NAME"
+  else
+    echo "Zyphor: ✖ Failed to restart smbd"
+    return 1
+  fi
+  echo ""
+}

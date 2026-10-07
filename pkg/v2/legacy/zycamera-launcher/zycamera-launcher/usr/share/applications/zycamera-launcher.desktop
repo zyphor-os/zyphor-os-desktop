@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Zyphor Camera
+Comment=Launch the Zyphor OS camera application
+Exec=zycamera-launcher
+Icon=/usr/share/zycamera-launcher/assets/icons/camera.png
+Terminal=false
+Type=Application
+Categories=AudioVideo;Video;Camera;
+StartupNotify=true

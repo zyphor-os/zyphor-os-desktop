@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+# Set ownership
+
+chown root:root /usr/bin/zywin
+
+# Executable file
+
+chmod 555 /usr/bin/zywin
+
+exit 0

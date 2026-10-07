@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=ZyWin-UI
+Comment=Install and run Windows applications on Zyphor OS
+Exec=/usr/bin/zywin-ui
+Icon=zywin
+Terminal=false
+Categories=System;Utility;
+StartupNotify=true

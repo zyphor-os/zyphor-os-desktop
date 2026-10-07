@@ -1,0 +1,21 @@
+#!/bin/bash
+
+zyphor_smb_list() {
+
+  source /usr/lib/zyphor/smb/ensure
+  zyphor_smb_ensure || return 1
+
+  read -p "IP Address: " IP
+  read -p "Username: " USER
+
+  if [ -z "$IP" ] || [ -z "$USER" ]; then
+    echo "Zyphor: ✖ Missing required input"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: Fetching shares from //$IP ..."
+  smbclient -L "//$IP" -U "$USER"
+
+  echo ""
+}

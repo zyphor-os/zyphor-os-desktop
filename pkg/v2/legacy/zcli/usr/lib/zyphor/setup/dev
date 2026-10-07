@@ -1,0 +1,530 @@
+#!/bin/bash
+#
+# zyphor_setup_dev — dev environment bootstrapper for Zyphor OS
+#
+# Usage: zyphor setup dev <target>
+# Targets: php, git, node, composer, android-studio (with flutter)
+#
+
+# ======================================================================
+# HELPERS
+# ======================================================================
+
+_zyphor_require_root() {
+  local target="$1"
+  if [ "$EUID" -ne 0 ]; then
+    echo ""
+    echo "Zyphor: ⚠ Requires root privileges"
+    echo "Try: sudo zyphor setup dev $target"
+    echo ""
+    return 1
+  fi
+}
+
+# Resolve the "real" invoking user when running under sudo/root, with
+# fallbacks for cases where $SUDO_USER isn't set (e.g. already a root
+# shell, invoked via su/pkexec, etc). This is the fix for the bug where
+# SSH keys / git config were being written into /root instead of the
+# real user's home.
+_zyphor_resolve_real_user() {
+  local candidate=""
+
+  if [ -n "$SUDO_USER" ] && [ "$SUDO_USER" != "root" ]; then
+    candidate="$SUDO_USER"
+  elif command -v logname >/dev/null 2>&1 && logname >/dev/null 2>&1; then
+    candidate="$(logname 2>/dev/null)"
+  fi
+
+  # Last resort: owner of the controlling terminal (covers su -, pkexec, etc)
+  if [ -z "$candidate" ] || [ "$candidate" = "root" ]; then
+    local tty_owner
+    tty_owner="$(stat -c '%U' "$(tty 2>/dev/null)" 2>/dev/null)"
+    if [ -n "$tty_owner" ] && [ "$tty_owner" != "root" ]; then
+      candidate="$tty_owner"
+    fi
+  fi
+
+  # Give up and use $USER only if nothing better was found
+  if [ -z "$candidate" ]; then
+    candidate="$USER"
+  fi
+
+  echo "$candidate"
+}
+
+_zyphor_user_home() {
+  local user="$1"
+  eval echo "~$user"
+}
+
+# zyphor_setup_dev — android-studio target
+#
+# Add this block to zyphor_setup_dev.sh (same file as _zyphor_setup_php /
+# _zyphor_setup_git). Also wire it into the main dispatcher's case
+# statement — see bottom of this file.
+#
+
+# ======================================================================
+# HELPERS (new — add alongside _zyphor_resolve_real_user / _zyphor_user_home)
+# ======================================================================
+
+# Looks for a matching downloaded archive in common locations for the
+# real user (Downloads first, since that's where browsers default to).
+_zyphor_find_archive() {
+  local home="$1" pattern="$2"
+  local dir match
+  for dir in "$home/Downloads" "$home" "/tmp"; do
+    match="$(find "$dir" -maxdepth 1 -iname "$pattern" 2>/dev/null | sort -V | tail -n1)"
+    if [ -n "$match" ]; then
+      echo "$match"
+      return 0
+    fi
+  done
+}
+
+# Picks the real user's shell rc file (.zshrc vs .bashrc) so PATH
+# exports land where that user's shell will actually read them.
+_zyphor_resolve_rc_file() {
+  local user="$1" home="$2"
+  local shell
+  shell="$(getent passwd "$user" 2>/dev/null | cut -d: -f7)"
+  case "$shell" in
+    */zsh) echo "$home/.zshrc" ;;
+    *)     echo "$home/.bashrc" ;;
+  esac
+}
+
+# ======================================================================
+# ANDROID STUDIO + FLUTTER TARGET
+# ======================================================================
+
+_zyphor_setup_android_studio() {
+  _zyphor_require_root "android-studio" || return 1
+
+  echo ""
+  echo "Zyphor: 🚀 Setting up Android Studio + Flutter development environment"
+  echo ""
+
+  echo "Zyphor: Installing base dependencies..."
+  apt update -qq
+  apt install -y git curl unzip zip default-jdk adb fastboot || {
+    echo "Zyphor: ✖ Failed installing dependencies"
+    return 1
+  }
+  echo "Zyphor: ✔ Dependencies installed"
+
+  # ------------------------------------------------------------------
+  # Resolve real user/home, same pattern as the git target
+  # ------------------------------------------------------------------
+  local ORIGINAL_USER ORIGINAL_HOME
+  ORIGINAL_USER="$(_zyphor_resolve_real_user)"
+  ORIGINAL_HOME="$(_zyphor_user_home "$ORIGINAL_USER")"
+
+  echo ""
+  echo "Zyphor: Detected target user → $ORIGINAL_USER"
+  echo "Zyphor: Detected home dir   → $ORIGINAL_HOME"
+  echo ""
+
+  if [ "$ORIGINAL_USER" = "root" ] || [ -z "$ORIGINAL_HOME" ] || [ ! -d "$ORIGINAL_HOME" ]; then
+    echo "Zyphor: ⚠ Could not confidently resolve a non-root user/home."
+    read -rp "Continue using '$ORIGINAL_USER' ($ORIGINAL_HOME)? [y/N]: " CONFIRM_USER
+    case "$CONFIRM_USER" in
+      y|Y) ;;
+      *)
+        echo "Zyphor: ✖ Aborting — re-run as: sudo -u <youruser> zyphor setup dev android-studio"
+        return 1
+        ;;
+    esac
+  fi
+
+  # ------------------------------------------------------------------
+  # Android Studio
+  # ------------------------------------------------------------------
+  if [ -d /opt/android-studio ]; then
+    echo ""
+    echo "Zyphor: ⚠ /opt/android-studio already exists"
+    read -rp "Reinstall Android Studio? [y/N]: " REINSTALL_AS
+    case "$REINSTALL_AS" in
+      y|Y) rm -rf /opt/android-studio ;;
+      *)   echo "Zyphor: Skipping Android Studio install" ;;
+    esac
+  fi
+
+  if [ ! -d /opt/android-studio ]; then
+    local AS_ARCHIVE
+    AS_ARCHIVE="$(_zyphor_find_archive "$ORIGINAL_HOME" "android-studio-*-linux.tar.gz")"
+
+    if [ -z "$AS_ARCHIVE" ]; then
+      echo ""
+      echo "Zyphor: 📘 Android Studio archive not found"
+      echo "Download it from: https://developer.android.com/studio"
+      echo "(save android-studio-*-linux.tar.gz into $ORIGINAL_HOME/Downloads)"
+      echo ""
+      read -rp "Press ENTER once downloaded (or paste the full path to the archive): " AS_ARCHIVE_INPUT
+      if [ -n "$AS_ARCHIVE_INPUT" ] && [ -f "$AS_ARCHIVE_INPUT" ]; then
+        AS_ARCHIVE="$AS_ARCHIVE_INPUT"
+      else
+        AS_ARCHIVE="$(_zyphor_find_archive "$ORIGINAL_HOME" "android-studio-*-linux.tar.gz")"
+      fi
+    fi
+
+    if [ -z "$AS_ARCHIVE" ] || [ ! -f "$AS_ARCHIVE" ]; then
+      echo "Zyphor: ✖ Could not locate Android Studio archive"
+      return 1
+    fi
+
+    echo "Zyphor: Extracting $(basename "$AS_ARCHIVE")..."
+    tar -xzf "$AS_ARCHIVE" -C /tmp || {
+      echo "Zyphor: ✖ Failed extracting Android Studio"
+      return 1
+    }
+    mv /tmp/android-studio /opt/ || {
+      echo "Zyphor: ✖ Failed moving Android Studio to /opt"
+      return 1
+    }
+    ln -sf /opt/android-studio/bin/studio.sh /usr/local/bin/android-studio
+    echo "Zyphor: ✔ Android Studio installed → /opt/android-studio"
+  fi
+
+  # ------------------------------------------------------------------
+  # Flutter
+  # ------------------------------------------------------------------
+  if [ -d /opt/flutter ]; then
+    echo ""
+    echo "Zyphor: ⚠ /opt/flutter already exists"
+    read -rp "Reinstall Flutter? [y/N]: " REINSTALL_FL
+    case "$REINSTALL_FL" in
+      y|Y) rm -rf /opt/flutter ;;
+      *)   echo "Zyphor: Skipping Flutter install" ;;
+    esac
+  fi
+
+  if [ ! -d /opt/flutter ]; then
+    local FL_ARCHIVE
+    FL_ARCHIVE="$(_zyphor_find_archive "$ORIGINAL_HOME" "flutter_linux_*.tar.xz")"
+
+    if [ -z "$FL_ARCHIVE" ]; then
+      echo ""
+      echo "Zyphor: 📘 Flutter archive not found"
+      echo "Download it from: https://docs.flutter.dev/get-started/install/linux"
+      echo "(save flutter_linux_*.tar.xz into $ORIGINAL_HOME/Downloads)"
+      echo ""
+      read -rp "Press ENTER once downloaded (or paste the full path to the archive): " FL_ARCHIVE_INPUT
+      if [ -n "$FL_ARCHIVE_INPUT" ] && [ -f "$FL_ARCHIVE_INPUT" ]; then
+        FL_ARCHIVE="$FL_ARCHIVE_INPUT"
+      else
+        FL_ARCHIVE="$(_zyphor_find_archive "$ORIGINAL_HOME" "flutter_linux_*.tar.xz")"
+      fi
+    fi
+
+    if [ -z "$FL_ARCHIVE" ] || [ ! -f "$FL_ARCHIVE" ]; then
+      echo "Zyphor: ✖ Could not locate Flutter archive"
+      return 1
+    fi
+
+    echo "Zyphor: Extracting $(basename "$FL_ARCHIVE")..."
+    tar -xf "$FL_ARCHIVE" -C /tmp || {
+      echo "Zyphor: ✖ Failed extracting Flutter"
+      return 1
+    }
+    mv /tmp/flutter /opt/ || {
+      echo "Zyphor: ✖ Failed moving Flutter to /opt"
+      return 1
+    }
+    chown -R "$ORIGINAL_USER:$ORIGINAL_USER" /opt/flutter
+    echo "Zyphor: ✔ Flutter installed → /opt/flutter"
+  fi
+
+  # ------------------------------------------------------------------
+  # Shell PATH / env exports — written to the real user's rc file,
+  # guarded so re-running the target doesn't duplicate the block
+  # ------------------------------------------------------------------
+  local RC_FILE
+  RC_FILE="$(_zyphor_resolve_rc_file "$ORIGINAL_USER" "$ORIGINAL_HOME")"
+
+  echo ""
+  echo "Zyphor: Updating $RC_FILE ..."
+
+  if ! grep -q "# ZYPHOR: android-studio/flutter" "$RC_FILE" 2>/dev/null; then
+    sudo -u "$ORIGINAL_USER" bash -c "cat >> '$RC_FILE'" <<'EOF'
+
+# ZYPHOR: android-studio/flutter
+export PATH="$PATH:/opt/flutter/bin"
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+EOF
+    echo "Zyphor: ✔ PATH exports added to $RC_FILE"
+  else
+    echo "Zyphor: PATH exports already present in $RC_FILE — skipping"
+  fi
+
+  echo ""
+  echo "Zyphor: ✔ Android Studio + Flutter environment ready"
+  echo "Zyphor: Run 'source $RC_FILE' or open a new terminal, then:"
+  echo "  android-studio      # launch the IDE"
+  echo "  flutter doctor      # verify the Flutter/Android toolchain"
+  echo ""
+}
+
+# ======================================================================
+# PHP TARGET
+# ======================================================================
+
+_zyphor_setup_php() {
+  _zyphor_require_root "php" || return 1
+
+  if ! command -v php >/dev/null 2>&1; then
+    echo "Zyphor: Installing PHP..."
+    apt update -qq
+    apt install -y php php-cli php-mbstring unzip curl
+  fi
+
+  echo "Zyphor: Installing Composer..."
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" || {
+    echo "Zyphor: ✖ Failed downloading Composer installer"
+    return 1
+  }
+  php composer-setup.php
+  mv composer.phar /usr/local/bin/composer
+  rm -f composer-setup.php
+  echo "Zyphor: ✔ Composer installed"
+
+  echo "Zyphor: Removing old Node.js..."
+  apt remove nodejs -y || true
+
+  echo "Zyphor: Installing Node.js 20..."
+  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+  apt install -y nodejs
+  echo "Zyphor: ✔ Node.js installed"
+
+  echo ""
+  echo "Zyphor: Verifying environment..."
+  php -v || echo "⚠ PHP missing"
+  composer -V || echo "⚠ Composer missing"
+  node -v || echo "⚠ Node missing"
+  npm -v || echo "⚠ NPM missing"
+}
+
+# ======================================================================
+# GIT TARGET
+# ======================================================================
+
+_zyphor_setup_git() {
+  _zyphor_require_root "git" || return 1
+
+  echo ""
+  echo "Zyphor: 🚀 Setting up Git development environment"
+  echo ""
+
+  echo "Zyphor: Installing Git and OpenSSH..."
+  apt update -qq
+  apt install -y git openssh-client curl || {
+    echo "Zyphor: ✖ Failed installing dependencies"
+    return 1
+  }
+
+  # ------------------------------------------------------------------
+  # Resolve the real user/home BEFORE asking anything, and show it so
+  # you can confirm it before any files get written.
+  # ------------------------------------------------------------------
+  local ORIGINAL_USER ORIGINAL_HOME
+  ORIGINAL_USER="$(_zyphor_resolve_real_user)"
+  ORIGINAL_HOME="$(_zyphor_user_home "$ORIGINAL_USER")"
+
+  echo ""
+  echo "Zyphor: Detected target user → $ORIGINAL_USER"
+  echo "Zyphor: Detected home dir   → $ORIGINAL_HOME"
+  echo ""
+
+  if [ "$ORIGINAL_USER" = "root" ] || [ -z "$ORIGINAL_HOME" ] || [ ! -d "$ORIGINAL_HOME" ]; then
+    echo "Zyphor: ⚠ Could not confidently resolve a non-root user/home."
+    read -rp "Continue using '$ORIGINAL_USER' ($ORIGINAL_HOME)? [y/N]: " CONFIRM_USER
+    case "$CONFIRM_USER" in
+      y|Y) ;;
+      *)
+        echo "Zyphor: ✖ Aborting — re-run as: sudo -u <youruser> zyphor setup dev git"
+        echo "         (or run plain 'sudo zyphor setup dev git' from your normal user's session)"
+        return 1
+        ;;
+    esac
+  fi
+
+  read -rp "Git Username: " GIT_USERNAME
+  read -rp "Git Email: " GIT_EMAIL
+  read -rp "SSH Algorithm [default: ed25519]: " SSH_ALGO
+  SSH_ALGO="${SSH_ALGO:-ed25519}"
+
+  if [ -z "$GIT_USERNAME" ]; then
+    echo "Zyphor: ✖ Username is required"
+    return 1
+  fi
+
+  if [ -z "$GIT_EMAIL" ]; then
+    echo "Zyphor: ✖ Email is required"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: Configuring Git for $ORIGINAL_USER..."
+
+  sudo -u "$ORIGINAL_USER" git config --global user.name "$GIT_USERNAME"
+  sudo -u "$ORIGINAL_USER" git config --global user.email "$GIT_EMAIL"
+  sudo -u "$ORIGINAL_USER" git config --global init.defaultBranch master
+
+  echo ""
+  echo "Zyphor: ✔ Git configured"
+  echo ""
+  sudo -u "$ORIGINAL_USER" git config --list
+
+  # ------------------------------------------------------------------
+  # SSH key generation — explicitly under ORIGINAL_HOME, never /root
+  # ------------------------------------------------------------------
+  echo ""
+  echo "Zyphor: Generating SSH key in $ORIGINAL_HOME/.ssh ..."
+
+  mkdir -p "$ORIGINAL_HOME/.ssh"
+  chown "$ORIGINAL_USER:$ORIGINAL_USER" "$ORIGINAL_HOME/.ssh"
+  chmod 700 "$ORIGINAL_HOME/.ssh"
+
+  local SSH_KEY="$ORIGINAL_HOME/.ssh/id_$SSH_ALGO"
+
+  if [ -f "$SSH_KEY" ]; then
+    echo ""
+    echo "Zyphor: ⚠ SSH key already exists:"
+    echo "$SSH_KEY"
+    echo ""
+    read -rp "Overwrite existing SSH key? [y/N]: " OVERWRITE
+    case "$OVERWRITE" in
+      y|Y) rm -f "$SSH_KEY" "${SSH_KEY}.pub" ;;
+      *) echo "Zyphor: Using existing SSH key" ;;
+    esac
+  fi
+
+  if [ ! -f "$SSH_KEY" ]; then
+    sudo -u "$ORIGINAL_USER" ssh-keygen \
+      -t "$SSH_ALGO" \
+      -C "$GIT_EMAIL" \
+      -f "$SSH_KEY" \
+      -N "" || {
+      echo "Zyphor: ✖ Failed generating SSH key"
+      return 1
+    }
+  fi
+
+  # ------------------------------------------------------------------
+  # SSH agent — run as the real user, not root, so the key is added
+  # to *their* agent/session, not root's.
+  # ------------------------------------------------------------------
+  echo ""
+  echo "Zyphor: Starting SSH agent for $ORIGINAL_USER..."
+
+  sudo -u "$ORIGINAL_USER" bash -c "eval \"\$(ssh-agent -s)\" >/dev/null; ssh-add '$SSH_KEY'" || {
+    echo "Zyphor: ✖ Failed adding SSH key"
+    return 1
+  }
+
+  echo ""
+  echo "=================================================="
+  echo "GitHub SSH Public Key"
+  echo "=================================================="
+  echo ""
+  cat "${SSH_KEY}.pub"
+  echo ""
+  echo "=================================================="
+  echo ""
+  echo "Zyphor: 📘 Add SSH key to GitHub"
+  echo ""
+  echo "1. Open GitHub"
+  echo "2. Go to Settings"
+  echo "3. Open 'SSH and GPG keys'"
+  echo "4. Click 'New SSH key'"
+  echo "5. Paste the SSH key above"
+  echo "6. Save the key"
+  echo ""
+  echo "GitHub SSH Settings:"
+  echo "https://github.com/settings/keys"
+  echo ""
+
+  read -rp "Press ENTER after adding the SSH key to GitHub..."
+
+  echo ""
+  echo "Zyphor: Testing GitHub SSH connection..."
+  echo ""
+  sudo -u "$ORIGINAL_USER" ssh -T git@github.com
+
+  echo ""
+  echo "Zyphor: ✔ Git development environment ready"
+  echo ""
+}
+
+# ======================================================================
+# NODE / COMPOSER TARGETS
+# ======================================================================
+
+_zyphor_setup_node() {
+  _zyphor_require_root "node" || return 1
+  echo "Zyphor: Installing Node.js only..."
+  apt remove nodejs -y || true
+  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+  apt install -y nodejs
+}
+
+_zyphor_setup_composer() {
+  _zyphor_require_root "composer" || return 1
+  echo "Zyphor: Installing Composer only..."
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" || {
+    echo "Zyphor: ✖ Failed downloading Composer installer"
+    return 1
+  }
+  php composer-setup.php
+  mv composer.phar /usr/local/bin/composer
+  rm -f composer-setup.php
+}
+
+# ======================================================================
+# MAIN ENTRY POINT
+# ======================================================================
+
+zyphor_setup_dev() {
+  local TARGET="$3"
+  local status
+
+  if [ -z "$TARGET" ]; then
+    echo ""
+    echo "Zyphor: ✖ Missing dev target"
+    echo "Usage: zyphor setup dev <target>"
+    echo "Example: zyphor setup dev php"
+    echo ""
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: 🚀 Setting up dev environment → $TARGET"
+  echo ""
+
+  case "$TARGET" in
+    php)             _zyphor_setup_php ;;
+    git)             _zyphor_setup_git ;;
+    node)            _zyphor_setup_node ;;
+    composer)        _zyphor_setup_composer ;;
+    android-studio)  _zyphor_setup_android_studio ;;
+    *)
+      echo ""
+      echo "Zyphor: ✖ Unknown dev target → $TARGET"
+      echo ""
+      return 1
+      ;;
+  esac
+  status=$?
+
+  if [ "$status" -eq 0 ]; then
+    echo ""
+    echo "Zyphor: ✔ Dev setup '$TARGET' completed"
+    echo ""
+  else
+    echo ""
+    echo "Zyphor: ✖ Dev setup failed → $TARGET"
+    echo ""
+    return 1
+  fi
+}

@@ -1,0 +1,72 @@
+#!/bin/sh
+# postrm - zyshell post-removal script
+# Removes the zyshell launcher block from ~/.bashrc and/or ~/.zshrc
+# on uninstall or purge.
+
+set -e
+
+MARKER="# >>> zyshell >>>"
+MARKER_END="# <<< zyshell <<<"
+
+# ── Helper: remove block from a rc file ──────────────────────────────────────
+remove_from_rc() {
+    RC_FILE="$1"
+
+    if [ ! -f "$RC_FILE" ]; then
+        return
+    fi
+
+    # Check if our block is actually there
+    if ! grep -qF "$MARKER" "$RC_FILE" 2>/dev/null; then
+        return
+    fi
+
+    # Use sed to delete everything between the markers (inclusive)
+    sed -i "/$(printf '%s' "$MARKER" | sed 's/[\/&]/\\&/g')/,/$(printf '%s' "$MARKER_END" | sed 's/[\/&]/\\&/g')/d" "$RC_FILE"
+
+    # Also remove the blank line we added before the block (if present)
+    # This trims a trailing blank line left behind
+    sed -i '${/^[[:space:]]*$/d}' "$RC_FILE"
+
+    echo "zyshell: launcher block removed from $RC_FILE"
+}
+
+# ── Only act on remove/purge, not on upgrade ─────────────────────────────────
+case "$1" in
+    remove|purge)
+        # Determine the target user
+        if [ -n "$SUDO_USER" ]; then
+            TARGET_USER="$SUDO_USER"
+        else
+            TARGET_USER="$(logname 2>/dev/null || echo "$USER")"
+        fi
+
+        TARGET_HOME=$(getent passwd "$TARGET_USER" 2>/dev/null | cut -d: -f6)
+        if [ -z "$TARGET_HOME" ]; then
+            TARGET_HOME="$HOME"
+        fi
+
+        echo "zyshell: cleaning up for user '$TARGET_USER' (home: $TARGET_HOME)"
+
+        remove_from_rc "$TARGET_HOME/.bashrc"
+        remove_from_rc "$TARGET_HOME/.zshrc"
+
+        # Clean up root's rc files too if we're running as root
+        if [ "$(id -u)" = "0" ] && [ "$TARGET_USER" != "root" ]; then
+            remove_from_rc "/root/.bashrc"
+            remove_from_rc "/root/.zshrc"
+        fi
+
+        echo "zyshell: removal complete. Open a new terminal to apply changes."
+        ;;
+
+    upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        # Don't touch rc files on upgrade — postinst handles that
+        ;;
+
+    *)
+        echo "postrm called with unknown argument: $1" >&2
+        ;;
+esac
+
+exit 0

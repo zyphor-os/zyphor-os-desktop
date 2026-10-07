@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+cat > /etc/apt/sources.list.d/zyphor.list <<EOF
+deb [arch=amd64 signed-by=/usr/share/keyrings/zyphor-archive-keyring.gpg] https://zyphor-os.github.io/ada-lovelace-lts ada-lovelace main
+EOF
+
+chown root:root /etc/apt/sources.list.d/zyphor.list
+chmod 644 /etc/apt/sources.list.d/zyphor.list
+
+apt update
+
+exit 0

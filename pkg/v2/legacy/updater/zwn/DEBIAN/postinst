@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+# Set ownership to root:root
+chown -R root:root /usr/share/zyphor-whats-new
+
+# Set permissions to 555
+chmod -R 555 /usr/share/zyphor-whats-new
+
+REAL_USER=$(logname 2>/dev/null || echo "$SUDO_USER")
+
+if [ -n "$REAL_USER" ]; then
+    sudo -u "$REAL_USER" xdg-open /usr/share/zyphor-whats-new/release-notes.html &
+fi
+
+exit 0
