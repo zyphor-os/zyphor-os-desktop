@@ -170,14 +170,26 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add pkg/v2/reforged/zyphor-bashrc-config/
-	git commit -m "chore: add reforged zyphor bashrc config package"
+	git add pkg/v2/reforged/apps/zyphor-cli/DEBIAN/control
+	git commit -m "chore: update reforged zyphor CLI package control"
 
-	git add pkg/v2/reforged/zyphor-face-icon/
-	git commit -m "chore: add reforged zyphor face icon package"
+	git add pkg/v2/reforged/apps/zyphor-command-center/DEBIAN/control
+	git commit -m "chore: update reforged zyphor Command Center package control"
 
-	git add pkg/v2/reforged/zyphor-fastfetch-config/
-	git commit -m "chore: add reforged zyphor fastfetch config package"
+	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "chore: update reforged zyphor What's New package control"
+
+	git add pkg/v2/reforged/apps/zycamera-launcher/
+	git commit -m "chore: add reforged zy camera launcher package"
+
+	git add pkg/v2/reforged/apps/zylearn/
+	git commit -m "chore: add reforged ZyLearn package"
+
+	git add pkg/v2/reforged/apps/zywin-ui/
+	git commit -m "chore: add reforged ZyWin UI package"
+
+	git add pkg/v2/reforged/apps/zywin/
+	git commit -m "chore: add reforged ZyWin package"
 
 push:
 	git push origin $(branch)
@@ -261,28 +273,40 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-background-themes
 # 	mv pkg/v2/reforged/zyphor-background-themes.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
-	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
+# 	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 	
-	zyphor build package pkg/v2/reforged/zyphor-face-icon
-	mv pkg/v2/reforged/zyphor-face-icon.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-face-icon
+# 	mv pkg/v2/reforged/zyphor-face-icon.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 	
-	zyphor build package pkg/v2/reforged/zyphor-fastfetch-config
-	mv pkg/v2/reforged/zyphor-fastfetch-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-fastfetch-config
+# 	mv pkg/v2/reforged/zyphor-fastfetch-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
 # ADA LOVELACE APPS
 
-# 	zyphor build package pkg/v2/reforged/apps/zyphor-cli
-# 	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/apps/zyphor-cli
+	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
-# 	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
+	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
 # 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
-# 	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
+	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	
+	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
+	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	
+	zyphor build package pkg/v2/reforged/apps/zylearn/zylearn
+	mv pkg/v2/reforged/apps/zylearn/zylearn.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	
+	zyphor build package pkg/v2/reforged/apps/zywin/zywin
+	mv pkg/v2/reforged/apps/zywin/zywin.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	
+	zyphor build package pkg/v2/reforged/apps/zywin-ui/zywin-ui
+	mv pkg/v2/reforged/apps/zywin-ui/zywin-ui.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # V3 UPDATES ===========================================================
 
