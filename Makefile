@@ -170,11 +170,8 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add pkg/v2/reforged/zyphor-os-release/
-	git commit -m "chore: add reforged zyphor OS release package"
-
-	git add pkg/v2/zyphor-archive-keyring/
-	git commit -m "chore: add zyphor archive keyring package"
+	git add pkg/v2/reforged/zyphor-plymouth/
+	git commit -m "chore: add reforged zyphor Plymouth package"
 
 push:
 	git push origin $(branch)
@@ -249,8 +246,11 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-repo-config
 # 	mv pkg/v2/reforged/zyphor-repo-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/zyphor-os-release
-	mv pkg/v2/reforged/zyphor-os-release.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-os-release
+# 	mv pkg/v2/reforged/zyphor-os-release.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+
+	zyphor build package pkg/v2/reforged/zyphor-plymouth
+	mv pkg/v2/reforged/zyphor-plymouth.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
 # ADA LOVELACE APPS
 
