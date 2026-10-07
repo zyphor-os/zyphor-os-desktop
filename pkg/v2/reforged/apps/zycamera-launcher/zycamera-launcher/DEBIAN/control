@@ -1,0 +1,8 @@
+Package: zycamera-launcher
+Version: 1.0.0-r1
+Section: utils
+Priority: optional
+Architecture: all
+Depends: guvcview
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
+Description: Zyphor OS Camera Launcher

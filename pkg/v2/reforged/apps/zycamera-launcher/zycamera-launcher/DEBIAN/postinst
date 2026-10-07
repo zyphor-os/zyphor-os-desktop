@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+# Set ownership
+chown -R root:root /usr/share/zycamera-launcher
+chown root:root /usr/bin/zycamera-launcher
+chown root:root /usr/share/applications/zycamera-launcher.desktop
+
+# Set permissions
+chmod -R 555 /usr/share/zycamera-launcher
+chmod 555 /usr/bin/zycamera-launcher
+chmod 555 /usr/share/applications/zycamera-launcher.desktop
+
+exit 0
