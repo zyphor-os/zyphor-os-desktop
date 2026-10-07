@@ -1,0 +1,11 @@
+NAME="Zyphor OS 2 Ada Lovelace LTS Reforged"
+PRETTY_NAME="Zyphor OS 2 Ada Lovelace LTS Reforged"
+ID=zyphor
+ID_LIKE=debian
+VERSION_ID="2.0"
+VERSION="2 (Ada Lovelace LTS Reforged)"
+VERSION_CODENAME=Ada Lovelace-lts
+
+HOME_URL="https://zyphor-os.github.io"
+SUPPORT_URL="https://www.facebook.com/profile.php?id=61572426796629"
+BUG_REPORT_URL="https://github.com/zyphor-os/zyphor-os-2-ada Lovelace-lts/issues"

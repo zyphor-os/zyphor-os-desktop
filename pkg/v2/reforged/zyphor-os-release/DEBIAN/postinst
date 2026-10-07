@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        # Ensure Zyphor's os-release has the correct ownership/permissions
+        if [ -f /etc/os-release ]; then
+            chown root:root /etc/os-release
+            chmod 555 /etc/os-release
+        fi
+
+        # Customize the login/TTY issue message
+        cat > /etc/issue <<'EOF'
+Zyphor OS 3 Bethany GNU/Linux \n \l
+
+EOF
+        ;;
+esac
+
+exit 0

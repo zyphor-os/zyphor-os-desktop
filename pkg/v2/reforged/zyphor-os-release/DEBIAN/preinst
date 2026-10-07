@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    install|upgrade)
+        dpkg-divert \
+            --package zyphor-os-release \
+            --rename \
+            --divert /etc/os-release.debian \
+            --add /etc/os-release
+        ;;
+esac
+
+exit 0
