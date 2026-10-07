@@ -7,7 +7,7 @@ exit
 
 host:
 sudo rm -f iso/live/vmlinuz* iso/live/initrd.img*
-sudo cp extract/boot/vmlinuz-6.12.107+deb13-amd64    iso/live/vmlinuz
-sudo cp extract/boot/initrd.img-6.12.107+deb13-amd64 iso/live/initrd.img
+sudo cp extract/boot/vmlinuz-6.12.111+deb13-amd64    iso/live/vmlinuz
+sudo cp extract/boot/initrd.img-6.12.111+deb13-amd64 iso/live/initrd.img
 
 LIVEMODE
