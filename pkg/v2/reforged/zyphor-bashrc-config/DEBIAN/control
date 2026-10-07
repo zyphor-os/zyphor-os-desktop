@@ -1,0 +1,10 @@
+Package: zyphor-bashrc-config
+Version: 1.0.0-r1
+Section: shells
+Priority: optional
+Architecture: all
+Depends: git
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
+Description: Zyphor OS Bash configuration
+ Provides the default Zyphor OS Bash prompt and shell startup information.
+ 

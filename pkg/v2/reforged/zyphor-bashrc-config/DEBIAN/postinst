@@ -1,0 +1,69 @@
+#!/bin/sh
+set -e
+
+echo "[zyphor-bashrc-config] Installing Bash configuration..."
+
+SKEL_BASHRC="/etc/skel/.bashrc"
+CONFIG="/etc/bashrc.d/zyphor.sh"
+
+# -------------------------
+# 1. PATCH /etc/skel/.bashrc
+# -------------------------
+
+if [ -f "$CONFIG" ]; then
+
+    if ! grep -q "bashrc.d/zyphor.sh" "$SKEL_BASHRC" 2>/dev/null; then
+
+        cat <<'EOF' >> "$SKEL_BASHRC"
+
+# Zyphor OS Bash configuration
+if [ -f /etc/bashrc.d/zyphor.sh ]; then
+    . /etc/bashrc.d/zyphor.sh
+fi
+EOF
+
+    fi
+fi
+
+# -------------------------
+# 2. PATCH CURRENT USER
+# -------------------------
+
+REAL_USER=$(logname 2>/dev/null || echo "")
+
+if [ -n "$REAL_USER" ] && [ -d "/home/$REAL_USER" ]; then
+
+    USER_BASHRC="/home/$REAL_USER/.bashrc"
+
+    if [ -f "$USER_BASHRC" ]; then
+
+        if ! grep -q "bashrc.d/zyphor.sh" "$USER_BASHRC" 2>/dev/null; then
+
+            cp "$USER_BASHRC" \
+               "$USER_BASHRC.bak.$(date +%Y%m%d%H%M%S)"
+
+            cat <<'EOF' >> "$USER_BASHRC"
+
+# Zyphor OS Bash configuration
+if [ -f /etc/bashrc.d/zyphor.sh ]; then
+    . /etc/bashrc.d/zyphor.sh
+fi
+EOF
+
+        fi
+
+        chown "$REAL_USER:$REAL_USER" "$USER_BASHRC" 2>/dev/null || true
+
+    fi
+fi
+
+# -------------------------
+# 3. PROTECT ZYPHOR CONFIG
+# -------------------------
+
+if [ -f /etc/bashrc.d/zyphor.sh ]; then
+    chown root:root /etc/bashrc.d/zyphor.sh
+    chmod 555 /etc/bashrc.d/zyphor.sh
+fi
+
+exit 0
