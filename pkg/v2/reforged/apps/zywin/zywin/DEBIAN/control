@@ -1,0 +1,7 @@
+Package: zywin
+Version: 1.0.0-r1
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Dan Stephen B. Blanco & Zyphor OS Team
+Description: Zyphor OS Windows Installer Application
