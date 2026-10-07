@@ -1,0 +1,8 @@
+Package: zywin-ui
+Version: 1.0.0-r1
+Section: utils
+Priority: optional
+Architecture: all
+Depends: zywin
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
+Description: Zyphor OS zywin-ui Application
