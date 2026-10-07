@@ -4,7 +4,7 @@ ID=zyphor
 ID_LIKE=debian
 VERSION_ID="2.0"
 VERSION="2 (Ada Lovelace LTS Reforged)"
-VERSION_CODENAME=Ada Lovelace-lts
+VERSION_CODENAME=ada-lovelace-lts
 
 HOME_URL="https://zyphor-os.github.io"
 SUPPORT_URL="https://www.facebook.com/profile.php?id=61572426796629"
