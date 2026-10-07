@@ -1,0 +1,52 @@
+#!/bin/sh
+set -e
+
+# ============================================================
+# Zyphor CLI - Post Installation
+# ============================================================
+
+# ------------------------------------------------------------
+# Set ownership
+# ------------------------------------------------------------
+
+chown -R root:root /usr/lib/zyphor
+chown root:root /usr/local/bin/zyphor
+
+# ------------------------------------------------------------
+# Set permissions
+# ------------------------------------------------------------
+
+# Make all Zyphor CLI directories read/execute only
+find /usr/lib/zyphor -type d -exec chmod 555 {} \;
+
+# Make all Zyphor CLI files read/execute only
+find /usr/lib/zyphor -type f -exec chmod 555 {} \;
+
+# Main Zyphor CLI executable
+chmod 555 /usr/local/bin/zyphor
+
+# ------------------------------------------------------------
+# Create command shortcuts
+# ------------------------------------------------------------
+
+# Short command:
+#   zy <command>
+ln -sf /usr/local/bin/zyphor /usr/local/bin/zy
+
+# System-wide commands:
+#   zyphor <command>
+#   zy <command>
+ln -sf /usr/local/bin/zyphor /usr/bin/zyphor
+ln -sf /usr/local/bin/zyphor /usr/bin/zy
+
+# ------------------------------------------------------------
+# Verify required files
+# ------------------------------------------------------------
+
+chmod 555 /usr/local/bin/zyphor
+
+# ------------------------------------------------------------
+# Finish
+# ------------------------------------------------------------
+
+exit 0

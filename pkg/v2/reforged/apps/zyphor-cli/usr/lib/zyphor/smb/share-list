@@ -1,0 +1,8 @@
+#!/bin/bash
+zyphor_smb_share_list() {
+  echo ""
+  echo "Zyphor: Configured shares:"
+  awk -F'[][]' '/^\[.*\]/{print $2}' /etc/samba/smb.conf \
+    | grep -vE '^(global|homes|printers|print\$)$'
+  echo ""
+}

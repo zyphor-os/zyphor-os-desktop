@@ -1,0 +1,12 @@
+#!/bin/bash
+
+zyphor_smb_disk_list() {
+
+  source /usr/lib/zyphor/smb/ensure
+  zyphor_smb_ensure || return 1
+
+  echo ""
+  echo "Zyphor: Available disks:"
+  fdisk -l
+  echo ""
+}

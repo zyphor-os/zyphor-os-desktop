@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+APP_DIR="/usr/share/zyphor-command-center-web"
+
+if [ -d "$APP_DIR" ]; then
+    cd "$APP_DIR"
+
+    # profile.json AND avatar uploads now live entirely in the logged-in
+    # user's home directory (~/.config/zyphor-command-center-web/), created
+    # lazily by the app on first run. Nothing under $APP_DIR is written to
+    # at runtime anymore, so the whole tree can be locked down read-only —
+    # no exceptions needed.
+    chown -R root:root "$APP_DIR"
+    find "$APP_DIR" -type d -exec chmod 555 {} +
+    find "$APP_DIR" -type f -exec chmod 555 {} +
+fi
+
+exit 0

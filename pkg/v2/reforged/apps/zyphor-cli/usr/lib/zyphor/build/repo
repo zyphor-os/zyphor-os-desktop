@@ -1,0 +1,278 @@
+#!/bin/bash
+
+# zyphor build repo
+
+zyphor_build_repo() {
+  echo "[zyphor] Generating repository metadata..."
+
+  # ------------------------------------------------------------
+  # Validate repository structure
+  # ------------------------------------------------------------
+
+  if [ ! -d "pool" ]; then
+    echo "[error] pool directory not found"
+    return 1
+  fi
+
+  # ------------------------------------------------------------
+  # Ask for LTS codename
+  # ------------------------------------------------------------
+
+  read -rp "[zyphor] Enter LTS codename: " codename
+
+  if [ -z "$codename" ]; then
+    echo "[error] LTS codename cannot be empty"
+    return 1
+  fi
+
+  REPO_DIR="$(pwd)"
+  DIST_DIR="$REPO_DIR/dists/$codename"
+  BINARY_DIR="$DIST_DIR/main/binary-amd64"
+
+  mkdir -p "$BINARY_DIR"
+
+  # ------------------------------------------------------------
+  # Check required tools
+  # ------------------------------------------------------------
+
+  for command in dpkg-scanpackages gzip apt-ftparchive gpg gpgv; do
+    if ! command -v "$command" >/dev/null 2>&1; then
+      echo "[error] Required command not found: $command"
+      echo "[error] Please install the required Debian repository tools."
+      return 1
+    fi
+  done
+
+  # ------------------------------------------------------------
+  # Generate Packages
+  # ------------------------------------------------------------
+
+  echo "[zyphor] Generating Packages..."
+
+  if ! dpkg-scanpackages pool /dev/null > "$BINARY_DIR/Packages"; then
+    echo "[error] Failed to generate Packages file"
+    return 1
+  fi
+
+  # ------------------------------------------------------------
+  # Generate Packages.gz
+  # ------------------------------------------------------------
+
+  echo "[zyphor] Compressing Packages..."
+
+  if ! gzip -kf "$BINARY_DIR/Packages"; then
+    echo "[error] Failed to generate Packages.gz"
+    return 1
+  fi
+
+  # ------------------------------------------------------------
+  # Generate Release
+  # ------------------------------------------------------------
+
+  echo "[zyphor] Generating Release file..."
+
+  RELEASE_FILE="$DIST_DIR/Release"
+
+  cat > "$DIST_DIR/repo-release.conf" <<EOF
+APT::FTPArchive::Release::Origin "Zyphor OS";
+APT::FTPArchive::Release::Label "Zyphor OS";
+APT::FTPArchive::Release::Suite "$codename";
+APT::FTPArchive::Release::Codename "$codename";
+APT::FTPArchive::Release::Architectures "amd64";
+APT::FTPArchive::Release::Components "main";
+APT::FTPArchive::Release::Description "Zyphor OS $codename Repository";
+EOF
+
+  if ! apt-ftparchive \
+      -c "$DIST_DIR/repo-release.conf" \
+      release "$DIST_DIR" > "$RELEASE_FILE"; then
+
+    echo "[error] Failed to generate Release file"
+    rm -f "$DIST_DIR/repo-release.conf"
+    return 1
+  fi
+
+  rm -f "$DIST_DIR/repo-release.conf"
+
+  # ------------------------------------------------------------
+  # Check signing key
+  # ------------------------------------------------------------
+
+  SIGNING_KEY="${ZYPHOR_SIGNING_KEY:-}"
+
+  if [ -z "$SIGNING_KEY" ]; then
+    echo ""
+    echo "[warning] ZYPHOR_SIGNING_KEY is not configured."
+    echo "[warning] Repository metadata was generated but NOT signed."
+    echo ""
+    echo "[zyphor] Set your signing key with:"
+    echo ""
+    echo "  export ZYPHOR_SIGNING_KEY=\"YOUR_KEY\""
+    echo ""
+    return 1
+  fi
+
+  echo "[zyphor] Using signing key: $SIGNING_KEY"
+
+  if ! gpg --list-secret-keys "$SIGNING_KEY" >/dev/null 2>&1; then
+    echo "[error] GPG secret key not found: $SIGNING_KEY"
+    return 1
+  fi
+
+  # ------------------------------------------------------------
+  # Remove old signatures
+  # ------------------------------------------------------------
+
+  rm -f "$DIST_DIR/InRelease"
+  rm -f "$DIST_DIR/Release.gpg"
+
+  # ------------------------------------------------------------
+  # Create InRelease
+  # ------------------------------------------------------------
+
+  echo "[zyphor] Signing Release → InRelease..."
+
+  if ! gpg \
+      --batch \
+      --yes \
+      --local-user "$SIGNING_KEY" \
+      --clearsign \
+      --output "$DIST_DIR/InRelease" \
+      "$RELEASE_FILE"; then
+
+    echo "[error] Failed to create InRelease"
+    return 1
+  fi
+
+  # ------------------------------------------------------------
+  # Create detached Release.gpg
+  # ------------------------------------------------------------
+
+  echo "[zyphor] Creating detached Release.gpg..."
+
+  if ! gpg \
+      --batch \
+      --yes \
+      --local-user "$SIGNING_KEY" \
+      --armor \
+      --detach-sign \
+      --output "$DIST_DIR/Release.gpg" \
+      "$RELEASE_FILE"; then
+
+    echo "[error] Failed to create Release.gpg"
+    return 1
+  fi
+
+  # ------------------------------------------------------------
+  # Export public repository key
+  # ------------------------------------------------------------
+
+  KEY_FILE="$REPO_DIR/zyphor-archive-keyring.asc"
+
+  echo "[zyphor] Exporting public repository key..."
+
+  if ! gpg \
+      --batch \
+      --yes \
+      --export-options export-minimal \
+      --armor \
+      --export "$SIGNING_KEY" \
+      > "$KEY_FILE"; then
+
+    echo "[error] Failed to export public key"
+    return 1
+  fi
+
+  # ------------------------------------------------------------
+  # Verify InRelease
+  # ------------------------------------------------------------
+
+  echo "[zyphor] Verifying InRelease signature..."
+
+  TEMP_KEYRING="$(mktemp)"
+
+  if ! gpg \
+      --batch \
+      --yes \
+      --dearmor \
+      --output "$TEMP_KEYRING" \
+      "$KEY_FILE"; then
+
+    echo "[error] Failed to create temporary keyring"
+    rm -f "$TEMP_KEYRING"
+    return 1
+  fi
+
+  if ! gpgv \
+      --keyring "$TEMP_KEYRING" \
+      "$DIST_DIR/InRelease"; then
+
+    echo "[error] InRelease signature verification FAILED"
+    rm -f "$TEMP_KEYRING"
+    return 1
+  fi
+
+  rm -f "$TEMP_KEYRING"
+
+  # ------------------------------------------------------------
+  # Generate Zyphor archive keyring package
+  # ------------------------------------------------------------
+
+  KEYRING_PACKAGE="$HOME/zyphor-os-desktop/pkg/v2/zyphor-archive-keyring"
+  KEYRING_ASC="$KEYRING_PACKAGE/usr/share/keyrings/zyphor-archive-keyring.asc"
+  KEYRING_GPG="$KEYRING_PACKAGE/usr/share/keyrings/zyphor-archive-keyring.gpg"
+
+  echo "[zyphor] Updating Zyphor archive keyring package..."
+
+  # Make sure destination exists
+  mkdir -p "$(dirname "$KEYRING_ASC")"
+
+  # Copy public ASCII key into package
+  if ! cp "$KEY_FILE" "$KEYRING_ASC"; then
+    echo "[error] Failed to copy public key into keyring package"
+    return 1
+  fi
+
+  echo "[zyphor] Generating binary keyring..."
+
+  if ! gpg \
+      --batch \
+      --yes \
+      --dearmor \
+      --output "$KEYRING_GPG" \
+      "$KEYRING_ASC"; then
+
+    echo "[error] Failed to generate binary archive keyring"
+    return 1
+  fi
+
+  chmod 644 "$KEYRING_GPG"
+
+  echo "[zyphor] Archive keyring package updated:"
+  echo "         $KEYRING_GPG"
+
+  # ------------------------------------------------------------
+  # Display repository information
+  # ------------------------------------------------------------
+
+  echo ""
+  echo "============================================================"
+  echo " Zyphor Repository Build Complete"
+  echo "============================================================"
+  echo ""
+  echo " LTS Codename : $codename"
+  echo " Repository   : $REPO_DIR"
+  echo " Packages     : $BINARY_DIR/Packages"
+  echo " Packages.gz  : $BINARY_DIR/Packages.gz"
+  echo " Release      : $DIST_DIR/Release"
+  echo " InRelease    : $DIST_DIR/InRelease"
+  echo " Release.gpg  : $DIST_DIR/Release.gpg"
+  echo " Public Key   : $KEY_FILE"
+  echo " Keyring Pkg  : $KEYRING_PACKAGE"
+  echo " Binary Key   : $KEYRING_GPG"
+  echo " Signing Key  : $SIGNING_KEY"
+  echo ""
+  echo "============================================================"
+  echo "[zyphor] Repository is signed and ready for publishing."
+  echo "============================================================"
+}

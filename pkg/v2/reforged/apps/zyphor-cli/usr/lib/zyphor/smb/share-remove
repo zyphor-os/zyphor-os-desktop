@@ -1,0 +1,26 @@
+#!/bin/bash
+zyphor_smb_share_remove() {
+  if [ "$EUID" -ne 0 ]; then
+    echo ""
+    echo "Zyphor: ⚠ Requires root"
+    echo "Try: sudo zyphor smb share-remove"
+    echo ""
+    return 1
+  fi
+
+  read -p "Share name to remove: " NAME
+  if [ -z "$NAME" ]; then
+    echo "Zyphor: ✖ Missing required input"
+    return 1
+  fi
+
+  if ! grep -q "^\[$NAME\]" /etc/samba/smb.conf 2>/dev/null; then
+    echo "Zyphor: ✖ Share '$NAME' not found"
+    return 1
+  fi
+
+  sed -i "/^\[$NAME\]/,/^$/d" /etc/samba/smb.conf
+  systemctl restart smbd
+  echo "Zyphor: ✔ Share '$NAME' removed"
+  echo ""
+}

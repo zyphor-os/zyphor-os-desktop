@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 /usr/share/zyphor-command-center/main.py
