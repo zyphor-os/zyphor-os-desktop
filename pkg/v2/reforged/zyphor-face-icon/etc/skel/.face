@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358 358" width="358" height="358">
+  <defs>
+    <!-- Dark Blue Background Gradient -->
+    <linearGradient id="bgGradientDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+
+    <!-- Dark Blue Avatar Silhouette Gradient -->
+    <linearGradient id="avatarGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+
+    <!-- Soft Inner Shadow -->
+    <filter id="innerShadowDark" x="-20%" y="-20%" width="140%" height="140%">
+      <feComponentTransfer in="SourceAlpha">
+        <feFuncA type="linear" slope="0.6"/>
+      </feComponentTransfer>
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feOffset dx="0" dy="4"/>
+      <feComposite operator="out" in2="SourceAlpha" result="inverse"/>
+      <feFlood flood-color="#020617" flood-opacity="0.4" result="color"/>
+      <feComposite operator="in" in2="inverse" result="shadow"/>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+
+    <clipPath id="avatarClip">
+      <circle cx="179" cy="179" r="179" />
+    </clipPath>
+  </defs>
+
+  <!-- Background Circle -->
+  <circle cx="179" cy="179" r="179" fill="url(#bgGradientDark)" />
+
+  <!-- Avatar Group -->
+  <g clip-path="url(#avatarClip)" filter="url(#innerShadowDark)">
+    <!-- Head -->
+    <circle cx="179" cy="135" r="56" fill="url(#avatarGradientDark)" />
+    
+    <!-- Body / Shoulders -->
+    <path d="M 179 211 
+             C 115 211, 75 248, 67 310 
+             C 100 342, 145 358, 179 358 
+             C 213 358, 258 342, 291 310 
+             C 283 248, 243 211, 179 211 Z" 
+          fill="url(#avatarGradientDark)" />
+  </g>
+
+  <!-- Outer Ring Accent -->
+  <circle cx="179" cy="179" r="177.5" fill="none" stroke="#60A5FA" stroke-opacity="0.3" stroke-width="3" />
+</svg>

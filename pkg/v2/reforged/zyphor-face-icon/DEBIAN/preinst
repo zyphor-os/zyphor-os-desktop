@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    install|upgrade)
+        if [ ! -L /etc/skel/.face ] && [ -e /etc/skel/.face ]; then
+            dpkg-divert \
+                --package zyphor-face-icon \
+                --add \
+                --rename \
+                /etc/skel/.face
+        fi
+        ;;
+esac
+
+exit 0

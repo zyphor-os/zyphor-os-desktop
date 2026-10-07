@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    purge)
+        dpkg-divert \
+            --package zyphor-face-icon \
+            --remove \
+            --rename \
+            /etc/skel/.face
+        ;;
+esac
+
+exit 0
