@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e
+
+case "$1" in
+
+    configure)
+
+        chown root:root /etc/bash.bashrc.d/zyphor-fastfetch.sh
+        chmod 644 /etc/bash.bashrc.d/zyphor-fastfetch.sh
+
+        chown root:root /etc/zyphor/fastfetch/config.jsonc
+        chmod 644 /etc/zyphor/fastfetch/config.jsonc
+
+        chown root:root /etc/zyphor/fastfetch/zyphor.txt
+        chmod 644 /etc/zyphor/fastfetch/zyphor.txt
+
+        if ! grep -qF '/etc/bash.bashrc.d/*.sh' /etc/bash.bashrc; then
+            cat >> /etc/bash.bashrc <<'EOF'
+
+# Zyphor Bash configuration
+if [ -d /etc/bash.bashrc.d ]; then
+    for f in /etc/bash.bashrc.d/*.sh; do
+        [ -r "$f" ] && . "$f"
+    done
+fi
+EOF
+        fi
+
+        ;;
+
+esac
+
+exit 0

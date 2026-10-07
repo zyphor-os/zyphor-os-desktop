@@ -1,0 +1,125 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+  "logo": {
+    "type": "file",
+    "source": "/etc/zyphor/fastfetch/zyphor.txt",
+    "color": {
+      "1": "cyan"
+    },
+    "padding": {
+      "top": 1,
+      "left": 2
+    }
+  },
+
+  "display": {
+    "color": {
+      "keys": "cyan",
+      "title": "cyan"
+    },
+    "percent": {
+      "color": {
+        "green": "cyan",
+        "yellow": "cyan",
+        "red": "cyan"
+      }
+    }
+  },
+
+  "modules": [
+    "title",
+    "separator",
+
+    {
+      "type": "os",
+      "key": "OS"
+    },
+    {
+      "type": "host",
+      "key": "Host"
+    },
+    {
+      "type": "kernel",
+      "key": "Kernel"
+    },
+    {
+      "type": "bios",
+      "key": "BIOS"
+    },
+    {
+      "type": "bootmgr",
+      "key": "Boot"
+    },
+    {
+      "type": "uptime",
+      "key": "Uptime"
+    },
+    {
+      "type": "packages",
+      "key": "Packages"
+    },
+    {
+      "type": "shell",
+      "key": "Shell"
+    },
+    {
+      "type": "terminal",
+      "key": "Terminal"
+    },
+    {
+      "type": "de",
+      "key": "Desktop"
+    },
+    {
+      "type": "wm",
+      "key": "Window Manager"
+    },
+    {
+      "type": "theme",
+      "key": "Theme"
+    },
+    {
+      "type": "icons",
+      "key": "Icons"
+    },
+    {
+      "type": "font",
+      "key": "Font"
+    },
+    {
+      "type": "display",
+      "key": "Display"
+    },
+    {
+      "type": "cpu",
+      "key": "CPU"
+    },
+    {
+      "type": "gpu",
+      "key": "GPU"
+    },
+    {
+      "type": "memory",
+      "key": "Memory"
+    },
+    {
+      "type": "swap",
+      "key": "Swap"
+    },
+    {
+      "type": "disk",
+      "key": "Disk (/)"
+    },
+    {
+      "type": "localip",
+      "key": "IP"
+    },
+    {
+      "type": "locale",
+      "key": "Locale"
+    },
+
+    "colors"
+  ]
+}
