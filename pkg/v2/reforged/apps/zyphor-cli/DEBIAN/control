@@ -1,8 +1,8 @@
 Package: zyphor-cli
-Version: 13.0.1-r20-stable-release
+Version: 13.0.2-r21-stable-release
 Section: utils
 Priority: optional
 Architecture: all
 Depends: bash
-Maintainer: Zyphor OS Team
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
 Description: Zyphor OS CLI abstraction layer
