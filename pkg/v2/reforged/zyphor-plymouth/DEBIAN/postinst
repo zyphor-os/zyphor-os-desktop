@@ -1,0 +1,51 @@
+#!/bin/sh
+set -e
+
+THEME_DIR="/usr/share/plymouth/themes/zyphor"
+
+# Set ownership and permissions
+if [ -d "$THEME_DIR" ]; then
+    chown -R root:root "$THEME_DIR"
+
+    # Directories need execute permission to be traversable
+    find "$THEME_DIR" -type d -exec chmod 755 {} \;
+
+    # Theme files
+    find "$THEME_DIR" -type f -exec chmod 644 {} \;
+fi
+
+# Configure GRUB for Plymouth and OS probing
+if [ -f /etc/default/grub ]; then
+    sed -i \
+        's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/' \
+        /etc/default/grub
+
+    if grep -q '^#GRUB_DISABLE_OS_PROBER=false' /etc/default/grub; then
+        sed -i \
+            's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' \
+            /etc/default/grub
+    elif grep -q '^GRUB_DISABLE_OS_PROBER=' /etc/default/grub; then
+        sed -i \
+            's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' \
+            /etc/default/grub
+    else
+        echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub
+    fi
+fi
+
+# Set Zyphor as the default Plymouth theme
+if command -v plymouth-set-default-theme >/dev/null 2>&1; then
+    plymouth-set-default-theme zyphor
+fi
+
+# Regenerate GRUB configuration
+if command -v update-grub >/dev/null 2>&1; then
+    update-grub
+fi
+
+# Rebuild initramfs
+if command -v update-initramfs >/dev/null 2>&1; then
+    update-initramfs -u -k all
+fi
+
+exit 0
