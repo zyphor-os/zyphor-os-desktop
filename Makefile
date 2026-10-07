@@ -197,52 +197,70 @@ switch:
 
 release:
 
-# V2 UPDATES ===========================================================
+# V2 Legacy UPDATES ===========================================================
 
-# 	zyphor build package pkg/v2/updater/updates
-# 	mv pkg/v2/updater/updates.deb zyphor-updates.deb
+# 	zyphor build package pkg/v2/legacy/updater/updates
+# 	mv pkg/v2/legacy/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/v2/updater/zor
-	mv pkg/v2/updater/zor.deb zyphor-os-release.deb
+# 	zyphor build package pkg/v2/legacy/updater/zor
+# 	mv pkg/v2/legacy/updater/zor.deb zyphor-os-release.deb
 
-	zyphor build package pkg/v2/updater/zwn
-	mv pkg/v2/updater/zwn.deb zyphor-whats-new.deb
+# 	zyphor build package pkg/v2/legacy/updater/zwn
+# 	mv pkg/v2/legacy/updater/zwn.deb zyphor-whats-new.deb
 
-# 	zyphor build package pkg/v2/zywin/zywin
-# 	mv pkg/v2/zywin/zywin.deb zywin.deb
+# 	zyphor build package pkg/v2/legacy/zywin/zywin
+# 	mv pkg/v2/legacy/zywin/zywin.deb zywin.deb
 
-# 	zyphor build package pkg/v2/zywin-ui/zywin-ui
-# 	mv pkg/v2/zywin-ui/zywin-ui.deb zywin-ui.deb
+# 	zyphor build package pkg/v2/legacy/zywin-ui/zywin-ui
+# 	mv pkg/v2/legacy/zywin-ui/zywin-ui.deb zywin-ui.deb
 
-# 	zyphor build package pkg/v2/zywelcome/zywelcome
-# 	mv pkg/v2/zywelcome/zywelcome.deb zywelcome.deb
+# 	zyphor build package pkg/v2/legacy/zywelcome/zywelcome
+# 	mv pkg/v2/legacy/zywelcome/zywelcome.deb zywelcome.deb
 
-# 	zyphor build package pkg/v2/zylearn/zylearn
-# 	mv pkg/v2/zylearn/zylearn.deb zylearn.deb
+# 	zyphor build package pkg/v2/legacy/zylearn/zylearn
+# 	mv pkg/v2/legacy/zylearn/zylearn.deb zylearn.deb
 
-# 	zyphor build package pkg/v2/updater/updates
-# 	mv pkg/v2/updater/updates.deb zyphor-updates.deb
+# 	zyphor build package pkg/v2/legacy/updater/updates
+# 	mv pkg/v2/legacy/updater/updates.deb zyphor-updates.deb
 
-# 	zyphor build package pkg/v2/zcli
-# 	mv pkg/v2/zcli.deb zyphor-cli.deb
+# 	zyphor build package pkg/v2/legacy/zcli
+# 	mv pkg/v2/legacy/zcli.deb zyphor-cli.deb
 
-# 	zyphor build package pkg/v2/zrc
-# 	mv pkg/v2/zrc.deb zyphor-repo-config.deb
+# 	zyphor build package pkg/v2/legacy/zrc
+# 	mv pkg/v2/legacy/zrc.deb zyphor-repo-config.deb
 
-# 	zyphor build package pkg/v2/zysh
-# 	mv pkg/v2/zysh.deb zysh.deb
+# 	zyphor build package pkg/v2/legacy/zysh
+# 	mv pkg/v2/legacy/zysh.deb zysh.deb
 
-# 	zyphor build package pkg/v2/zcc-web
-# 	mv pkg/v2/zcc-web.deb zyphor-command-center-web.deb
+# 	zyphor build package pkg/v2/legacy/zcc-web
+# 	mv pkg/v2/legacy/zcc-web.deb zyphor-command-center-web.deb
 		
-# 	zyphor build package pkg/v2/zycamera-launcher/zycamera-launcher
-# 	mv pkg/v2/zycamera-launcher/zycamera-launcher.deb zycamera-launcher.deb
+# 	zyphor build package pkg/v2/legacy/zycamera-launcher/zycamera-launcher
+# 	mv pkg/v2/legacy/zycamera-launcher/zycamera-launcher.deb zycamera-launcher.deb
 
-# 	zyphor build package pkg/v2/zou/grub-screensaver-1
-# 	mv pkg/v2/zou/grub-screensaver-1.deb grub-screensaver-1.deb
+# 	zyphor build package pkg/v2/legacy/zou/grub-screensaver-1
+# 	mv pkg/v2/legacy/zou/grub-screensaver-1.deb grub-screensaver-1.deb
 
-	zyphor build package pkg/v2/zyphor-grub-theme
-	mv pkg/v2/zyphor-grub-theme.deb zyphor-grub-theme.deb
+# 	zyphor build package pkg/v2/legacy/zyphor-grub-theme
+# 	mv pkg/v2/legacy/zyphor-grub-theme.deb zyphor-grub-theme.deb
+
+# V2 Reforged UPDATES ====================================================
+
+# ADA LOVELACE MAIN
+
+	zyphor build package pkg/v2/reforged/zyphor-archive-keyring
+	mv pkg/v2/reforged/zyphor-archive-keyring.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+
+# ADA LOVELACE APPS
+
+	zyphor build package pkg/v2/reforged/apps/zyphor-cli
+	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+
+	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
+	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+
+	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
+	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # V3 UPDATES ===========================================================
 
@@ -316,7 +334,7 @@ release:
 
 # 	---
 
-	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
+# 	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
 
 # 	mv ./*.deb ../zyphor-os.github.io/bethany-lts/pool/main/z --verbose
 
