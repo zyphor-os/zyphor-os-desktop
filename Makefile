@@ -170,26 +170,11 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add pkg/v2/reforged/apps/zyphor-cli/DEBIAN/control
-	git commit -m "chore: update reforged zyphor CLI package control"
+	git add scripts/clean-test-user
+	git commit -m "chore: update clean test user script"
 
-	git add pkg/v2/reforged/apps/zyphor-command-center/DEBIAN/control
-	git commit -m "chore: update reforged zyphor Command Center package control"
-
-	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "chore: update reforged zyphor What's New package control"
-
-	git add pkg/v2/reforged/apps/zycamera-launcher/
-	git commit -m "chore: add reforged zy camera launcher package"
-
-	git add pkg/v2/reforged/apps/zylearn/
-	git commit -m "chore: add reforged ZyLearn package"
-
-	git add pkg/v2/reforged/apps/zywin-ui/
-	git commit -m "chore: add reforged ZyWin UI package"
-
-	git add pkg/v2/reforged/apps/zywin/
-	git commit -m "chore: add reforged ZyWin package"
+	git add compiz/
+	git commit -m "chore: add Compiz configuration"
 
 push:
 	git push origin $(branch)
