@@ -170,14 +170,14 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add compiz/compizconfig/Default.ini
-	git commit -m "chore: remove Compiz default configuration"
+	git add pkg/staging/zyphor-desktop-environment.deb
+	git commit -m "chore: update staging zyphor desktop environment package"
 
-	git add compiz/compizconfig/config
-	git commit -m "chore: remove Compiz configuration"
+	git add defaults/v3/Desktop/
+	git commit -m "chore: add v3 default Desktop configuration"
 
-	git add defaults/
-	git commit -m "chore: add default configuration"
+	git add pkg/v3/testing/zyphor-desktop-environment/
+	git commit -m "chore: add testing zyphor desktop environment package"
 
 push:
 	git push origin $(branch)
@@ -272,29 +272,29 @@ release:
 
 # ADA LOVELACE APPS
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-cli
-	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-cli
+# 	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
-	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
+# 	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
 # 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
-	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
+# 	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
-	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
-	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
+# 	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
-	zyphor build package pkg/v2/reforged/apps/zylearn/zylearn
-	mv pkg/v2/reforged/apps/zylearn/zylearn.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zylearn/zylearn
+# 	mv pkg/v2/reforged/apps/zylearn/zylearn.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
-	zyphor build package pkg/v2/reforged/apps/zywin/zywin
-	mv pkg/v2/reforged/apps/zywin/zywin.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zywin/zywin
+# 	mv pkg/v2/reforged/apps/zywin/zywin.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
-	zyphor build package pkg/v2/reforged/apps/zywin-ui/zywin-ui
-	mv pkg/v2/reforged/apps/zywin-ui/zywin-ui.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zywin-ui/zywin-ui
+# 	mv pkg/v2/reforged/apps/zywin-ui/zywin-ui.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # V3 UPDATES ===========================================================
 
@@ -308,7 +308,9 @@ release:
 
 # 	zyphor build package pkg/v3/zyphor-desktop-environment
 # 	mv pkg/v3/zyphor-desktop-environment.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
-# 	mv pkg/v3/zyphor-desktop-environment.deb pkg/staging --verbose
+
+	zyphor build package pkg/v3/testing/zyphor-desktop-environment
+	mv pkg/v3/testing/zyphor-desktop-environment.deb pkg/staging --verbose
 
 # 	zyphor build package pkg/v3/zyphor-os-release
 # 	mv pkg/v3/zyphor-os-release.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
