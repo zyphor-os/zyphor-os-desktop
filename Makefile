@@ -176,6 +176,9 @@ add:
 	git add pkg/v3/testing/zyphor-desktop-environment/DEBIAN/control
 	git commit -m "chore: update testing zyphor desktop environment package control"
 
+	git add pkg/v3/testing/zyphor-desktop-environment/usr/
+	git commit -m "chore: add testing zyphor desktop environment files"
+
 push:
 	git push origin $(branch)
 
