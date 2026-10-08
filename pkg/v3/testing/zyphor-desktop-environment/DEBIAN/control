@@ -1,0 +1,7 @@
+Package: zyphor-desktop-environment
+Version: 5.0.0-r14-alpha-test-1
+Section: admin
+Priority: optional
+Architecture: all
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
+Description: Zyphor OS Desktop Environment Theme

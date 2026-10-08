@@ -1,0 +1,45 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+NoDisplay=false
+Icon=libreoffice-startcenter
+Type=Application
+Categories=Office;X-Red-Hat-Base;X-SuSE-Core-Office;
+Exec=libreoffice %F
+MimeType=application/vnd.openofficeorg.extension;x-scheme-handler/vnd.libreoffice.cmis;x-scheme-handler/vnd.sun.star.webdav;x-scheme-handler/vnd.sun.star.webdavs;x-scheme-handler/vnd.libreoffice.command;x-scheme-handler/ms-word;x-scheme-handler/ms-powerpoint;x-scheme-handler/ms-excel;x-scheme-handler/ms-visio;x-scheme-handler/ms-access;
+Name=LibreOffice
+GenericName=Office
+GenericName[en]=Office
+Comment=Launch applications to create text documents, spreadsheets, presentations, drawings, formulas, and databases, or open recently used documents.
+Comment[en]=Launch applications to create text documents, spreadsheets, presentations, drawings, formulas, and databases, or open recently used documents.
+StartupNotify=true
+X-GIO-NoFuse=true
+StartupWMClass=libreoffice-startcenter
+X-KDE-Protocols=file,http,webdav,webdavs
+X-AppStream-Ignore=True
+Actions=Writer;Calc;Impress;Draw;Base;Math;
+X-XFCE-Source=file:///usr/share/applications/libreoffice-startcenter.desktop
+
+[Desktop Action Writer]
+Name=Writer
+Exec=libreoffice --writer
+
+[Desktop Action Calc]
+Name=Calc
+Exec=libreoffice --calc
+
+[Desktop Action Impress]
+Name=Impress
+Exec=libreoffice --impress
+
+[Desktop Action Draw]
+Name=Draw
+Exec=libreoffice --draw
+
+[Desktop Action Base]
+Name=Base
+Exec=libreoffice --base
+
+[Desktop Action Math]
+Name=Math
+Exec=libreoffice --math

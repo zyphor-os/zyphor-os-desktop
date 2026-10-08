@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+for dir in \
+    /etc/skel/.config \
+    /etc/skel/.fonts \
+    /etc/skel/.icons \
+    /etc/skel/.themes
+do
+    if [ -e "$dir" ]; then
+        chown -R root:root "$dir"
+        chmod -R 755 "$dir"
+    fi
+done
+
+exit 0
