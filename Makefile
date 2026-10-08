@@ -170,11 +170,14 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add scripts/clean-test-user
-	git commit -m "chore: update clean test user script"
+	git add compiz/compizconfig/Default.ini
+	git commit -m "chore: remove Compiz default configuration"
 
-	git add compiz/
-	git commit -m "chore: add Compiz configuration"
+	git add compiz/compizconfig/config
+	git commit -m "chore: remove Compiz configuration"
+
+	git add defaults/
+	git commit -m "chore: add default configuration"
 
 push:
 	git push origin $(branch)
