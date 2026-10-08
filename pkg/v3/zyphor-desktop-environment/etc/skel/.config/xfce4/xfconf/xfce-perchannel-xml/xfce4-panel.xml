@@ -13,8 +13,14 @@
       <property name="icon-size" type="uint" value="16"/>
       <property name="size" type="uint" value="26"/>
       <property name="plugin-ids" type="array">
-        <value type="int" value="1"/>
-        <value type="int" value="2"/>
+        <value type="int" value="20"/>
+        <value type="int" value="33"/>
+        <value type="int" value="23"/>
+        <value type="int" value="34"/>
+        <value type="int" value="36"/>
+        <value type="int" value="37"/>
+        <value type="int" value="38"/>
+        <value type="int" value="39"/>
         <value type="int" value="3"/>
         <value type="int" value="5"/>
         <value type="int" value="21"/>
@@ -34,25 +40,18 @@
       <property name="position-locked" type="bool" value="true"/>
       <property name="size" type="uint" value="48"/>
       <property name="plugin-ids" type="array">
-        <value type="int" value="4"/>
-        <value type="int" value="12"/>
+        <value type="int" value="1"/>
         <value type="int" value="13"/>
         <value type="int" value="14"/>
         <value type="int" value="15"/>
-        <value type="int" value="16"/>
-        <value type="int" value="17"/>
-        <value type="int" value="18"/>
         <value type="int" value="22"/>
         <value type="int" value="25"/>
         <value type="int" value="11"/>
+        <value type="int" value="32"/>
       </property>
     </property>
   </property>
   <property name="plugins" type="empty">
-    <property name="plugin-1" type="string" value="applicationsmenu"/>
-    <property name="plugin-2" type="string" value="tasklist">
-      <property name="grouping" type="uint" value="1"/>
-    </property>
     <property name="plugin-3" type="string" value="separator">
       <property name="expand" type="bool" value="true"/>
       <property name="style" type="uint" value="0"/>
@@ -79,7 +78,6 @@
     </property>
     <property name="plugin-10" type="string" value="actions"/>
     <property name="plugin-11" type="string" value="showdesktop"/>
-    <property name="plugin-12" type="string" value="separator"/>
     <property name="plugin-13" type="string" value="launcher">
       <property name="items" type="array">
         <value type="string" value="17891875681.desktop"/>
@@ -95,16 +93,6 @@
         <value type="string" value="17891875693.desktop"/>
       </property>
     </property>
-    <property name="plugin-16" type="string" value="launcher">
-      <property name="items" type="array">
-        <value type="string" value="17891875694.desktop"/>
-      </property>
-    </property>
-    <property name="plugin-17" type="string" value="separator"/>
-    <property name="plugin-18" type="string" value="directorymenu">
-      <property name="base-directory" type="string" value="/home"/>
-    </property>
-    <property name="plugin-4" type="string" value="places"/>
     <property name="notes" type="empty">
       <property name="global" type="empty">
         <property name="version" type="string" value="1.11.1"/>
@@ -116,6 +104,88 @@
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
     </property>
     <property name="plugin-21" type="string" value="power-manager-plugin"/>
-    <property name="plugin-29" type="string" value="weather"/>
+    <property name="plugin-29" type="string" value="weather">
+      <property name="msl" type="int" value="0"/>
+      <property name="timezone" type="string" value=""/>
+      <property name="offset" type="string" value="-04:00"/>
+      <property name="cache-max-age" type="int" value="172800"/>
+      <property name="power-saving" type="bool" value="true"/>
+      <property name="units" type="empty">
+        <property name="temperature" type="int" value="0"/>
+        <property name="pressure" type="int" value="0"/>
+        <property name="windspeed" type="int" value="0"/>
+        <property name="precipitation" type="int" value="0"/>
+        <property name="altitude" type="int" value="0"/>
+        <property name="apparent-temperature" type="int" value="2"/>
+      </property>
+      <property name="round" type="bool" value="true"/>
+      <property name="single-row" type="bool" value="true"/>
+      <property name="tooltip-style" type="int" value="1"/>
+      <property name="forecast" type="empty">
+        <property name="layout" type="int" value="1"/>
+        <property name="days" type="int" value="5"/>
+      </property>
+      <property name="theme-dir" type="string" value="/usr/share/xfce4/weather/icons/liquid"/>
+      <property name="scrollbox" type="empty">
+        <property name="show" type="bool" value="true"/>
+        <property name="animate" type="bool" value="true"/>
+        <property name="lines" type="int" value="1"/>
+        <property name="color" type="string" value="rgba(0,0,0,0)"/>
+        <property name="use-color" type="bool" value="false"/>
+      </property>
+    </property>
+    <property name="plugin-20" type="string" value="whiskermenu">
+      <property name="view-mode" type="int" value="1"/>
+      <property name="button-icon" type="string" value="file-manager"/>
+      <property name="show-button-icon" type="bool" value="true"/>
+      <property name="show-button-title" type="bool" value="false"/>
+      <property name="menu-opacity" type="int" value="0"/>
+      <property name="recent" type="array">
+        <value type="string" value="zyphor-command-center.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-23" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="17914214711.desktop"/>
+      </property>
+      <property name="show-label" type="bool" value="false"/>
+    </property>
+    <property name="plugin-32" type="string" value="tasklist">
+      <property name="show-labels" type="bool" value="false"/>
+      <property name="grouping" type="bool" value="true"/>
+    </property>
+    <property name="plugin-33" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="17914221848.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-34" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="17914222509.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-36" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="179142234511.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-37" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="179142241112.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-38" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="179142244613.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-39" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="179142251414.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-1" type="string" value="applicationsmenu">
+      <property name="show-button-title" type="bool" value="false"/>
+    </property>
   </property>
 </channel>

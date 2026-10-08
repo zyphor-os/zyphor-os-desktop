@@ -1,20 +1,22 @@
 const releaseNotes = {
     distro: "Zyphor OS 3 \"Bethany\" LTS",
-    version: "3.0.0-bethany-lts-u1",
-    date: "Updated On: September 26, 2026 @ 08:14 AM",
+    version: "3.0.0-bethany-lts-u2",
+    date: "Updated On: October 8, 2026 @ 07:44 AM",
 
     sections: [
         {
-            "title": "Zyphor Web Server Setup",
+            "title": "New Desktop Environment",
             "items": [
-                "Added zyphor setup web-server for spinning up an Apache virtual host in one command",
-                "Automatically enables the rewrite and ssl Apache modules if they aren't already active",
-                "Generates a self-signed SSL certificate on first run and skips regeneration if one is already configured",
-                "Prompts for a port and adds it to ports.conf, skipping port 443 since it's already listened on by default",
-                "Prompts for a site name to create and enable a ready-to-use VirtualHost config with SSL, logging, and directory permissions pre-set",
-                "Creates a default index.html in the site's DocumentRoot so the new site has a working landing page out of the box",
-                "Restarts Apache automatically once the site is enabled"
+                "Introduced a refreshed Zyphor OS desktop environment with an updated visual experience",
+                "Added a new default desktop layout with updated panel launchers and desktop shortcuts",
+                "Added new default wallpapers and refreshed desktop artwork",
+                "Updated the default application launcher for a cleaner and more accessible desktop experience",
+                "Improved the default XFCE desktop configuration for new installations and newly created users",
+                "Desktop environment updates can be applied through sudo zy system upgrade",
+                "New desktop configurations are applied to newly created users through /etc/skel",
+                "Existing users can keep their current desktop configuration until they deliberately apply the new desktop environment updates",
+                "Desktop configuration updates are being tested in a virtual machine to help prevent existing user configurations from being overwritten or damaged"
             ]
-        },
+        }
     ]
 };

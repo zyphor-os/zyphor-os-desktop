@@ -26,4 +26,15 @@
     </property>
   </property>
   <property name="last-settings-migration-version" type="uint" value="1"/>
+  <property name="last" type="empty">
+    <property name="window-width" type="int" value="655"/>
+    <property name="window-height" type="int" value="510"/>
+  </property>
+  <property name="desktop-icons" type="empty">
+    <property name="file-icons" type="empty">
+      <property name="show-removable" type="bool" value="false"/>
+      <property name="show-filesystem" type="bool" value="false"/>
+    </property>
+    <property name="show-hidden-files" type="bool" value="false"/>
+  </property>
 </channel>

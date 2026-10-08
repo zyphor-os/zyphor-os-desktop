@@ -309,8 +309,9 @@ release:
 # 	zyphor build package pkg/v3/zyphor-desktop-environment
 # 	mv pkg/v3/zyphor-desktop-environment.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
-	zyphor build package pkg/v3/testing/zyphor-desktop-environment
-	mv pkg/v3/testing/zyphor-desktop-environment.deb pkg/staging --verbose
+# 	TEST>>>
+# 	zyphor build package pkg/v3/testing/zyphor-desktop-environment
+# 	mv pkg/v3/testing/zyphor-desktop-environment.deb pkg/staging --verbose
 
 # 	zyphor build package pkg/v3/zyphor-os-release
 # 	mv pkg/v3/zyphor-os-release.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
@@ -365,8 +366,8 @@ release:
 # 	zyphor build package pkg/v3/apps/zyphor-command-center
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/apps/zyphor-whats-new
-# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-whats-new
+	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	---
 
