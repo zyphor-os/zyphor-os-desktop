@@ -4,11 +4,11 @@
 
 Download the latest **Zyphor OS ISO** and get started in minutes.
 
-👉 **[Click Here To Download Zyphor OS 1 (v1.13.0)](https://white-opossum-308929.hostingersite.com/zyphor-os-iso/zyphor-os-desktop-v1.13.0-xfce-amd64.iso)** - The first initial version (end of life).  
+👉 **[Click Here To Download Zyphor OS 1 (v1.13.0)](https://drive.google.com/uc?export=download&id=1CAUJLU0N_lXVSSejHHethg9BlYOVDi5r)** - The first initial version (end of life).  
 
-👉 **[Click Here To Download Zyphor OS 2 "Ada Lovelace" LTS (v2.2.1)](https://white-opossum-308929.hostingersite.com/zyphor-os-iso/zyphor-os-desktop-v2.2.1-ada-lovelace-lts-xfce-amd64.iso)** - Current LTS version.  
+👉 **[Click Here To Download Zyphor OS 2 "Ada Lovelace" LTS (v2.2.1)](https://drive.google.com/uc?export=download&id=1BnGmflv5TN9hMwcu8v7pvKvFq0ZikBvm)** - Current LTS version.  
 
-👉 **[Click Here To Download Zyphor OS 3 "Bethany" LTS (v3.2.0-alpha)](https://white-opossum-308929.hostingersite.com/zyphor-os-iso/zyphor-os-desktop-v3.2.0-bethany-lts-alpha-xfce-live-amd64.iso)** - Future LTS version with Live Mode. Alpha release for testing.  
+👉 **[Click Here To Download Zyphor OS 3 "Bethany" LTS (v3.2.0-alpha)](https://drive.google.com/uc?export=download&id=1y_oRAvI1th6ILXRxeJzNFPWfig3Hjlzj)** - Future LTS version with Live Mode. Alpha release for testing.  
 
 ---
 
