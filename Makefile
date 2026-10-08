@@ -173,11 +173,8 @@ add:
 	git add pkg/staging/zyphor-desktop-environment.deb
 	git commit -m "chore: update staging zyphor desktop environment package"
 
-	git add defaults/v3/Desktop/
-	git commit -m "chore: add v3 default Desktop configuration"
-
-	git add pkg/v3/testing/zyphor-desktop-environment/
-	git commit -m "chore: add testing zyphor desktop environment package"
+	git add pkg/v3/testing/zyphor-desktop-environment/DEBIAN/control
+	git commit -m "chore: update testing zyphor desktop environment package control"
 
 push:
 	git push origin $(branch)
