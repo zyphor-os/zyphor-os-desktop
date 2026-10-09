@@ -170,11 +170,11 @@ add:
 	git add Makefile
 	git commit -m "build: update repository automation"
 
-	git add defaults/v2/
-	git commit -m "chore: add v2 default configuration"
+	git add pkg/v3/zyphor-desktop-environment/DEBIAN/control
+	git commit -m "chore: update zyphor desktop environment package control"
 
-	git add pkg/v2/reforged/zyphor-desktop-environment/
-	git commit -m "chore: add reforged zyphor desktop environment package"
+	git add pkg/v3/zyphor-desktop-environment/DEBIAN/postinst
+	git commit -m "chore: update zyphor desktop environment postinst script"
 
 push:
 	git push origin $(branch)
@@ -267,8 +267,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-fastfetch-config
 # 	mv pkg/v2/reforged/zyphor-fastfetch-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/zyphor-desktop-environment
-	mv pkg/v2/reforged/zyphor-desktop-environment.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-desktop-environment
+# 	mv pkg/v2/reforged/zyphor-desktop-environment.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
 # ADA LOVELACE APPS
 
@@ -306,8 +306,8 @@ release:
 # 	zyphor build package pkg/v3/zyphor-archive-keyring
 # 	mv pkg/v3/zyphor-archive-keyring.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/zyphor-desktop-environment
-# 	mv pkg/v3/zyphor-desktop-environment.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+	zyphor build package pkg/v3/zyphor-desktop-environment
+	mv pkg/v3/zyphor-desktop-environment.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 # 	TEST>>>
 # 	zyphor build package pkg/v3/testing/zyphor-desktop-environment
