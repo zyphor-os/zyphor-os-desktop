@@ -1,5 +1,5 @@
 Package: zyphor-os-release
-Version: 72.0.0-r56-stable-release
+Version: 73.0.0-r57-stable-release
 Section: utils
 Priority: optional
 Architecture: all
