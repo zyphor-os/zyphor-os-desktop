@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 echo "Cleaning logs..."
 find /var/log -type f -exec truncate -s 0 {} \;
 rm -rf /var/log/journal/*
@@ -21,5 +24,18 @@ echo "Cleaning machine identity..."
 truncate -s 0 /etc/machine-id
 rm -f /var/lib/dbus/machine-id
 
+echo "Stopping services and processes..."
+
+# Stop services gracefully when systemd is available.
+if command -v systemctl >/dev/null 2>&1; then
+    systemctl stop cron.service 2>/dev/null || true
+    systemctl stop rsyslog.service 2>/dev/null || true
+fi
+
+# This script should run inside the target chroot.
+# Do not use pkill -9 -x bash or kill every host process.
+# The build host and its shell must remain running.
+
 echo "Cleanup complete."
+
 
