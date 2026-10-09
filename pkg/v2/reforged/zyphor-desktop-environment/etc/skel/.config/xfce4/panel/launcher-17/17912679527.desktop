@@ -1,0 +1,27 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Icon=libreoffice-draw
+Type=Application
+Categories=Office;FlowChart;Graphics;2DGraphics;VectorGraphics;
+Exec=libreoffice --draw %U
+MimeType=application/clarisworks;application/pdf;application/vnd.corel-draw;application/vnd.ms-publisher;application/vnd.oasis.opendocument.graphics;application/vnd.oasis.opendocument.graphics-flat-xml;application/vnd.oasis.opendocument.graphics-template;application/vnd.quark.quarkxpress;application/vnd.stardivision.draw;application/vnd.sun.xml.draw;application/vnd.sun.xml.draw.template;application/vnd.visio;application/x-pagemaker;application/x-stardraw;application/x-wpg;image/x-emf;image/x-freehand;image/x-wmf;
+Name=LibreOffice Draw
+GenericName=Drawing Program
+GenericName[en]=Drawing Program
+Comment=Create and edit drawings, flow charts and logos.
+Comment[en]=Create and edit drawings, flow charts and logos.
+StartupNotify=true
+X-GIO-NoFuse=true
+Keywords=Vector;Schema;Diagram;Layout;OpenDocument Graphics;Microsoft Publisher;Microsoft Visio;Corel Draw;cdr;odg;svg;pdf;vsd;
+InitialPreference=5
+StartupWMClass=libreoffice-draw
+X-KDE-Protocols=file,http,webdav,webdavs
+Actions=NewDocument;
+X-XFCE-Source=file:///usr/share/applications/libreoffice-draw.desktop
+
+[Desktop Action NewDocument]
+Name=New Drawing
+Name[en]=New Drawing
+Icon=document-new
+Exec=libreoffice --draw

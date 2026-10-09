@@ -1,0 +1,27 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Icon=libreoffice-calc
+Type=Application
+Categories=Office;Spreadsheet;
+Exec=libreoffice --calc %U
+MimeType=application/clarisworks;application/csv;application/excel;application/msexcel;application/tab-separated-values;application/vnd.apache.parquet;application/vnd.apple.numbers;application/vnd.lotus-1-2-3;application/vnd.ms-excel;application/vnd.ms-excel.sheet.binary.macroEnabled.12;application/vnd.ms-excel.sheet.macroEnabled.12;application/vnd.ms-excel.template.macroEnabled.12;application/vnd.ms-works;application/vnd.oasis.opendocument.chart;application/vnd.oasis.opendocument.chart-template;application/vnd.oasis.opendocument.spreadsheet;application/vnd.oasis.opendocument.spreadsheet-flat-xml;application/vnd.oasis.opendocument.spreadsheet-template;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.openxmlformats-officedocument.spreadsheetml.template;application/vnd.stardivision.calc;application/vnd.stardivision.chart;application/vnd.sun.xml.calc;application/vnd.sun.xml.calc.template;application/x-123;application/x-dbase;application/x-dbf;application/x-dos_ms_excel;application/x-excel;application/x-gnumeric;application/x-iwork-numbers-sffnumbers;application/x-ms-excel;application/x-msexcel;application/x-quattropro;application/x-starcalc;application/x-starchart;text/comma-separated-values;text/csv;text/spreadsheet;text/tab-separated-values;text/x-comma-separated-values;text/x-csv;
+Name=LibreOffice Calc
+GenericName=Spreadsheet
+GenericName[en]=Spreadsheet
+Comment=Perform calculations, analyze information and manage lists in spreadsheets.
+Comment[en]=Perform calculations, analyze information and manage lists in spreadsheets.
+StartupNotify=true
+X-GIO-NoFuse=true
+Keywords=Accounting;Stats;OpenDocument Spreadsheet;Chart;Microsoft Excel;Microsoft Works;OpenOffice Calc;ods;xls;xlsx;
+InitialPreference=5
+StartupWMClass=libreoffice-calc
+X-KDE-Protocols=file,http,webdav,webdavs
+Actions=NewDocument;
+X-XFCE-Source=file:///usr/share/applications/libreoffice-calc.desktop
+
+[Desktop Action NewDocument]
+Name=New Spreadsheet
+Name[en]=New Spreadsheet
+Icon=document-new
+Exec=libreoffice --calc
