@@ -6,11 +6,17 @@ for dir in \
     /etc/skel/.fonts \
     /etc/skel/.icons \
     /etc/skel/.themes \
-    /etc/skel/Desktop
+    /etc/skel/Desktop \
+    /usr/share/images/desktop-base
 do
     if [ -e "$dir" ]; then
         chown -R root:root "$dir"
-        chmod -R 755 "$dir"
+
+        # Directories: readable and accessible
+        find "$dir" -type d -exec chmod 755 {} \;
+
+        # Files: readable, without unnecessary execute permissions
+        find "$dir" -type f -exec chmod 644 {} \;
     fi
 done
 
