@@ -6,7 +6,7 @@ Download the latest **Zyphor OS ISO** and get started in minutes.
 
 👉 **[Click Here To Download Zyphor OS 1 (v1.13.0)](https://drive.google.com/uc?export=download&id=1CAUJLU0N_lXVSSejHHethg9BlYOVDi5r)** - The first initial version (end of life).  
 
-👉 **[Click Here To Download Zyphor OS 2 "Ada Lovelace" LTS (v2.2.1)](https://drive.google.com/uc?export=download&id=1BnGmflv5TN9hMwcu8v7pvKvFq0ZikBvm)** - Current LTS version.  
+👉 **[Click Here To Download Zyphor OS 2 "Ada Lovelace" LTS Reforge (v2.2.1)](https://drive.google.com/uc?export=download&id=1B9TjTNQEA769VjvdYiUKhb50rWitQ2jT)** - Current LTS version.  
 
 👉 **[Click Here To Download Zyphor OS 3 "Bethany" LTS (v3.2.0-alpha)](https://drive.google.com/uc?export=download&id=1y_oRAvI1th6ILXRxeJzNFPWfig3Hjlzj)** - Future LTS version with Live Mode. Alpha release for testing.  
 
