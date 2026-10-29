@@ -1,0 +1,16 @@
+# Zyphor OS GNOME defaults (zyphor-os-settings-gnome). Installed as
+# /usr/share/glib-2.0/schemas/90_zyphor-os-settings-gnome.gschema.override
+# and compiled by glib-compile-schemas, which dpkg triggers after install.
+# A user's own settings (dconf) win over everything here.
+
+[org.gnome.desktop.background]
+# desktop-base's active theme, which zyphor-os-artwork makes Zyphor OS's, so
+# GNOME shows the same wallpaper as Xfce and KDE Plasma.
+picture-uri='file:///usr/share/desktop-base/active-theme/wallpaper/gnome-background.xml'
+picture-uri-dark='file:///usr/share/desktop-base/active-theme/wallpaper/gnome-background.xml'
+picture-options='zoom'
+
+[org.gnome.shell]
+# Entries of apps that aren't installed are skipped: the installer's launcher
+# exists only in the live session.
+favorite-apps=['zyphor-os-install.desktop', 'firefox-esr.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.TextEditor.desktop']
