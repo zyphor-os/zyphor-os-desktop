@@ -171,17 +171,33 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update Zyphor What's New package metadata
-	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(zyphor-whats-new): update Reforged package metadata"
+	# Update Zyphor OS v3 README
+	git add core/v3/README.md
+	git commit -m "docs(v3): update README"
 
-	# Update Zyphor What's New release data
-	git add pkg/v2/reforged/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(zyphor-whats-new): update Reforged release data"
+	# Update boot test tool
+	git add core/v3/tools/boot-test.py
+	git commit -m "test(v3): update boot test tool"
 
-	# Update Zyphor Bashrc Config package metadata
-	git add pkg/v2/reforged/zyphor-bashrc-config/DEBIAN/control
-	git commit -m "pkg(zyphor-bashrc-config): update Reforged package metadata"
+	# Update ISO build script
+	git add core/v3/tools/build-iso.sh
+	git commit -m "build(v3): update ISO build script"
+
+	# Add GNOME edition files
+	git add core/gnome-edition-files/
+	git commit -m "feat(gnome): add GNOME edition files"
+
+	# Add GNOME desktop configuration
+	git add core/v3/desktops/gnome/
+	git commit -m "feat(v3): add GNOME desktop configuration"
+
+	# Add Zyphor OS GNOME desktop package
+	git add core/v3/packages/zyphor-os-desktop-gnome/
+	git commit -m "feat(v3): add GNOME desktop package"
+
+	# Add Zyphor OS GNOME settings package
+	git add core/v3/packages/zyphor-os-settings-gnome/
+	git commit -m "feat(v3): add GNOME settings package"
 
 push:
 	git push origin $(branch)
