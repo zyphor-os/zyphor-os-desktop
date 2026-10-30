@@ -26,14 +26,14 @@ zyphor_pkg_cache() {
   fi
 
   echo ""
-  echo "Zyphor: Updating registry cache..."
+  echo "Zyphor: Updating repository cache..."
 
   # ==================================================
   # INTERNET CHECK
   # ==================================================
   if curl -s --head "$REGISTRY_URL" >/dev/null 2>&1; then
 
-    echo "Zyphor: Internet available → downloading registry..."
+    echo "Zyphor: Internet available → downloading repository..."
 
     if curl -fsSL "$REGISTRY_URL" -o "$CACHE_FILE"; then
       echo "Zyphor: ✔ Cache updated successfully"

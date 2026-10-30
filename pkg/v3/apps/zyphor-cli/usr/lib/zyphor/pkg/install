@@ -1,7 +1,7 @@
 # ==================================================
-# Zyphor pkg install (registry-aware v5)
+# Zyphor pkg install (repository-aware v5)
 # Falls back to a direct apt/snap/flatpak install
-# when the app isn't in the registry.
+# when the app isn't in the repository.
 # ==================================================
 
 zyphor_pkg_install() {
@@ -32,20 +32,20 @@ zyphor_pkg_install() {
   fi
 
   # ==================================================
-  # FETCH REGISTRY
+  # FETCH REPOSITORY
   # ==================================================
   echo ""
-  echo "Zyphor: Fetching registry..."
+  echo "Zyphor: Fetching repository..."
 
   if ! curl -fsSL "$REGISTRY_URL" -o "$CACHE_FILE"; then
-    echo "Zyphor: ⚠ Failed to fetch remote registry"
+    echo "Zyphor: ⚠ Failed to fetch remote repository"
 
     if [ ! -f "$CACHE_FILE" ]; then
       echo "Zyphor: ✖ No local cache available"
       return 1
     fi
 
-    echo "Zyphor: Using cached registry..."
+    echo "Zyphor: Using cached repository..."
   fi
 
   # ==================================================
@@ -65,7 +65,7 @@ zyphor_pkg_install() {
   if [ -z "$TYPE" ] || [ "$TYPE" = "null" ]; then
 
     echo ""
-    echo "Zyphor: ⚠ '$APP' is not registered in the app registry"
+    echo "Zyphor: ⚠ '$APP' is not registered in the app repository"
 
     # Resolve which manager to use: explicit $4 arg, or prompt interactively.
     if [ -n "$PREFERRED_MGR" ]; then
@@ -179,7 +179,7 @@ EOF
   fi
 
   # ==================================================
-  # REGISTERED APP → NORMAL REGISTRY-DRIVEN INSTALL
+  # REGISTERED APP → NORMAL REPOSITORY-DRIVEN INSTALL
   # ==================================================
   echo ""
   echo "Zyphor: Installing '$APP' (type: $TYPE)"

@@ -3,7 +3,7 @@
 zyphor_pkg_list() {
 
   echo ""
-  echo "Zyphor: Fetching registry + installed apps..."
+  echo "Zyphor: Fetching repository + installed apps..."
   echo ""
 
   # ==================================================
@@ -13,17 +13,17 @@ zyphor_pkg_list() {
   CACHE_FILE="${CACHE_FILE:-/tmp/zyphor_registry.json}"
 
   # ==================================================
-  # LOAD REGISTRY
+  # LOAD REPOSITORY
   # ==================================================
   if ! curl -fsSL "$REGISTRY_URL" -o "$CACHE_FILE"; then
-    echo "Zyphor: ⚠ Failed to fetch registry"
+    echo "Zyphor: ⚠ Failed to fetch repository"
 
     if [ ! -f "$CACHE_FILE" ]; then
-      echo "Zyphor: ✖ No registry available"
+      echo "Zyphor: ✖ No repository available"
       return 1
     fi
 
-    echo "Zyphor: Using cached registry..."
+    echo "Zyphor: Using cached repository..."
   fi
 
   # ==================================================
@@ -32,7 +32,7 @@ zyphor_pkg_list() {
   APPS=$(jq -r '.apps | keys[]' "$CACHE_FILE")
 
   if [ -z "$APPS" ]; then
-    echo "Zyphor: ⚠ No apps found in registry"
+    echo "Zyphor: ⚠ No apps found in repository"
     return 0
   fi
 
@@ -55,7 +55,7 @@ zyphor_pkg_list() {
       # --------------------------
       apt|deb)
 
-        # Primary check: registry package
+        # Primary check: repository package
         if [ -n "$PACKAGE" ] && dpkg -s "$PACKAGE" >/dev/null 2>&1; then
           INSTALLED=1
         else

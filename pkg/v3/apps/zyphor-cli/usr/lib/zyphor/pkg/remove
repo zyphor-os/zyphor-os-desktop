@@ -34,10 +34,10 @@ zyphor_pkg_remove() {
   fi
 
   # ==================================================
-  # LOAD REGISTRY (WITH FALLBACK)
+  # LOAD REPOSITORY (WITH FALLBACK)
   # ==================================================
   echo ""
-  echo "Zyphor: Loading registry..."
+  echo "Zyphor: Loading repository..."
 
   if ! curl -fsSL "$REGISTRY_URL" -o "$CACHE_FILE"; then
     echo "Zyphor: ⚠ Failed writing to $CACHE_FILE"
@@ -46,10 +46,10 @@ zyphor_pkg_remove() {
     echo "Zyphor: Retrying → $CACHE_FILE"
 
     if ! curl -fsSL "$REGISTRY_URL" -o "$CACHE_FILE"; then
-      echo "Zyphor: ⚠ Using cached registry..."
+      echo "Zyphor: ⚠ Using cached repository..."
 
       if [ ! -f "$CACHE_FILE" ]; then
-        echo "Zyphor: ✖ No registry available"
+        echo "Zyphor: ✖ No repository available"
         return 1
       fi
     fi
@@ -70,7 +70,7 @@ zyphor_pkg_remove() {
   if [ -z "$TYPE" ] || [ "$TYPE" = "null" ]; then
 
     echo ""
-    echo "Zyphor: ⚠ '$APP' is not registered in the app registry"
+    echo "Zyphor: ⚠ '$APP' is not registered in the app repository"
     echo "Zyphor: Checking installed packages directly..."
     echo ""
 

@@ -171,33 +171,29 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update Zyphor OS v3 README
-	git add core/v3/README.md
-	git commit -m "docs(v3): update README"
+	# Update ZOR updater package control metadata
+	git add pkg/v2/legacy/updater/zor/DEBIAN/control
+	git commit -m "pkg(zor): update updater package metadata"
 
-	# Update boot test tool
-	git add core/v3/tools/boot-test.py
-	git commit -m "test(v3): update boot test tool"
+	# Update ZOR updater post-install script
+	git add pkg/v2/legacy/updater/zor/DEBIAN/postinst
+	git commit -m "fix(zor): update updater post-install script"
 
-	# Update ISO build script
-	git add core/v3/tools/build-iso.sh
-	git commit -m "build(v3): update ISO build script"
+	# Update ZWN package control metadata
+	git add pkg/v2/legacy/updater/zwn/DEBIAN/control
+	git commit -m "pkg(zwn): update package metadata"
 
-	# Add GNOME edition files
-	git add core/gnome-edition-files/
-	git commit -m "feat(gnome): add GNOME edition files"
+	# Update Zyphor What's New release data
+	git add pkg/v2/legacy/updater/zwn/usr/share/zyphor-whats-new/release.js
+	git commit -m "feat(zwn): update release data"
 
-	# Add GNOME desktop configuration
-	git add core/v3/desktops/gnome/
-	git commit -m "feat(v3): add GNOME desktop configuration"
+	# Update Zyphor GRUB theme package metadata
+	git add pkg/v2/legacy/zyphor-grub-theme/DEBIAN/control
+	git commit -m "pkg(grub-theme): update package metadata"
 
-	# Add Zyphor OS GNOME desktop package
-	git add core/v3/packages/zyphor-os-desktop-gnome/
-	git commit -m "feat(v3): add GNOME desktop package"
-
-	# Add Zyphor OS GNOME settings package
-	git add core/v3/packages/zyphor-os-settings-gnome/
-	git commit -m "feat(v3): add GNOME settings package"
+	# Update Zyphor GRUB theme post-install script
+	git add pkg/v2/legacy/zyphor-grub-theme/DEBIAN/postinst
+	git commit -m "fix(grub-theme): update post-install script"
 
 push:
 	git push origin $(branch)
@@ -220,11 +216,11 @@ release:
 # 	zyphor build package pkg/v2/legacy/updater/updates
 # 	mv pkg/v2/legacy/updater/updates.deb zyphor-updates.deb
 
-# 	zyphor build package pkg/v2/legacy/updater/zor
-# 	mv pkg/v2/legacy/updater/zor.deb zyphor-os-release.deb
+	zyphor build package pkg/v2/legacy/updater/zor
+	mv pkg/v2/legacy/updater/zor.deb zyphor-os-release.deb
 
-# 	zyphor build package pkg/v2/legacy/updater/zwn
-# 	mv pkg/v2/legacy/updater/zwn.deb zyphor-whats-new.deb
+	zyphor build package pkg/v2/legacy/updater/zwn
+	mv pkg/v2/legacy/updater/zwn.deb zyphor-whats-new.deb
 
 # 	zyphor build package pkg/v2/legacy/zywin/zywin
 # 	mv pkg/v2/legacy/zywin/zywin.deb zywin.deb
@@ -259,8 +255,8 @@ release:
 # 	zyphor build package pkg/v2/legacy/zou/grub-screensaver-1
 # 	mv pkg/v2/legacy/zou/grub-screensaver-1.deb grub-screensaver-1.deb
 
-# 	zyphor build package pkg/v2/legacy/zyphor-grub-theme
-# 	mv pkg/v2/legacy/zyphor-grub-theme.deb zyphor-grub-theme.deb
+	zyphor build package pkg/v2/legacy/zyphor-grub-theme
+	mv pkg/v2/legacy/zyphor-grub-theme.deb zyphor-grub-theme.deb
 
 # V2 Reforged UPDATES ====================================================
 
@@ -281,8 +277,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-background-themes
 # 	mv pkg/v2/reforged/zyphor-background-themes.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
-	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
+# 	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 	
 # 	zyphor build package pkg/v2/reforged/zyphor-face-icon
 # 	mv pkg/v2/reforged/zyphor-face-icon.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
@@ -304,8 +300,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
 # 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
-	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
+# 	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
 # 	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
@@ -405,7 +401,7 @@ release:
 
 # 	---
 
-# 	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
+	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
 
 # 	mv ./*.deb ../zyphor-os.github.io/bethany-lts/pool/main/z --verbose
 

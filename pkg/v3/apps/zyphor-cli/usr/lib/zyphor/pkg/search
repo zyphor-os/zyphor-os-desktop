@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==================================================
-# Zyphor pkg search (registry-aware v5)
+# Zyphor pkg search (repository-aware v5)
 # Clean + resilient + deb-aware + live-fallback
 # ==================================================
 
@@ -71,29 +71,29 @@ zyphor_pkg_search() {
   fi
 
   echo ""
-  echo "Zyphor: Searching registry for '$KEYWORD'..."
+  echo "Zyphor: Searching repository for '$KEYWORD'..."
   echo ""
 
   # ==================================================
   # VALIDATE CONFIG (prevents curl bug)
   # ==================================================
   if [ -z "$REGISTRY_URL" ] || [ -z "$CACHE_FILE" ]; then
-    echo "Zyphor: ✖ Internal error (missing registry config)"
+    echo "Zyphor: ✖ Internal error (missing repository config)"
     return 1
   fi
 
   # ==================================================
-  # FETCH REGISTRY
+  # FETCH REPOSITORY
   # ==================================================
   if ! curl -fsSL "$REGISTRY_URL" -o "$CACHE_FILE"; then
-    echo "Zyphor: ⚠ Failed to fetch registry"
+    echo "Zyphor: ⚠ Failed to fetch repository"
 
     if [ ! -f "$CACHE_FILE" ]; then
-      echo "Zyphor: ✖ No cached registry available"
+      echo "Zyphor: ✖ No cached repository available"
       return 1
     fi
 
-    echo "Zyphor: Using cached registry..."
+    echo "Zyphor: Using cached repository..."
   fi
 
   LC_KEYWORD=$(echo "$KEYWORD" | tr '[:upper:]' '[:lower:]')
@@ -114,7 +114,7 @@ zyphor_pkg_search() {
     | .key
   ' "$CACHE_FILE")
 
-  # Set of package identifiers already known to the registry, used later to
+  # Set of package identifiers already known to the repository, used later to
   # avoid re-listing the same app as "unregistered" in the live fallback.
   KNOWN_NAMES=$(jq -r '
     .apps | to_entries[]
@@ -124,7 +124,7 @@ zyphor_pkg_search() {
   REGISTRY_COUNT=0
 
   if [ -n "$MATCHES" ]; then
-    echo "Registry results:"
+    echo "Repository results:"
     echo ""
 
     for app in $MATCHES; do
@@ -146,14 +146,14 @@ zyphor_pkg_search() {
 
     echo ""
   else
-    echo "Zyphor: ⚠ No registry matches for '$KEYWORD'"
+    echo "Zyphor: ⚠ No repository matches for '$KEYWORD'"
     echo ""
   fi
 
   # ==================================================
   # LIVE FALLBACK — apt / snap / flatpak
   # Anything found here that isn't already a known
-  # registry name gets flagged as unregistered.
+  # repository name gets flagged as unregistered.
   # Runs in the background behind a spinner.
   # ==================================================
   LIVE_TMP=$(mktemp)
@@ -200,18 +200,18 @@ zyphor_pkg_search() {
   wait "$LIVE_PID" 2>/dev/null
 
   LIVE_RESULTS=$(cat "$LIVE_TMP")
-  LIVE_COUNT=$(grep -c '^ -' "$LIVE_TMP" 2>/dev/null || echo 0)
+  LIVE_COUNT=$(grep -c '^ -' "$LIVE_TMP" 2>/dev/null); LIVE_COUNT=${LIVE_COUNT:-0}
   rm -f "$LIVE_TMP"
 
   if [ "$LIVE_COUNT" -gt 0 ]; then
-    echo "Also found (not registered in app registry):"
+    echo "Also found (not registered in app repository):"
     echo ""
     printf "%s" "$LIVE_RESULTS"
     echo ""
   fi
 
   if [ "$REGISTRY_COUNT" -eq 0 ] && [ "$LIVE_COUNT" -eq 0 ]; then
-    echo "Zyphor: ⚠ No apps found for '$KEYWORD' (registry or system package managers)"
+    echo "Zyphor: ⚠ No apps found for '$KEYWORD' (repository or system package managers)"
     echo ""
     return 0
   fi
