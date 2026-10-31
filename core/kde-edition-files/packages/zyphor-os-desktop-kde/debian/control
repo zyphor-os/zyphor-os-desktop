@@ -1,0 +1,97 @@
+Source: zyphor-os-desktop-kde
+Section: metapackages
+Priority: optional
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+
+Package: zyphor-os-desktop-kde
+Architecture: all
+# Depends: the desktop is broken without these. Removing one removes this
+# meta-package too.
+Depends: zyphor-os-base,
+         zyphor-os-artwork,
+# The display server: Plasma runs on Wayland by default, with a Plasma (X11)
+# session as the fallback (virtual machines sometimes need it). XWayland runs
+# X11 apps (Calamares among them) inside the Wayland session.
+         xserver-xorg,
+         xwayland,
+         libgl1-mesa-dri,
+         x11-xserver-utils,
+# The Plasma session (listed one by one, not the kde-plasma-desktop
+# meta-package, so removing e.g. kwrite doesn't remove this package).
+# plasma-desktop itself brings the Breeze theme, the password dialog agent
+# (polkit-kde-agent-1) and the desktop portals.
+         plasma-desktop,
+         plasma-workspace,
+         kwin-wayland,
+         kwin-x11,
+         systemsettings,
+         powerdevil,
+         kscreen,
+         plasma-nm,
+         plasma-pa,
+         dolphin,
+         konsole,
+# Login screen: the Debian Breeze theme takes its background from the active
+# desktop-base theme, which zyphor-os-artwork makes Zyphor OS's.
+         sddm,
+         sddm-theme-debian-breeze,
+         polkitd,
+# Session bus, power, disks, sound.
+         dbus-user-session,
+         upower,
+         udisks2,
+         pipewire-audio,
+         xdg-user-dirs,
+         xdg-utils,
+         fonts-noto-core,
+         ${misc:Depends}
+# Recommends: the applications and extras. Users can remove any of them
+# without apt removing the desktop.
+Recommends: firefox-esr,
+            kate,
+            okular,
+            gwenview,
+            ark,
+            kcalc,
+            kde-spectacle,
+            vlc,
+            kinfocenter,
+            plasma-systemmonitor,
+            kio-extras,
+            kdialog,
+            kdegraphics-thumbnailers,
+            ffmpegthumbs,
+            libreoffice-writer,
+            libreoffice-calc,
+            libreoffice-impress,
+            libreoffice-gtk3,
+# Settings pages, GTK apps that look like Plasma, Bluetooth, power profiles,
+# printing, and the saved-password wallet unlocked at login.
+            kde-config-sddm,
+            kde-config-screenlocker,
+            kde-config-gtk-style,
+            breeze-gtk-theme,
+            bluedevil,
+            bluez,
+            power-profiles-daemon,
+            print-manager,
+            cups,
+            kwalletmanager,
+            libpam-kwallet5,
+            at-spi2-core,
+            fonts-noto-color-emoji,
+# Clipboard and screen resizing in virtual machines.
+            spice-vdagent
+Description: Zyphor OS KDE Plasma desktop (metapackage)
+ Zyphor OS's KDE Plasma edition: the Plasma desktop (Plasma 6) with the
+ SDDM login screen, screen locking, sound (PipeWire), network, Bluetooth,
+ printing and applications for everyday work: Firefox, LibreOffice, a file
+ manager, terminal, text editor, image viewer, PDF viewer, media player and
+ archive manager.
+ .
+ The wallpaper, lock screen and login screen come from the Zyphor OS
+ desktop-base theme (zyphor-os-artwork); Plasma's other defaults are KDE's
+ and Debian's own.

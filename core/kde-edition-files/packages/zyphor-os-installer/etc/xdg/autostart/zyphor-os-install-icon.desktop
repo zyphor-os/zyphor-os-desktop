@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Install Zyphor OS desktop icon
+Exec=/usr/libexec/zyphor-os-installer/desktop-icon
+NoDisplay=true
+OnlyShowIn=XFCE;KDE;
+X-GNOME-Autostart-Phase=Initialization
