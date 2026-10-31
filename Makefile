@@ -171,29 +171,17 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update ZOR updater package control metadata
-	git add pkg/v2/legacy/updater/zor/DEBIAN/control
-	git commit -m "pkg(zor): update updater package metadata"
+	# Remove CONTRIBUTING.md
+	git add -u CONTRIBUTING.md
+	git commit -m "docs: remove CONTRIBUTING guide"
 
-	# Update ZOR updater post-install script
-	git add pkg/v2/legacy/updater/zor/DEBIAN/postinst
-	git commit -m "fix(zor): update updater post-install script"
+	# Update README.md
+	git add README.md
+	git commit -m "docs: update README"
 
-	# Update ZWN package control metadata
-	git add pkg/v2/legacy/updater/zwn/DEBIAN/control
-	git commit -m "pkg(zwn): update package metadata"
-
-	# Update Zyphor What's New release data
-	git add pkg/v2/legacy/updater/zwn/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(zwn): update release data"
-
-	# Update Zyphor GRUB theme package metadata
-	git add pkg/v2/legacy/zyphor-grub-theme/DEBIAN/control
-	git commit -m "pkg(grub-theme): update package metadata"
-
-	# Update Zyphor GRUB theme post-install script
-	git add pkg/v2/legacy/zyphor-grub-theme/DEBIAN/postinst
-	git commit -m "fix(grub-theme): update post-install script"
+	# Add ISO not available notice
+	git add iso-not-available
+	git commit -m "docs: add ISO availability notice"
 
 push:
 	git push origin $(branch)
