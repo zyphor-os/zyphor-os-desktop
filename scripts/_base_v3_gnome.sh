@@ -36,7 +36,11 @@ zy system upgrade
 
 zy system clean
 
-# Configure GNOME window buttons
+# Install GNOME Dash to Dock
+apt update
+apt install -y gnome-shell-extension-dashtodock
+
+# Configure GNOME window buttons and dock
 mkdir -p /etc/dconf/db/local.d
 
 cat > /etc/dconf/db/local.d/00-zyphor-gnome <<'EOF'
