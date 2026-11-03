@@ -6,6 +6,7 @@ get a bootable live ISO for it:
 ```sh
 tools/build-iso.sh --desktop xfce        # → out/zyphor-os-1.0-xfce-amd64.iso
 tools/build-iso.sh --gnome               # same as --desktop gnome
+tools/build-iso.sh --kde                 # the KDE Plasma edition
 ```
 
 Editions live in `desktops/`:
@@ -14,9 +15,10 @@ Editions live in `desktops/`:
 |---|---|
 | `minimal` | Console only: kernel, NetworkManager (`nmtui`), sudo, automatic security updates. |
 | `gnome` | GNOME (Wayland, with an Xorg fallback) with the GDM login screen and lock screen, PipeWire sound, Bluetooth, printing, Firefox, LibreOffice and everyday apps, and the Calamares installer. |
+| `kde` | KDE Plasma 6 (Wayland, with an X11 session as fallback) with the SDDM login screen and lock screen, PipeWire sound, Bluetooth, printing, Firefox, LibreOffice and everyday apps, and the Calamares installer. |
 | `xfce` | Xfce with the LightDM login screen and screen lock, one bottom panel (Whisker menu, windows, tray, sound, battery, notifications, clock), Greybird theme, PipeWire sound, Bluetooth, printing, update notifications, Firefox, LibreOffice and everyday apps, and the Calamares installer. |
 
-A KDE Plasma edition is next. Every edition's live session logs in
+Every edition's live session logs in
 automatically; installed systems ask for the password at the login screen,
 unless "Log in automatically" was ticked in the installer.
 
@@ -100,6 +102,7 @@ Recommends back on for installed systems, like plain Debian.
 | `zyphor-os-settings-xfce` | Xfce defaults in `/etc/xdg/zyphor-os-xfce/` (panel, theme, fonts, default apps), read before Debian's `/etc/xdg` in Xfce sessions; LightDM and greeter settings. |
 | `zyphor-os-desktop-gnome` | Meta-package of the GNOME edition. |
 | `zyphor-os-settings-gnome` | GNOME defaults as a GSettings override (priority 90): the desktop-base wallpaper and the apps pinned to the dash. A user's own dconf settings win. |
+| `zyphor-os-desktop-kde` | Meta-package of the KDE Plasma edition. It has no settings package: the wallpaper, lock screen and SDDM background follow the artwork theme, the rest is KDE's and Debian's own defaults. |
 | `zyphor-os-installer` | Calamares settings and branding, "Install" in the menu and on the live desktop. Live image only: installing removes it, Calamares and the live-system packages. |
 
 **Installer.** Editions with `INSTALLER=yes` get `installer/config/`: the
