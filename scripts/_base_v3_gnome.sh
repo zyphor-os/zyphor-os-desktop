@@ -23,6 +23,7 @@ apt install zyphor-fastfetch-config -y
 apt install zyphor-face-icon -y
 
 # apt install zyphor-desktop-environment -y
+apt install zyphor-command-center -y
 
 apt install zyphor-bashrc-config -y
 
