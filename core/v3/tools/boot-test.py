@@ -75,6 +75,14 @@ EDITION_CHECKS = {
         ("password dialog agent running (polkit)",
          "pgrep -u $(id -u) -f polkit-mate-authentication-agent-1", 60),
     ],
+    "gnome": [
+        # zyphor-os-settings-gnome's GSettings override (priority 90).
+        ("GNOME wallpaper is desktop-base's",
+         "gsettings get org.gnome.desktop.background picture-uri"
+         " | grep -q '/usr/share/desktop-base/active-theme/wallpaper/'", 90),
+        ("GNOME dash has the distro's favorites (Firefox)",
+         "gsettings get org.gnome.shell favorite-apps | grep -q firefox-esr.desktop", 90),
+    ],
 }
 
 

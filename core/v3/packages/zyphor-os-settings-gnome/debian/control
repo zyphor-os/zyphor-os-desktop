@@ -1,0 +1,25 @@
+Source: zyphor-os-settings-gnome
+Section: gnome
+Priority: optional
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+
+Package: zyphor-os-settings-gnome
+Architecture: all
+# What the settings name: the schemas the override file sets keys of (an
+# override of a missing schema is silently ignored), and the desktop-base
+# theme the wallpaper points to.
+Depends: gsettings-desktop-schemas,
+         gnome-shell,
+         desktop-base,
+         zyphor-os-artwork,
+         ${misc:Depends}
+Description: Zyphor OS defaults for the GNOME desktop
+ The look and layout of Zyphor OS's GNOME edition: the desktop-base
+ wallpaper and the applications pinned to the dash.
+ .
+ The settings are a GSettings override (priority 90, above Debian's own), so
+ they only change defaults: a user's own choices in dconf always win, and
+ Debian's files are left untouched.

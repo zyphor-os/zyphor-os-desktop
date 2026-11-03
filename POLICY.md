@@ -6,11 +6,9 @@ Made by **Mark Jason Espelita** himself.
 
 **AI USAGE**
 
-* All contributions are expected to be made by **humans**.
 * AI tools may be used for research and learning, but all content in contributions must **originate** from and be **understood by the contributor**.
 * This includes code, documentation, issues, security reports, pull request descriptions, and comments in all Zyphor OS codebases.
 * **ALL** usage of AI tools **MUST** be disclosed.
-* Do not bring AI review tools into pull requests.
 
 **MEETINGS (No Ghosting Allowed)**
 

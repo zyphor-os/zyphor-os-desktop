@@ -5,6 +5,7 @@ get a bootable live ISO for it:
 
 ```sh
 tools/build-iso.sh --desktop xfce        # → out/zyphor-os-1.0-xfce-amd64.iso
+tools/build-iso.sh --gnome               # same as --desktop gnome
 ```
 
 Editions live in `desktops/`:
@@ -12,9 +13,10 @@ Editions live in `desktops/`:
 | Edition | What you get |
 |---|---|
 | `minimal` | Console only: kernel, NetworkManager (`nmtui`), sudo, automatic security updates. |
+| `gnome` | GNOME (Wayland, with an Xorg fallback) with the GDM login screen and lock screen, PipeWire sound, Bluetooth, printing, Firefox, LibreOffice and everyday apps, and the Calamares installer. |
 | `xfce` | Xfce with the LightDM login screen and screen lock, one bottom panel (Whisker menu, windows, tray, sound, battery, notifications, clock), Greybird theme, PipeWire sound, Bluetooth, printing, update notifications, Firefox, LibreOffice and everyday apps, and the Calamares installer. |
 
-GNOME and KDE Plasma editions are next. Every edition's live session logs in
+A KDE Plasma edition is next. Every edition's live session logs in
 automatically; installed systems ask for the password at the login screen,
 unless "Log in automatically" was ticked in the installer.
 
@@ -43,6 +45,7 @@ sizes), or change the colors at the top of the script and run it again.
 
 ```sh
 tools/build-iso.sh --desktop NAME [--purge]    # build one edition (--purge: fresh download cache)
+tools/build-iso.sh --NAME [--purge]            # shorthand: --gnome, --xfce, --minimal, ...
 tools/build-iso.sh --desktop NAME --config-only   # assemble build/NAME and run lb config, no root
 tools/boot-test.py --desktop NAME [-v]         # headless QEMU boot test on the serial console
 tools/test-iso.sh --desktop NAME [--live|--install|--disk] [--uefi|--bios] [--reset]   # QEMU window
@@ -95,6 +98,8 @@ Recommends back on for installed systems, like plain Debian.
 | `zyphor-os-artwork` | A desktop-base theme made the active one, so the wallpaper, lock screen, LightDM/SDDM login background and the installed system's GRUB menu show Zyphor OS artwork; the logo icon. |
 | `zyphor-os-desktop-xfce` | Meta-package of the Xfce edition. |
 | `zyphor-os-settings-xfce` | Xfce defaults in `/etc/xdg/zyphor-os-xfce/` (panel, theme, fonts, default apps), read before Debian's `/etc/xdg` in Xfce sessions; LightDM and greeter settings. |
+| `zyphor-os-desktop-gnome` | Meta-package of the GNOME edition. |
+| `zyphor-os-settings-gnome` | GNOME defaults as a GSettings override (priority 90): the desktop-base wallpaper and the apps pinned to the dash. A user's own dconf settings win. |
 | `zyphor-os-installer` | Calamares settings and branding, "Install" in the menu and on the live desktop. Live image only: installing removes it, Calamares and the live-system packages. |
 
 **Installer.** Editions with `INSTALLER=yes` get `installer/config/`: the
@@ -111,6 +116,8 @@ that detects Debian keeps working.
 
 ## Adding an edition
 
+0. A `desktops/NAME/` folder is all a `--NAME` build flag needs: `tools/build-iso.sh`
+   accepts `--NAME` for every edition it finds.
 1. `desktops/NAME/desktop.conf`: `DESKTOP_NAME`, `META`, `INSTALLER`,
    `BOOT_OPTIONS`, `REQUIRED`, `DISPLAY_MANAGER` and `SESSION_PROCESSES` (what
    the boot test waits for as proof of autologin), as in

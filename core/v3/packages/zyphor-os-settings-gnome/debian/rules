@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+# Priority 90: above Debian's own overrides (desktop-base, gnome-shell, ...),
+# which use lower numbers, so these defaults win.
+override_dh_installgsettings:
+	dh_installgsettings --priority=90

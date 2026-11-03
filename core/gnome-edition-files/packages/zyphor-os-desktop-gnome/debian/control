@@ -1,0 +1,86 @@
+Source: zyphor-os-desktop-gnome
+Section: metapackages
+Priority: optional
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+
+Package: zyphor-os-desktop-gnome
+Architecture: all
+# Depends: the desktop is broken without these. Removing one removes this
+# meta-package too.
+Depends: zyphor-os-base,
+         zyphor-os-artwork,
+         zyphor-os-settings-gnome,
+# The display server: Wayland is GNOME's default, Xorg the fallback, and
+# XWayland runs X11 apps (Calamares among them) inside the Wayland session.
+         xserver-xorg,
+         xwayland,
+         libgl1-mesa-dri,
+         x11-xserver-utils,
+# The GNOME session (listed one by one, not the gnome or gnome-core
+# meta-packages, so removing e.g. gnome-clocks doesn't remove this package).
+         gnome-shell,
+         gnome-session,
+         gnome-settings-daemon,
+         gnome-control-center,
+         nautilus,
+         xdg-desktop-portal-gnome,
+         xdg-desktop-portal-gtk,
+         adwaita-icon-theme,
+# Login and lock screen, and the password dialog of administrative actions
+# (gnome-shell has its own polkit agent).
+         gdm3,
+         polkitd,
+# Session bus, power, disks, sound.
+         dbus-user-session,
+         upower,
+         udisks2,
+         gvfs,
+         pipewire-audio,
+         xdg-user-dirs,
+         xdg-user-dirs-gtk,
+         xdg-utils,
+         fonts-noto-core,
+# Saved Wi-Fi and web passwords, unlocked at login.
+         gnome-keyring,
+         libpam-gnome-keyring,
+         ${misc:Depends}
+# Recommends: the applications and extras. Users can remove any of them
+# without apt removing the desktop.
+Recommends: firefox-esr,
+            gnome-terminal,
+            gnome-text-editor,
+            loupe,
+            evince,
+            totem,
+            file-roller,
+            gnome-calculator,
+            gnome-system-monitor,
+            gnome-disk-utility,
+            gnome-tweaks,
+            gnome-backgrounds,
+            gnome-menus,
+            gvfs-backends,
+            libreoffice-writer,
+            libreoffice-calc,
+            libreoffice-impress,
+            libreoffice-gtk3,
+# Sound, Bluetooth, power profiles, colour profiles and printer settings.
+            bluez,
+            gnome-bluetooth-sendto,
+            power-profiles-daemon,
+            colord,
+            cups,
+            cups-pk-helper,
+            at-spi2-core,
+            fonts-noto-color-emoji,
+# Clipboard and screen resizing in virtual machines.
+            spice-vdagent
+Description: Zyphor OS GNOME desktop (metapackage)
+ Zyphor OS's GNOME edition: the GNOME desktop with the GDM login screen,
+ screen locking, sound (PipeWire), network, Bluetooth, printing and
+ applications for everyday work: Firefox, LibreOffice, a file manager,
+ terminal, text editor, image viewer, PDF viewer, media player and archive
+ manager.
