@@ -5,5 +5,5 @@
 # Bump DISTRO_VERSION for each release, together with a changelog entry for
 # this package (dch -i -D trixie "Version X.Y.").
 DISTRO_ID=zyphor-os
-DISTRO_NAME="Zyphor OS 3"
+DISTRO_NAME="Zyphor OS 3 Bethany"
 DISTRO_VERSION="3.2.0"
