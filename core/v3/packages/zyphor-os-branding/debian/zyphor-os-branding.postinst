@@ -32,8 +32,7 @@ generate_files() {
     # os-release: keep every Debian field (ID, VERSION_ID, ...) so tools that
     # detect Debian keep working; change only the display name and add VARIANT.
     {
-        # echo "PRETTY_NAME=\"$DISTRO_NAME $DISTRO_VERSION (based on $debian_pretty)\""
-        echo "PRETTY_NAME=\"$DISTRO_NAME $DISTRO_VERSION\" GNU/Linux"
+        echo "PRETTY_NAME=\"$DISTRO_NAME $DISTRO_VERSION (based on $debian_pretty)\""
         grep -v -E '^(PRETTY_NAME|VARIANT|VARIANT_ID)=' /usr/lib/os-release.debian
         echo "VARIANT=\"$DISTRO_NAME $DISTRO_VERSION\""
         echo "VARIANT_ID=$DISTRO_ID"
