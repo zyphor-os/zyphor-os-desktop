@@ -166,8 +166,20 @@ if leftover="$(grep -rlE '@[A-Z_]+@' "$BUILD/config/hooks" "$BUILD/config/packag
     die "Unknown @WORD@ left in: $leftover"
 fi
 
+# live-build installs every .deb in packages.chroot, not just what the edition's
+# package list asks for. So this edition gets only its own packages: those of
+# the other editions (DISTRO_ID-desktop-NAME, DISTRO_ID-settings-NAME) stay out,
+# and so does the installer unless the edition has it. Otherwise a KDE ISO
+# would also install GNOME and Xfce, and boot whichever login screen wins.
+SKIP=""
+for edition in $(editions); do
+    [ "$edition" = "$DESKTOP" ] && continue
+    SKIP="$SKIP $DISTRO_ID-desktop-$edition $DISTRO_ID-settings-$edition"
+done
+[ "$INSTALLER" = yes ] || SKIP="$SKIP $DISTRO_ID-installer"
+
 step "Building $DISTRO_NAME $DISTRO_VERSION packages"
-sh packages/build.sh "$ROOT/$BUILD/config/packages.chroot"
+sh packages/build.sh "$ROOT/$BUILD/config/packages.chroot" "$SKIP"
 
 step "Generating live-build configuration"
 (cd "$BUILD" && lb config)
