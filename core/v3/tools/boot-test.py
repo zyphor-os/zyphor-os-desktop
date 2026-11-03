@@ -75,6 +75,14 @@ EDITION_CHECKS = {
         ("password dialog agent running (polkit)",
          "pgrep -u $(id -u) -f polkit-mate-authentication-agent-1", 60),
     ],
+    "kde": [
+        # Plasma's window manager and the password dialog agent that the
+        # installer's pkexec needs (KWin runs as kwin_wayland or kwin_x11).
+        ("window manager running (KWin)",
+         "pgrep -u $(id -u) -f 'kwin_(wayland|x11)'", 90),
+        ("password dialog agent running (polkit)",
+         "pgrep -u $(id -u) -f polkit-kde-authentication-agent-1", 90),
+    ],
     "gnome": [
         # zyphor-os-settings-gnome's GSettings override (priority 90).
         ("GNOME wallpaper is desktop-base's",
