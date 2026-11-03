@@ -1,11 +1,17 @@
 #!/bin/sh
-# Build every package under packages/ and put the .debs in OUT (default:
+# Build the packages under packages/ and put the .debs in OUT (default:
 # packages/.build/debs/). tools/build-iso.sh passes the edition's
 # build/DESKTOP/config/packages.chroot/, where live-build installs them from.
+#
+# Usage: packages/build.sh [OUT [SKIP]]
+#   SKIP  space-separated package names to leave out. live-build installs
+#         EVERY .deb in packages.chroot, so an edition must not get the
+#         packages of other editions (a KDE ISO would also boot GNOME).
 set -e
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="${1:-$ROOT/packages/.build/debs}"
+SKIP=" ${2:-} "
 WORK="$ROOT/packages/.build/work"
 
 rm -rf "$WORK"
@@ -13,6 +19,9 @@ mkdir -p "$WORK" "$OUT"
 
 for src in "$ROOT"/packages/*/debian; do
     pkg="$(basename "$(dirname "$src")")"
+    case "$SKIP" in
+        *" $pkg "*) echo "==> Skipping $pkg (not part of this edition)"; continue ;;
+    esac
     echo "==> Building $pkg"
     # Build from a copy so build artifacts stay out of the source tree.
     cp -r "$ROOT/packages/$pkg" "$WORK/$pkg"
