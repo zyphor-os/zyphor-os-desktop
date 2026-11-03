@@ -36,4 +36,33 @@ zy system upgrade
 
 zy system clean
 
+# Configure GNOME window buttons
+mkdir -p /etc/dconf/db/local.d
+
+cat > /etc/dconf/db/local.d/00-zyphor-gnome <<'EOF'
+[org/gnome/desktop/wm/preferences]
+button-layout=':minimize,maximize,close'
+
+[org/gnome/shell]
+disable-user-extensions=false
+enabled-extensions=['dash-to-dock@micxgx.gmail.com']
+
+[org/gnome/shell/extensions/dash-to-dock]
+dock-fixed=true
+autohide=false
+intellihide=false
+dock-position='BOTTOM'
+EOF
+
+# Apply system-wide GNOME defaults
+mkdir -p /etc/dconf/profile
+
+cat > /etc/dconf/profile/user <<'EOF'
+user-db:user
+system-db:local
+EOF
+
+dconf update
+
+# Remove build script
 rm -rf ./_base_v3_gnome.sh
