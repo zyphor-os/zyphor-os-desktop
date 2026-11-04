@@ -4,18 +4,9 @@
 
 Download the latest **Zyphor OS ISO** and get started in minutes.
 
-👉 **[Click Here To Download Zyphor OS 1 (v1.13.0)](https://drive.google.com/uc?export=download&id=1CAUJLU0N_lXVSSejHHethg9BlYOVDi5r)** - The first initial version (end of life).  
+Download Here: https://zyphor-os.github.io/#/download  
 
-👉 **[Click Here To Download Zyphor OS 2 "Ada Lovelace" LTS Reforge (v2.2.1)](https://drive.google.com/uc?export=download&id=1ldE5ct0Wrk6Lan5laHyRnCgvCzqF2Qh5)** - Current LTS version.  
-
-👉 **[Click Here To Download Zyphor OS 3 "Bethany" LTS (v3.2.0-alpha)](https://drive.google.com/uc?export=download&id=1vO8Y-pMPIxe2WUV1o6k8Hi9YOPesSR5H)** - Future LTS version with Live Mode. Alpha release for testing.  
-
----
-
-👉 **[Click Here To Download Zyphor Horizon ISO (v1.0.0-beta-2026.06.14-r1)](https://drive.google.com/uc?export=download&id=1eRYZQN7W-4aB1hp6SXclQwdO8Qzh31Ko)** - Experimental / futuristic preview release  
-
-> 📦 Hosted on Hostinger  
-> 💿 File Type: ISO Image  
+--- 
 
 After installing, open the terminal and run this command:
 ```bash
