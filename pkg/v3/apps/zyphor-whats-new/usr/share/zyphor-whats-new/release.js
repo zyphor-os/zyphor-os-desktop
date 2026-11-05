@@ -1,9 +1,16 @@
 const releaseNotes = {
     distro: "Zyphor OS 3 \"Bethany\" LTS",
-    version: "3.2.0-bethany-lts-u6",
-    date: "Updated On: November 05, 2026 @ 10:02 AM",
+    version: "3.2.0-bethany-lts-u7",
+    date: "Updated On: November 05, 2026 @ 04:12 PM",
 
     sections: [
+        {
+            "title": "Zyphor CLI Help, Available Offline",
+            "items": [
+                "The Zyphor CLI documentation is now built into the Zyphor Command Center's offline mode, so you can look up any zyphor command without an internet connection",
+                "Added a button on this What's New page that takes you straight to the Zyphor CLI documentation, so you no longer have to find it at the bottom of the sidebar"
+            ]
+        },
          {
             "title": "Profile Picture Works on Every Desktop",
             "items": [
