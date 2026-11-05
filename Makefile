@@ -175,9 +175,9 @@ add:
 	git add pkg/v3/apps/zyphor-command-center-web/DEBIAN/control
 	git commit -m "pkg(command-center-web): update package metadata"
 
-	# Update profile processing script
-	git add pkg/v3/apps/zyphor-command-center-web/usr/share/zyphor-command-center-web/process/profile.php
-	git commit -m "fix(command-center-web): update profile processing"
+	# Update Zyphor Command Center package metadata
+	git add pkg/v3/apps/zyphor-command-center/DEBIAN/control
+	git commit -m "pkg(command-center): update package metadata"
 
 push:
 	git push origin $(branch)
@@ -200,11 +200,11 @@ release:
 # 	zyphor build package pkg/v2/legacy/updater/updates
 # 	mv pkg/v2/legacy/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/v2/legacy/updater/zor
-	mv pkg/v2/legacy/updater/zor.deb zyphor-os-release.deb
+# 	zyphor build package pkg/v2/legacy/updater/zor
+# 	mv pkg/v2/legacy/updater/zor.deb zyphor-os-release.deb
 
-	zyphor build package pkg/v2/legacy/updater/zwn
-	mv pkg/v2/legacy/updater/zwn.deb zyphor-whats-new.deb
+# 	zyphor build package pkg/v2/legacy/updater/zwn
+# 	mv pkg/v2/legacy/updater/zwn.deb zyphor-whats-new.deb
 
 # 	zyphor build package pkg/v2/legacy/zywin/zywin
 # 	mv pkg/v2/legacy/zywin/zywin.deb zywin.deb
@@ -239,8 +239,8 @@ release:
 # 	zyphor build package pkg/v2/legacy/zou/grub-screensaver-1
 # 	mv pkg/v2/legacy/zou/grub-screensaver-1.deb grub-screensaver-1.deb
 
-	zyphor build package pkg/v2/legacy/zyphor-grub-theme
-	mv pkg/v2/legacy/zyphor-grub-theme.deb zyphor-grub-theme.deb
+# 	zyphor build package pkg/v2/legacy/zyphor-grub-theme
+# 	mv pkg/v2/legacy/zyphor-grub-theme.deb zyphor-grub-theme.deb
 
 # V2 Reforged UPDATES ====================================================
 
@@ -370,10 +370,10 @@ release:
 # 	zyphor build package pkg/v3/apps/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v3/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/apps/zyphor-command-center-web
+	zyphor build package pkg/v3/apps/zyphor-command-center-web
 # 	mv pkg/v3/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/apps/zyphor-command-center
+	zyphor build package pkg/v3/apps/zyphor-command-center
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 # 	mv pkg/v3/apps/zyphor-command-center.deb pkg/staging
 
@@ -385,7 +385,7 @@ release:
 
 # 	---
 
-	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
+# 	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
 
 # 	mv ./*.deb ../zyphor-os.github.io/bethany-lts/pool/main/z --verbose
 
