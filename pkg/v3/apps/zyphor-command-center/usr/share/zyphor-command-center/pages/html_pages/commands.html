@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zyphor CLI Help</title>
+<link href="/usr/share/zyphor-command-center-web/assets/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="/usr/share/zyphor-command-center-web/assets/bootstrap/all.min.css" rel="stylesheet">
+<style>
+  :root { --sidebar-width: 260px; }
+
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+
+  .sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    border-right: 1px solid var(--bs-border-color);
+    background-color: var(--bs-tertiary-bg);
+    transition: transform 0.3s ease;
+    z-index: 1030;
+  }
+  .sidebar-brand { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--bs-border-color); }
+  .sidebar .nav-link { color: var(--bs-body-color); padding: 0.5rem 1.5rem; font-size: 0.92rem; }
+  .sidebar .nav-link:hover { background-color: var(--bs-secondary-bg); }
+  .sidebar .nav-section-title {
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--bs-secondary-color);
+    padding: 1rem 1.5rem 0.35rem;
+    font-weight: 600;
+  }
+
+  .main-content { margin-left: var(--sidebar-width); min-height: 100vh; }
+
+  .topbar {
+    border-bottom: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+  }
+
+  .content-section, tr[id] { scroll-margin-top: 80px; }
+
+  .theme-toggle-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 991.98px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.show { transform: translateX(0); }
+    .main-content { margin-left: 0; }
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1025;
+  }
+  .sidebar-overlay.show { display: block; }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-thumb { background: var(--bs-secondary-color); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand d-flex align-items-center gap-2">
+    <i class="fa-solid fa-terminal fs-5 text-primary"></i>
+    <span class="fw-bold fs-5">Zyphor CLI</span>
+  </div>
+
+  <div class="pb-4">
+    <div class="nav-section-title">Overview</div>
+    <ul class="nav flex-column">
+      <li class="nav-item"><a class="nav-link" href="#zyphor-cli"><i class="fa-solid fa-circle-info me-2"></i>Introduction</a></li>
+      <li class="nav-item"><a class="nav-link" href="#commands"><i class="fa-solid fa-list me-2"></i>All Commands</a></li>
+    </ul>
+
+    <div class="nav-section-title">Jump to Category</div>
+    <ul class="nav flex-column">
+      <li class="nav-item"><a class="nav-link" href="#cat-system"><i class="fa-solid fa-gear me-2"></i>System</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cat-setup"><i class="fa-solid fa-wrench me-2"></i>Setup</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cat-package"><i class="fa-solid fa-box me-2"></i>Package</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cat-service"><i class="fa-solid fa-server me-2"></i>Service</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cat-network"><i class="fa-solid fa-network-wired me-2"></i>Network / Storage</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cat-ftp"><i class="fa-solid fa-upload me-2"></i>FTP</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cat-ssh"><i class="fa-solid fa-lock me-2"></i>SSH</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cat-doctor"><i class="fa-solid fa-stethoscope me-2"></i>Doctor</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cat-build"><i class="fa-solid fa-hammer me-2"></i>Build</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cat-core"><i class="fa-solid fa-microchip me-2"></i>Core</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Main content -->
+<div class="main-content">
+
+  <!-- Top bar -->
+  <div class="topbar d-flex align-items-center justify-content-between px-3 px-md-4 py-3">
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-outline-secondary d-lg-none" id="sidebarToggle" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <span class="fw-semibold">Offline Help</span>
+    </div>
+
+    <button class="btn btn-outline-secondary theme-toggle-btn" id="themeToggle" title="Toggle theme">
+      <i class="fa-solid fa-moon" id="themeIcon"></i>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="container-fluid px-3 px-md-5 py-4" style="max-width: 1000px;">
+
+    <section id="zyphor-cli" class="content-section mb-5">
+        <h1 class="fw-bold">Zyphor CLI</h1>
+        <p>Installation: <code>zyphor pkg install zyphor-cli</code></p>
+        <div class="alert alert-info d-flex align-items-start gap-2" role="alert">
+            <i class="fa-solid fa-lightbulb mt-1"></i>
+            <div>Note: Zyphor CLI is pre-installed and available by default after operating system installation.</div>
+        </div>
+        <p><strong>Zyphor CLI Abstraction Layer</strong> — A unified command framework that transforms complex Linux operations into simple, consistent, and easy-to-remember commands for developers, administrators, and everyday users.</p>
+        <pre class="bg-dark text-light border rounded p-3"><code>zyphor help</code></pre>
+    </section>
+
+    <section id="commands" class="content-section mb-5">
+        <h2 class="fw-bold">All Commands</h2>
+
+        <!-- Search Filter -->
+        <div class="mb-3">
+            <input
+                type="search"
+                id="commandSearch"
+                class="form-control"
+                placeholder="Search commands, categories, or descriptions..."
+                aria-label="Search Zyphor CLI commands"
+            >
+            <small class="text-muted" id="searchResults">Showing all commands</small>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle" id="commandTable">
+                <thead>
+                    <tr>
+                        <th width="20%">Category</th>
+                        <th width="35%">Command</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="cat-system">
+                        <td>SYSTEM</td>
+                        <td><code>sudo zyphor system upgrade</code></td>
+                        <td>Upgrade all installed system packages to their latest available versions from configured repositories, ensuring security updates, bug fixes, and feature improvements are applied.</td>
+                    </tr>
+                    <tr>
+                        <td>SYSTEM</td>
+                        <td><code>sudo zyphor system clean</code></td>
+                        <td>Remove package caches, temporary files, and unused dependencies to free disk space and keep the system optimized.</td>
+                    </tr>
+                    <tr>
+                        <td>SYSTEM</td>
+                        <td><code>sudo zyphor system info</code></td>
+                        <td>Display detailed information about the operating system, kernel version, hardware resources, and system environment.</td>
+                    </tr>
+
+                    <tr id="cat-setup">
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev &lt;target&gt;</code></td>
+                        <td>Automatically configure a complete development environment for the selected programming language or technology stack.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>zyphor setup dev version php</code></td>
+                        <td>List the PHP versions that are installed and available, and show which one is currently active.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev version php 8.3</code></td>
+                        <td>Install the chosen PHP version (e.g. 8.3) with the common extensions and switch the active <code>php</code> command to it. Offers to add the Sury PHP repository if the version is not available in your current sources.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>zyphor setup dev version node</code></td>
+                        <td>Show the installed Node.js version and the latest release of each recent Node.js major version, with LTS releases marked.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev version node 22</code></td>
+                        <td>Install the chosen Node.js version (e.g. 22) and switch to it. A minor version such as 22.5 is also accepted and pinned when it is still available.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev android-studio</code></td>
+                        <td>Install and configure Android Studio and Flutter for development, including the Android SDK, required build packages, and PATH entries in your shell configuration.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev undo php</code></td>
+                        <td>Remove PHP and its extensions, with optional removal of Composer and the Sury PHP repository. Asks for confirmation before anything is removed.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev undo node</code></td>
+                        <td>Remove Node.js, with optional removal of the NodeSource repository files.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev undo composer</code></td>
+                        <td>Remove Composer from <code>/usr/local/bin</code>.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev undo git</code></td>
+                        <td>Remove the Git settings configured by the setup, with an optional, separate prompt for each generated SSH key. Git and OpenSSH themselves stay installed.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev undo android-studio</code></td>
+                        <td>Remove Android Studio, Flutter, and the PATH entries added to your shell configuration, with optional removal of the Android SDK and related build packages.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup dev undo os</code></td>
+                        <td>Remove the OS/Distro development tools installed by <code>setup dev os</code>. Packages the base system depends on, such as <code>gzip</code>, <code>python3</code>, and <code>grub-pc-bin</code>, are kept.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup pentest recon</code></td>
+                        <td>Install reconnaissance and scanning tools such as Nmap, Masscan, Amass, and Gobuster for network and target discovery.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup pentest web</code></td>
+                        <td>Install web application testing tools including Sqlmap, Nikto, Burp Suite, ZAP, and Wpscan for auditing web apps.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup pentest wireless</code></td>
+                        <td>Install wireless auditing tools such as Aircrack-ng, Kismet, and Wifite for testing Wi-Fi networks you own or are authorized to assess.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup pentest passwords</code></td>
+                        <td>Install password auditing tools including John the Ripper, Hashcat, Hydra, and Medusa for credential strength testing.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup pentest sniffing</code></td>
+                        <td>Install traffic analysis tools such as Wireshark, Tcpdump, and Bettercap, and configure non-root packet capture.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup pentest forensics</code></td>
+                        <td>Install forensics and analysis tools including Autopsy, Sleuth Kit, Binwalk, and Volatility3 for investigating systems and files.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup pentest exploitation</code></td>
+                        <td>Install exploitation framework tools such as Metasploit, Exploit-DB, and SET for authorized penetration testing engagements.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup pentest full</code></td>
+                        <td>Install the complete pentest toolkit, covering recon, web, wireless, passwords, sniffing, forensics, and exploitation in one run.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup wine</code></td>
+                        <td>Install and configure Wine with 32-bit compatibility, then initialize the default Wine environment for running Windows applications.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup theme light</code></td>
+                        <td>Apply the Windows-10 inspired desktop theme for a bright and familiar user experience.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup theme dark</code></td>
+                        <td>Apply the Kali-Dark inspired desktop theme optimized for developers and low-light environments.</td>
+                    </tr>
+                    <tr>
+                        <td>SETUP</td>
+                        <td><code>sudo zyphor setup web-server</code></td>
+                        <td>Sets up an Apache web server by enabling required modules, configuring SSL, creating a VirtualHost, setting the site document root, and enabling and restarting the Apache service.</td>
+                    </tr>
+
+                    <tr id="cat-package">
+                        <td>PACKAGE</td>
+                        <td><code>sudo zyphor pkg install &lt;pkg&gt;</code></td>
+                        <td>Install software packages from configured repositories while automatically resolving required dependencies.</td>
+                    </tr>
+                    <tr>
+                        <td>PACKAGE</td>
+                        <td><code>sudo zyphor pkg remove &lt;pkg&gt;</code></td>
+                        <td>Uninstall a package and optionally remove associated dependencies that are no longer required.</td>
+                    </tr>
+                    <tr>
+                        <td>PACKAGE</td>
+                        <td><code>sudo zyphor pkg search &lt;key&gt;</code></td>
+                        <td>Search available repositories for packages matching a keyword, name, or partial package identifier.</td>
+                    </tr>
+                    <tr>
+                        <td>PACKAGE</td>
+                        <td><code>sudo zyphor pkg list</code></td>
+                        <td>Display all currently installed packages along with their versions and installation status.</td>
+                    </tr>
+
+                    <tr id="cat-service">
+                        <td>SERVICE</td>
+                        <td><code>sudo zyphor service restart &lt;name&gt;</code></td>
+                        <td>Restart a running service to apply configuration changes or recover from operational issues.</td>
+                    </tr>
+                    <tr>
+                        <td>SERVICE</td>
+                        <td><code>sudo zyphor service list</code></td>
+                        <td>Lists system services and displays their current running status and whether each service is enabled or disabled at boot.</td>
+                    </tr>
+                    <tr>
+                        <td>SERVICE</td>
+                        <td><code>sudo zyphor service start &lt;service&gt;</code></td>
+                        <td>Starts a specified system service using systemd and reports whether the service started successfully.</td>
+                    </tr>
+                    <tr>
+                        <td>SERVICE</td>
+                        <td><code>sudo zyphor service status &lt;service&gt;</code></td>
+                        <td>Displays the current status and detailed information of a specified system service.</td>
+                    </tr>
+                    <tr>
+                        <td>SERVICE</td>
+                        <td><code>sudo zyphor service stop &lt;service&gt;</code></td>
+                        <td>Stops a specified system service using systemd and reports whether the service stopped successfully.</td>
+                    </tr>
+
+                    <tr id="cat-network">
+                        <td>NETWORK / STORAGE</td>
+                        <td><code>sudo zyphor smb list</code></td>
+                        <td>Lists the available SMB network shares on a specified IP address using the provided username.</td>
+                    </tr>
+                    <tr>
+                        <td>NETWORK / STORAGE</td>
+                        <td><code>sudo zyphor smb disk-list</code></td>
+                        <td>Displays a list of available disks and their partition information on the system.</td>
+                    </tr>
+                    <tr>
+                        <td>NETWORK / STORAGE</td>
+                        <td><code>sudo zyphor smb disk-mount</code></td>
+                        <td>Mounts an NTFS disk partition to a named directory under <code>/mnt</code> for access through the filesystem.</td>
+                    </tr>
+                    <tr>
+                        <td>NETWORK / STORAGE</td>
+                        <td><code>sudo zyphor smb mount</code></td>
+                        <td>Connect and mount a remote SMB/CIFS network share, making it accessible like a local directory.</td>
+                    </tr>
+                    <tr>
+                        <td>NETWORK / STORAGE</td>
+                        <td><code>sudo zyphor smb share-add</code></td>
+                        <td>Share a local folder over SMB so it's accessible from other devices, including Windows PCs, on the network.</td>
+                    </tr>
+                    <tr>
+                        <td>NETWORK / STORAGE</td>
+                        <td><code>sudo zyphor smb share-list</code></td>
+                        <td>List all folders currently being shared over SMB from this machine.</td>
+                    </tr>
+                    <tr>
+                        <td>NETWORK / STORAGE</td>
+                        <td><code>sudo zyphor smb share-remove</code></td>
+                        <td>Stop sharing a folder that was previously shared over SMB.</td>
+                    </tr>
+
+                    <tr id="cat-ftp">
+                        <td>FTP</td>
+                        <td><code>sudo zyphor ftp upload</code></td>
+                        <td>Transfer files securely from the local system to a configured FTP server.</td>
+                    </tr>
+                    <tr>
+                        <td>FTP</td>
+                        <td><code>sudo zyphor ftp download</code></td>
+                        <td>Downloads a file from an FTP server by prompting for the FTP host, username, remote file, and optional local save path.</td>
+                    </tr>
+                    <tr>
+                        <td>FTP</td>
+                        <td><code>sudo zyphor ftp list</code></td>
+                        <td>Lists the files and directories available on an FTP server by prompting for the FTP host and username.</td>
+                    </tr>
+
+                    <tr id="cat-ssh">
+                        <td>SSH</td>
+                        <td><code>sudo zyphor ssh connect</code></td>
+                        <td>Establish a secure encrypted shell session to a remote server for administration and maintenance.</td>
+                    </tr>
+                    <tr>
+                        <td>SSH</td>
+                        <td><code>sudo zyphor ssh cmd</code></td>
+                        <td>Execute commands on a remote server over SSH without opening an interactive terminal session.</td>
+                    </tr>
+
+                    <tr id="cat-doctor">
+                        <td>DOCTOR</td>
+                        <td><code>sudo zyphor doctor scan</code></td>
+                        <td>Analyze the system for configuration issues, missing dependencies, broken packages, and common problems.</td>
+                    </tr>
+                    <tr>
+                        <td>DOCTOR</td>
+                        <td><code>sudo zyphor doctor fix</code></td>
+                        <td>Attempt to automatically repair issues detected during a diagnostic scan.</td>
+                    </tr>
+                    <tr>
+                        <td>DOCTOR</td>
+                        <td><code>sudo zyphor doctor report</code></td>
+                        <td>Generate a comprehensive diagnostic report for troubleshooting and technical support purposes.</td>
+                    </tr>
+
+                    <tr id="cat-build">
+                        <td>BUILD</td>
+                        <td><code>sudo zyphor build package [dir]</code></td>
+                        <td>Build a Debian package from a project directory, simplifying software packaging and distribution.</td>
+                    </tr>
+                    <tr>
+                        <td>BUILD</td>
+                        <td><code>sudo zyphor build repo</code></td>
+                        <td>Generate repository metadata files such as Packages.gz for hosting a Debian-compatible package repository.</td>
+                    </tr>
+
+                    <tr id="cat-core">
+                        <td>CORE</td>
+                        <td><code>sudo zyphor refresh</code></td>
+                        <td>Refreshes the Zyphor OS system by resetting first-boot defaults and rebooting the system to apply them.</td>
+                    </tr>
+                    <tr>
+                        <td>CORE</td>
+                        <td><code>sudo zyphor help</code></td>
+                        <td>Display the complete Zyphor CLI command reference, categories, usage examples, and available options.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-muted d-none" id="noResults">No commands match your search.</p>
+    </section>
+
+    <footer class="border-top pt-4 pb-5 text-secondary small">
+        &copy; <span id="currentYear"></span> Zyphor OS
+    </footer>
+
+  </div>
+</div>
+
+<script src="/usr/share/zyphor-command-center-web/assets/bootstrap/bootstrap.bundle.js"></script>
+<script>
+  document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+  // Theme toggle (remembers the choice, defaults to dark)
+  const root = document.documentElement;
+  const themeIcon = document.getElementById('themeIcon');
+
+  function setTheme(theme) {
+    root.setAttribute('data-bs-theme', theme);
+    themeIcon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    try { localStorage.setItem('zyphor-cli-help-theme', theme); } catch (e) {}
+  }
+
+  let savedTheme = 'dark';
+  try { savedTheme = localStorage.getItem('zyphor-cli-help-theme') || 'dark'; } catch (e) {}
+  setTheme(savedTheme);
+
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    setTheme(root.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  // Mobile sidebar
+  const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+  function toggleSidebar() {
+    sidebar.classList.toggle('show');
+    sidebarOverlay.classList.toggle('show');
+  }
+
+  document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+  sidebarOverlay.addEventListener('click', toggleSidebar);
+
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 992) {
+        sidebar.classList.remove('show');
+        sidebarOverlay.classList.remove('show');
+      }
+    });
+  });
+
+  // Command search
+  const searchInput = document.getElementById('commandSearch');
+  const rows = document.querySelectorAll('#commandTable tbody tr');
+  const resultsText = document.getElementById('searchResults');
+  const noResults = document.getElementById('noResults');
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    let visible = 0;
+
+    rows.forEach(row => {
+      const match = row.textContent.toLowerCase().includes(query);
+      row.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+
+    resultsText.textContent = query === ''
+      ? 'Showing all ' + rows.length + ' commands'
+      : 'Showing ' + visible + ' of ' + rows.length + ' commands';
+    noResults.classList.toggle('d-none', visible !== 0);
+  });
+
+  resultsText.textContent = 'Showing all ' + rows.length + ' commands';
+</script>
+</body>
+</html>
