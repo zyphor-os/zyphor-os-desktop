@@ -2,7 +2,7 @@ from core.registry import page
 from ui.components.command_page import InputCommandPage
 
 
-@page(id="pkg_remove", title="Uninstall Packages/Apps", section="Packages", icon="✖", order=33)
+@page(id="pkg_remove", title="Uninstall Packages/Apps", section="Packages", icon="✖", order=36)
 class PkgRemovePage(InputCommandPage):
     description = "Remove a package or app from this system."
     placeholder = "Enter app name to remove"
