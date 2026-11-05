@@ -1,5 +1,5 @@
 Package: zyphor-command-center-web
-Version: 1.0.1-r2-alpha
+Version: 1.0.2-r3-alpha
 Section: admin
 Priority: optional
 Architecture: all
@@ -15,7 +15,8 @@ Depends: composer,
  php-bcmath,
  php-intl,
  php-tokenizer,
- php-fileinfo
+ php-fileinfo,
+ php-gd
 Recommends: sqlite3
 Description: Zyphor Command Center Web
  A PHP-based web interface for Zyphor Command Center.
