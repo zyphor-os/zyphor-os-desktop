@@ -1,5 +1,5 @@
 Package: zyphor-command-center-web
-Version: 1.0.0-r1-alpha
+Version: 1.0.1-r2-alpha
 Section: admin
 Priority: optional
 Architecture: all
@@ -18,7 +18,7 @@ Depends: composer,
  php-fileinfo
 Recommends: sqlite3
 Description: Zyphor Command Center Web
- A Laravel-based web interface for Zyphor Command Center.
+ A PHP-based web interface for Zyphor Command Center.
  .
  Provides the graphical management interface used by the
  Zyphor Command Center desktop application, including
