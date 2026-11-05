@@ -171,33 +171,13 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update Zyphor OS v3 README
-	git add core/v3/README.md
-	git commit -m "docs(v3): update README"
+	# Update Zyphor Command Center Web package metadata
+	git add pkg/v3/apps/zyphor-command-center-web/DEBIAN/control
+	git commit -m "pkg(command-center-web): update package metadata"
 
-	# Update v3 package build script
-	git add core/v3/packages/build.sh
-	git commit -m "build(v3): update package build script"
-
-	# Update Zyphor OS installer desktop autostart entry
-	git add core/v3/packages/zyphor-os-installer/etc/xdg/autostart/zyphor-os-install-icon.desktop
-	git commit -m "fix(installer): update install icon autostart entry"
-
-	# Update boot test tool
-	git add core/v3/tools/boot-test.py
-	git commit -m "test(v3): update boot test tool"
-
-	# Update ISO build script
-	git add core/v3/tools/build-iso.sh
-	git commit -m "build(v3): update ISO build script"
-
-	# Add KDE desktop configuration
-	git add core/v3/desktops/kde/
-	git commit -m "feat(v3): add KDE desktop configuration"
-
-	# Add Zyphor OS KDE desktop package
-	git add core/v3/packages/zyphor-os-desktop-kde/
-	git commit -m "feat(v3): add KDE desktop package"
+	# Update profile processing script
+	git add pkg/v3/apps/zyphor-command-center-web/usr/share/zyphor-command-center-web/process/profile.php
+	git commit -m "fix(command-center-web): update profile processing"
 
 push:
 	git push origin $(branch)
