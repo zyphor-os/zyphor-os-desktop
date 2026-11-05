@@ -118,21 +118,118 @@ function cropToCenterSquare(string $filePath): bool
     return $saved;
 }
 
+// ======================================================================
+// DESKTOP-ENVIRONMENT AWARE AVATAR REFRESH
+// ======================================================================
+//
+// Writing ~/.face and ~/.face.icon plus notifying AccountsService works on
+// every mainstream desktop (GNOME, KDE Plasma, XFCE, Cinnamon, MATE, LXQt,
+// Budgie, Pantheon, COSMIC ...) and on LightDM / GDM / SDDM greeters, so
+// that part is always done. Only the few desktops that cache the icon in a
+// running process need an extra nudge; those live in the registry below.
+//
+// To support a new desktop in the future, add one line to
+// desktopRefreshCommands() — nothing else needs to change.
+
+/** True when $command is available on PATH. */
+function commandExists(string $command): bool
+{
+    return trim((string) shell_exec('command -v ' . escapeshellarg($command) . ' 2>/dev/null')) !== '';
+}
+
+/**
+ * Extra, desktop-specific refresh steps, keyed by normalised desktop name
+ * (see detectDesktops()). Each entry is [required binary, command to run].
+ * Desktops that are not listed here need nothing beyond the common steps.
+ */
+function desktopRefreshCommands(): array
+{
+    return [
+        // XFCE: user widgets in the panel cache the icon, so restart the panel.
+        'xfce' => ['xfce4-panel', 'xfce4-panel -r'],
+
+        // GNOME, KDE Plasma, Cinnamon, MATE, LXQt, Budgie, Pantheon, COSMIC:
+        // they read AccountsService / ~/.face(.icon) themselves, so nothing
+        // extra is needed. Add an entry here if one of them ever does.
+    ];
+}
+
+/**
+ * Names of the desktop environment(s) the current session is running,
+ * lower-cased and normalised (e.g. "xfce", "gnome", "kde", "cinnamon").
+ * Returns [] when nothing can be detected — callers must cope with that.
+ */
+function detectDesktops(string $username): array
+{
+    // Spellings seen in XDG_CURRENT_DESKTOP / DESKTOP_SESSION -> one canonical name
+    $aliases = [
+        'xfce4'         => 'xfce',
+        'plasma'        => 'kde',
+        'plasmawayland' => 'kde',
+        'plasmax11'     => 'kde',
+        'kde-plasma'    => 'kde',
+        'lxqt-session'  => 'lxqt',
+    ];
+
+    // 1) The session environment. XDG_CURRENT_DESKTOP can be a colon-separated
+    //    list such as "ubuntu:GNOME" or "X-Cinnamon".
+    $raw = getenv('XDG_CURRENT_DESKTOP')
+        ?: getenv('XDG_SESSION_DESKTOP')
+        ?: getenv('DESKTOP_SESSION')
+        ?: '';
+
+    $found = [];
+    foreach (preg_split('/[:;,\s]+/', strtolower((string) $raw), -1, PREG_SPLIT_NO_EMPTY) as $token) {
+        if (strncmp($token, 'x-', 2) === 0) {
+            $token = substr($token, 2);            // "x-cinnamon" -> "cinnamon"
+        }
+        if (strncmp($token, 'gnome', 5) === 0) {
+            $token = 'gnome';                      // gnome-classic, gnome-xorg, ...
+        }
+        $found[] = $aliases[$token] ?? $token;
+    }
+
+    if (!empty($found)) {
+        return array_values(array_unique($found));
+    }
+
+    // 2) Fallback when the environment variables were not inherited: look for
+    //    a characteristic process owned by this user.
+    $processMarkers = [
+        'xfce'     => 'xfce4-session',
+        'gnome'    => 'gnome-shell',
+        'kde'      => 'plasmashell',
+        'cinnamon' => 'cinnamon',
+        'mate'     => 'mate-session',
+        'lxqt'     => 'lxqt-session',
+        'budgie'   => 'budgie-panel',
+    ];
+
+    foreach ($processMarkers as $desktop => $process) {
+        $pids = trim((string) shell_exec(
+            'pgrep -u ' . escapeshellarg($username) . ' -x ' . escapeshellarg($process) . ' 2>/dev/null'
+        ));
+        if ($pids !== '') {
+            $found[] = $desktop;
+        }
+    }
+
+    return array_values(array_unique($found));
+}
+
 // Live-refreshes anything currently showing the old avatar. Writing
 // ~/.face alone only takes effect the next time something re-reads it
-// (e.g. LightDM at the next login) — this nudges the running desktop too.
+// (e.g. the greeter at the next login) — this nudges the running desktop too.
 // Fire-and-forget + backgrounded so a slow/missing dbus or panel never
 // delays the HTTP response.
 function refreshFaceIcon(string $username, string $facePath): void
 {
+    // Common step (every desktop): notify AccountsService over D-Bus. This is
+    // what GDM, SDDM, LightDM greeters and most desktop shells watch,
+    // separately from ~/.face.
     $uid = trim((string) shell_exec('id -u ' . escapeshellarg($username)));
 
-    // Restart the XFCE panel so any avatar widget re-reads the icon
-    shell_exec('xfce4-panel -r > /dev/null 2>&1 &');
-
-    // Notify AccountsService over D-Bus (what most modern greeters and
-    // desktop shells actually watch, separately from ~/.face)
-    if ($uid !== '') {
+    if ($uid !== '' && commandExists('gdbus')) {
         $objectPath = '/org/freedesktop/Accounts/User' . $uid;
         $cmd = 'gdbus call --system --dest org.freedesktop.Accounts '
              . '--object-path ' . escapeshellarg($objectPath) . ' '
@@ -140,6 +237,22 @@ function refreshFaceIcon(string $username, string $facePath): void
              . escapeshellarg($facePath)
              . ' > /dev/null 2>&1 &';
         shell_exec($cmd);
+    }
+
+    // Desktop-specific extras: only run for the desktop(s) actually in use,
+    // and only if the tool they need is installed.
+    $extras = desktopRefreshCommands();
+
+    foreach (detectDesktops($username) as $desktop) {
+        if (!isset($extras[$desktop])) {
+            continue;
+        }
+
+        [$binary, $command] = $extras[$desktop];
+
+        if (commandExists($binary)) {
+            shell_exec($command . ' > /dev/null 2>&1 &');
+        }
     }
 }
 
@@ -216,6 +329,12 @@ switch ($action) {
             respond(['message' => 'No file was uploaded.'], 422);
         }
 
+        // Cropping needs PHP's GD extension; fail with a clear message
+        // instead of a fatal "undefined function" error.
+        if (!extension_loaded('gd')) {
+            respond(['message' => 'The PHP GD extension is not installed (install php-gd).'], 500);
+        }
+
         $file = $_FILES['avatar'];
 
         if ($file['size'] > $maxBytes) {
@@ -252,8 +371,8 @@ switch ($action) {
         // Store the bare filename — the URL is built on demand via avatarUrl()
         JSON::jsonUpdate($jsonFile, 'username', $username, 'avatar', $newFilename);
 
-        // Mirror the new avatar to the legacy "face" icon files that
-        // LightDM/greeters and some file managers look for directly in
+        // Mirror the new avatar to the "face" icon files that greeters
+        // (LightDM, SDDM, GDM) and desktop user menus look for directly in
         // the user's home directory.
         $facePath     = rtrim($homeDir, '/') . '/.face';
         $faceIconPath = rtrim($homeDir, '/') . '/.face.icon';
@@ -262,8 +381,8 @@ switch ($action) {
         @chmod($facePath, 0644);
         @chmod($faceIconPath, 0644);
 
-        // Nudge the running desktop (panel + AccountsService watchers) to
-        // pick up the new icon now, instead of waiting for next login
+        // Nudge the running desktop to pick up the new icon now, instead of
+        // waiting for next login (AccountsService + any desktop-specific step)
         refreshFaceIcon($username, $facePath);
 
         respond(['avatar' => avatarUrl($newFilename), 'message' => 'Avatar updated.']);
