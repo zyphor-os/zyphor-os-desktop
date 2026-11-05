@@ -171,27 +171,23 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update Zyphor Command Center package metadata
+	# Update Command Center package metadata
 	git add pkg/v3/apps/zyphor-command-center/DEBIAN/control
 	git commit -m "pkg(command-center): update package metadata"
 
-	# Add Command Center commands page
-	git add pkg/v3/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/commands.py
-	git commit -m "feat(command-center): add commands page"
+	# Update package installation page
+	git add pkg/v3/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/pkg_install.py
+	git commit -m "fix(command-center): update package installation page"
 
-	# Add Command Center HTML pages
-	git add pkg/v3/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/html_pages/
-	git commit -m "feat(command-center): add HTML pages"
+	# Update package removal page
+	git add pkg/v3/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/pkg_remove.py
+	git commit -m "fix(command-center): update package removal page"
 
 	# Update What's New package metadata
 	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
 	git commit -m "pkg(whats-new): update package metadata"
 
-	# Update What's New release notes
-	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release-notes.html
-	git commit -m "docs(whats-new): update release notes"
-
-	# Update What's New release script
+	# Update What's New release information
 	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
 	git commit -m "fix(whats-new): update release information"
 
