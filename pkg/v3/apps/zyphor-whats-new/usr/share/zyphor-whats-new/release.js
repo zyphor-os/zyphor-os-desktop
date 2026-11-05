@@ -1,87 +1,31 @@
 const releaseNotes = {
     distro: "Zyphor OS 3 \"Bethany\" LTS",
-    version: "3.2.0-bethany-lts-u5",
-    date: "Updated On: October 29, 2026 @ 08:17 AM",
+    version: "3.2.0-bethany-lts-u6",
+    date: "Updated On: November 05, 2026 @ 10:02 AM",
 
     sections: [
-        {
-            "title": "Git Branch in Terminal Prompt",
+         {
+            "title": "Profile Picture Works on Every Desktop",
             "items": [
-                "Added a git branch indicator to the default bash prompt, so the current branch name is shown right after the working directory whenever you are inside a git repository",
-                "A '*' appears after the branch name when the repository has uncommitted changes, so you can tell at a glance whether your working tree is clean",
-                "On a detached HEAD, the prompt shows the short commit hash instead of a branch name",
-                "The branch is shown in yellow when the terminal supports colors, and in plain text otherwise, so the prompt works in both modes",
-                "Nothing extra is shown outside a git repository, so the prompt stays clean in all other folders"
+                "Changing your profile picture in the Zyphor Command Center now updates correctly on XFCE, GNOME, KDE Plasma, Cinnamon, MATE and other desktops, instead of being tuned for XFCE only",
+                "The Zyphor Command Center detects which desktop you are running and applies only the extra refresh steps that desktop needs",
+                "The new picture is saved as your user icon and registered with the system, so login screens and user menus pick it up",
+                "The XFCE panel is only refreshed when you are actually running XFCE, so GNOME and KDE sessions are left untouched",
+                "Support for additional desktops can be added in the future without changing how the profile page works"
             ]
         },
         {
-            "title": "Dev Environment Version Management and Undo",
+            "title": "More Reliable Avatar Uploads",
             "items": [
-                "Added the new 'zyphor setup dev version' command, which lists the PHP and Node.js versions available on your system and shows which one is currently installed or active",
-                "Use 'zyphor setup dev version php <X.Y>' to install a specific PHP version (for example 8.3) together with the common extensions and switch the php command to it, with an optional prompt to add the Sury PHP repository when the version is not available in your current sources",
-                "Use 'zyphor setup dev version node <version>' to install and switch to a specific Node.js version (for example 22), and a minor version such as 22.5 is also accepted and pinned when it is still available",
-                "Added the new 'zyphor setup dev undo <target>' command, which reverses a development setup for PHP, Node.js, Composer, Git, Android Studio with Flutter, and OS development",
-                "Every undo asks for confirmation first, shows exactly what will be removed before anything changes, and keeps packages the base system depends on so the machine is never left in a broken state",
-                "Your personal data is protected: SSH keys and the Android SDK are only deleted when you confirm them separately, and your shell configuration is backed up before the PATH entries added by the setup are removed"
+                "Added php-gd as a dependency of the Zyphor Command Center web package, so the image cropping used for profile pictures is installed automatically",
+                "If image support is ever missing, the upload now shows a clear message asking you to install php-gd instead of failing with a server error"
             ]
         },
         {
-            "title": "New Zyphor CLI Features",
+            "title": "Administrator Actions on Fresh Installs",
             "items": [
-                "Added the new 'zyphor setup dev <target>' command, which sets up a complete development environment in one step with targets for PHP, Git, Node.js, Composer, Android Studio with Flutter, and OS development",
-                "The PHP target now installs PHP together with the GD, cURL, mbstring, XML, SQLite, Zip, Intl, BCMath and MySQL extensions, then installs Composer and Node.js 20 and verifies that each extension loaded correctly",
-                "The Git target configures your name and email, generates an SSH key in your own home directory (even when run with sudo), and tests the connection to GitHub",
-                "The Android Studio target installs Android Studio and Flutter from the archives you download, detects them automatically in your Downloads folder, supports optional SHA-256 checksum verification, and sets up your PATH for you",
-                "The OS target installs everything needed to build kernels, initramfs images, bootable ISOs, and live-build projects, including QEMU and OVMF for testing in a virtual machine",
-                "Improved security of the setup tools: the Composer installer is verified against its official signature, and the NodeSource script is downloaded to a file before it runs instead of being piped directly into the shell",
-                "Added helpful messages and clear error handling across all setup targets, with automatic detection of your real user account so files are never written to the root account by mistake"
-            ]
-        },
-        {
-            "title": "Windows/Super Key Opens Whisker Menu",
-            "items": [
-                "Configured the Windows/Super key to trigger the XFCE Whisker Menu, providing a familiar Start Menu experience similar to Windows",
-                "Improved keyboard navigation by allowing users to access the application menu directly using the Windows/Super key"
-            ]
-        },
-        {
-            "title": "Redesigned Zyphor Command Center",
-            "items": [
-                "Introduced a completely redesigned Zyphor Command Center with a modern dark look",
-                "Added a new sidebar with the Zyphor logo, grouped sections (Account, System, Doctor, Packages), and a highlighted current page",
-                "Every page now has a clear title and a short description of what it does",
-                "Added a terminal-style output panel with easier-to-read text and a Clear button",
-                "Added a progress animation while System Upgrade, System Clean, Doctor, and Package tasks are running",
-                "Added clear ✔ Finished and ✖ Failed messages at the end of every task, so you always know how it went",
-                "Task buttons are now disabled while a task is running to prevent starting the same task twice",
-                "Pressing Enter in the Search, Install, and Uninstall boxes now starts the action",
-                "Colored terminal codes are no longer shown as unreadable symbols in the output panel",
-                "Command Center now opens faster, and each page loads only when you open it",
-                "The Packages/Apps list now loads automatically the first time you open it",
-                "User Management now starts its local service only when you open it",
-                "If a page fails to open, an error message is shown instead of closing the whole app"
-            ]
-        },
-        {
-            "title": "Security & Reliability",
-            "items": [
-                "Improved the safety of the Search, Install, and Uninstall package boxes so typed text can no longer be run as system commands",
-                "Package names that begin with a dash are now rejected as invalid input",
-                "Improved how long task output is displayed, so lines no longer break in the wrong places"
-            ]
-        },
-        {
-            "title": "New Desktop Environment",
-            "items": [
-                "Introduced a refreshed Zyphor OS desktop environment with an updated visual experience",
-                "Added a new default desktop layout with updated panel launchers and desktop shortcuts",
-                "Added new default wallpapers and refreshed desktop artwork",
-                "Updated the default application launcher for a cleaner and more accessible desktop experience",
-                "Improved the default XFCE desktop configuration for new installations and newly created users",
-                "Desktop environment updates can be applied through sudo zy system upgrade",
-                "New desktop configurations are applied to newly created users through /etc/skel",
-                "Existing users can keep their current desktop configuration until they deliberately apply the new desktop environment updates",
-                "Desktop configuration updates are being tested in a virtual machine to help prevent existing user configurations from being overwritten or damaged"
+                "The Zyphor Command Center now depends on pkexec (or policykit-1 on older Debian bases), so actions that need administrator rights, such as installing and removing packages, can ask for your password",
+                "Fixes the 'pkexec: command not found' error on minimal installs, including KDE setups without a full desktop package set"
             ]
         }
     ]
