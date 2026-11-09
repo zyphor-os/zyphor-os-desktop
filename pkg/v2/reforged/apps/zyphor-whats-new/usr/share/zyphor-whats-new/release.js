@@ -1,9 +1,25 @@
 const releaseNotes = {
     distro: "Zyphor OS Ada Lovelace LTS",
-    version: "2.2.1-ada-lovelace-lts-u72",
-    date: "Updated On: October 29, 2026 @ 10:24 AM",
+    version: "2.2.1-ada-lovelace-lts-u73",
+    date: "Updated On: November 09, 2026 @ 08:44 AM",
 
     sections: [
+        {
+            "title": "Package Install Works From the Command Center",
+            "items": [
+                "Installing a package or app from the Zyphor Command Center no longer gets stuck on a menu that cannot be answered, so apps that are not in the Zyphor repository now install without freezing",
+                "Apps that are not in the Zyphor repository are installed with apt by default, so you only need to type the app name",
+                "Added Install via Snap and Install via Flatpak pages to the Packages section, so you can install directly from the Snap store or Flathub",
+                "Apps that are listed in the Zyphor repository still install the way the repository specifies, whichever page you use"
+            ]
+        },
+        {
+            "title": "Zyphor CLI Help, Available Offline",
+            "items": [
+                "The Zyphor CLI documentation is now built into the Zyphor Command Center's offline mode, so you can look up any zyphor command without an internet connection",
+                "Added a button on this What's New page that takes you straight to the Zyphor CLI documentation, so you no longer have to find it at the bottom of the sidebar"
+            ]
+        },
         {
             "title": "Git Branch in Terminal Prompt",
             "items": [
