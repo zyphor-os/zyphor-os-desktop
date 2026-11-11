@@ -172,29 +172,13 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update ZOR updater package metadata
-	git add pkg/v2/legacy/updater/zor/DEBIAN/control
-	git commit -m "pkg(zor): update package metadata"
+	# Update Zyphor CLI help
+	git add pkg/v2/reforged/apps/zyphor-cli/usr/lib/zyphor/core/help
+	git commit -m "docs(zyphor-cli): update help documentation"
 
-	# Update ZOR updater post-installation script
-	git add pkg/v2/legacy/updater/zor/DEBIAN/postinst
-	git commit -m "fix(zor): update post-installation script"
-
-	# Update ZWN package metadata
-	git add pkg/v2/legacy/updater/zwn/DEBIAN/control
-	git commit -m "pkg(zwn): update package metadata"
-
-	# Update What's New release information
-	git add pkg/v2/legacy/updater/zwn/usr/share/zyphor-whats-new/release.js
-	git commit -m "fix(zwn): update release information"
-
-	# Update legacy GRUB theme package metadata
-	git add pkg/v2/legacy/zyphor-grub-theme/DEBIAN/control
-	git commit -m "pkg(grub-theme): update package metadata"
-
-	# Update legacy GRUB theme post-installation script
-	git add pkg/v2/legacy/zyphor-grub-theme/DEBIAN/postinst
-	git commit -m "fix(grub-theme): update post-installation script"
+	# Update system cleanup command
+	git add pkg/v2/reforged/apps/zyphor-cli/usr/lib/zyphor/system/clean
+	git commit -m "fix(zyphor-cli): update system cleanup command"
 
 push:
 	git push origin $(branch)
