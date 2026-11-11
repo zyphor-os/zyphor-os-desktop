@@ -10,6 +10,14 @@ Made by **Mark Jason Espelita** himself.
 * This includes code, documentation, issues, security reports, pull request descriptions, and comments in all Zyphor OS codebases.
 * **ALL** usage of AI tools **MUST** be disclosed.
 
+**DEVELOPMENT**
+
+- **One task, one branch.** No feature-stacking. No surprise fixes.
+- **Hands off `main`.** No direct commits. PRs only. Review first. Merge later.
+- **Delete merged branches.** Zombies belong in horror movies, not Git.
+- **No mixed changes.** One branch, one purpose. Messy PRs get rejected.
+- **Keep PRs focused.** If your PR needs a novel to explain, something is wrong.
+
 **MEETINGS (No Ghosting Allowed)**
 
 * Mentioned contributors are **expected** to attend. No disappearing acts.
