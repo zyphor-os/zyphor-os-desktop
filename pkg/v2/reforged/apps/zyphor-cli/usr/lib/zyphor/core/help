@@ -6,7 +6,7 @@ help() {
 
   echo ""
   echo "=================================="
-  echo "          ZYPHOR OS 2 Ada Lovelace LTS CLI"
+  echo "          ZYPHOR OS 2 Ada Lovelace LTS Reforged CLI"
   echo "=================================="
   echo ""
 
@@ -15,7 +15,9 @@ help() {
   echo "----------------------------------"
   printf "  %-30s %s\n" "system upgrade" "Upgrade all system packages"
   printf "  %-30s %s\n" "system clean"   "Clean system cache & unused packages"
-  printf "  %-30s %s\n" "system info"   "System information"
+  printf "  %-30s %s\n" "  --dry-run"    "Preview what would be removed, change nothing"
+  printf "  %-30s %s\n" "  --deep"       "Also empty Trash & remove unused Flatpaks"
+  printf "  %-30s %s\n" "system info"    "System information"
   echo ""
 
    # ================= SETUP =================
