@@ -173,7 +173,19 @@
                     <tr>
                         <td>SYSTEM</td>
                         <td><code>sudo zyphor system clean</code></td>
-                        <td>Remove package caches, temporary files, and unused dependencies to free disk space and keep the system optimized.</td>
+                        <td>Remove package caches, unused dependencies, residual configs, old logs, and temporary files to free disk space and keep the system optimized.</td>
+                    </tr>
+
+                    <tr>
+                        <td>SYSTEM</td>
+                        <td><code>sudo zyphor system clean --dry-run</code></td>
+                        <td>Preview which unused packages and residual configs would be removed. Nothing is changed.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>SYSTEM</td>
+                        <td><code>sudo zyphor system clean --deep</code></td>
+                        <td>Run the standard cleanup, then also empty the user's Trash and remove unused Flatpak runtimes.</td>
                     </tr>
                     <tr>
                         <td>SYSTEM</td>
