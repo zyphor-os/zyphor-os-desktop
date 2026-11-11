@@ -167,34 +167,30 @@ status:
 	git status
 
 add:
-# 
+
 	# Update Makefile
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update ZOR updater package metadata
-	git add pkg/v2/legacy/updater/zor/DEBIAN/control
-	git commit -m "pkg(zor): update package metadata"
+	# Update Zyphor CLI package metadata
+	git add pkg/v3/apps/zyphor-cli/DEBIAN/control
+	git commit -m "pkg(zyphor-cli): update package metadata"
 
-	# Update ZOR updater post-installation script
-	git add pkg/v2/legacy/updater/zor/DEBIAN/postinst
-	git commit -m "fix(zor): update post-installation script"
+	# Update Command Center package metadata
+	git add pkg/v3/apps/zyphor-command-center/DEBIAN/control
+	git commit -m "pkg(command-center): update package metadata"
 
-	# Update ZWN package metadata
-	git add pkg/v2/legacy/updater/zwn/DEBIAN/control
-	git commit -m "pkg(zwn): update package metadata"
+	# Update Command Center commands page
+	git add pkg/v3/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/html_pages/commands.html
+	git commit -m "docs(command-center): update commands page"
+
+	# Update What's New package metadata
+	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "pkg(whats-new): update package metadata"
 
 	# Update What's New release information
-	git add pkg/v2/legacy/updater/zwn/usr/share/zyphor-whats-new/release.js
-	git commit -m "fix(zwn): update release information"
-
-	# Update legacy GRUB theme package metadata
-	git add pkg/v2/legacy/zyphor-grub-theme/DEBIAN/control
-	git commit -m "pkg(grub-theme): update package metadata"
-
-	# Update legacy GRUB theme post-installation script
-	git add pkg/v2/legacy/zyphor-grub-theme/DEBIAN/postinst
-	git commit -m "fix(grub-theme): update post-installation script"
+	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
+	git commit -m "fix(whats-new): update release information"
 
 push:
 	git push origin $(branch)
@@ -217,11 +213,11 @@ release:
 # 	zyphor build package pkg/v2/legacy/updater/updates
 # 	mv pkg/v2/legacy/updater/updates.deb zyphor-updates.deb
 
-	zyphor build package pkg/v2/legacy/updater/zor
-	mv pkg/v2/legacy/updater/zor.deb zyphor-os-release.deb
+# 	zyphor build package pkg/v2/legacy/updater/zor
+# 	mv pkg/v2/legacy/updater/zor.deb zyphor-os-release.deb
 
-	zyphor build package pkg/v2/legacy/updater/zwn
-	mv pkg/v2/legacy/updater/zwn.deb zyphor-whats-new.deb
+# 	zyphor build package pkg/v2/legacy/updater/zwn
+# 	mv pkg/v2/legacy/updater/zwn.deb zyphor-whats-new.deb
 
 # 	zyphor build package pkg/v2/legacy/zywin/zywin
 # 	mv pkg/v2/legacy/zywin/zywin.deb zywin.deb
@@ -256,8 +252,8 @@ release:
 # 	zyphor build package pkg/v2/legacy/zou/grub-screensaver-1
 # 	mv pkg/v2/legacy/zou/grub-screensaver-1.deb grub-screensaver-1.deb
 
-	zyphor build package pkg/v2/legacy/zyphor-grub-theme
-	mv pkg/v2/legacy/zyphor-grub-theme.deb zyphor-grub-theme.deb
+# 	zyphor build package pkg/v2/legacy/zyphor-grub-theme
+# 	mv pkg/v2/legacy/zyphor-grub-theme.deb zyphor-grub-theme.deb
 
 # V2 Reforged UPDATES ====================================================
 
@@ -370,8 +366,8 @@ release:
 
 # BETHANY APPS
 
-# 	zyphor build package pkg/v3/apps/zyphor-cli
-# 	mv pkg/v3/apps/zyphor-cli.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-cli
+	mv pkg/v3/apps/zyphor-cli.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	make -C pkg/v3/apps/zylearn clean
 # 	make -C pkg/v3/apps/zylearn
@@ -390,19 +386,19 @@ release:
 # 	zyphor build package pkg/v3/apps/zyphor-command-center-web
 # 	mv pkg/v3/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/apps/zyphor-command-center
-# 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-command-center
+	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 # 	mv pkg/v3/apps/zyphor-command-center.deb pkg/staging
 
-# 	zyphor build package pkg/v3/apps/zyphor-whats-new
-# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-whats-new
+	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/apps/zyphor-smart-downloads
 # 	mv pkg/v3/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	---
 
-	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
+# 	mv ./*.deb ../zyphor-os.github.io/ada-lovelace-lts/pool/main/z --verbose
 
 # 	mv ./*.deb ../zyphor-os.github.io/bethany-lts/pool/main/z --verbose
 
