@@ -3,6 +3,13 @@
 # zyphor system clean
 
 zyphor_system_clean() {
+  local deep=0 dry=0
+  for arg in "$@"; do
+    case "$arg" in
+      --deep)    deep=1 ;;
+      --dry-run) dry=1 ;;
+    esac
+  done
 
   # ===== Check root =====
   if [ "$EUID" -ne 0 ]; then
@@ -13,38 +20,64 @@ zyphor_system_clean() {
     return 1
   fi
 
+  # ===== Resolve real user's home (sudo-safe) =====
+  local real_user="${SUDO_USER:-root}"
+  local real_home
+  real_home=$(getent passwd "$real_user" | cut -d: -f6)
+
+  export DEBIAN_FRONTEND=noninteractive
+  local before after freed
+
   echo ""
   echo "Zyphor: Starting system cleanup..."
+  before=$(df --output=avail -k / | tail -n1)
 
-  # ===== Show disk usage before =====
-  BEFORE=$(df / | awk 'NR==2 {print $4}')
-
-  # ===== Clean package cache =====
-  echo "Zyphor: Cleaning package cache..."
-  apt clean
-
-  # ===== Remove unused packages =====
-  echo "Zyphor: Removing unused packages..."
-  apt autoremove -y
-
-  # ===== Remove partial packages =====
-  echo "Zyphor: Removing residual config files..."
-  dpkg -l | awk '/^rc/ {print $2}' | xargs -r apt purge -y
-
-  # ===== Clean thumbnail cache (user-level) =====
-  if [ -d "$HOME/.cache/thumbnails" ]; then
-    echo "Zyphor: Clearing thumbnail cache..."
-    rm -rf "$HOME/.cache/thumbnails/"*
+  if [ "$dry" -eq 1 ]; then
+    echo "Zyphor: [dry-run] Would remove:"
+    apt-get -s autoremove | awk '/^Remv/ {print "  " $2}'
+    dpkg -l | awk '/^rc/ {print "  (config) " $2}'
+    return 0
   fi
 
-  # ===== Show disk usage after =====
-  AFTER=$(df / | awk 'NR==2 {print $4}')
+  # ===== Package cache =====
+  echo "Zyphor: Cleaning package cache..."
+  apt-get clean || { echo "Zyphor: ✖ apt is busy or failed"; return 1; }
+  apt-get autoclean
 
-  # ===== Calculate freed space =====
-  FREED=$((AFTER - BEFORE))
+  # ===== Unused packages =====
+  echo "Zyphor: Removing unused packages..."
+  apt-get autoremove --purge -y
+
+  # ===== Residual configs =====
+  echo "Zyphor: Removing residual config files..."
+  dpkg -l | awk '/^rc/ {print $2}' | xargs -r apt-get purge -y
+
+  # ===== Logs =====
+  echo "Zyphor: Trimming system logs..."
+  journalctl --vacuum-time=7d >/dev/null 2>&1
+  find /var/log -type f \( -name "*.gz" -o -name "*.[0-9]" \) -delete 2>/dev/null
+
+  # ===== Temp files =====
+  find /var/tmp -type f -atime +30 -delete 2>/dev/null
+
+  # ===== User thumbnails =====
+  if [ -n "$real_home" ] && [ -d "$real_home/.cache/thumbnails" ]; then
+    echo "Zyphor: Clearing thumbnail cache..."
+    rm -rf "$real_home/.cache/thumbnails/"*
+  fi
+
+  # ===== Deep clean (optional) =====
+  if [ "$deep" -eq 1 ]; then
+    echo "Zyphor: Deep cleaning..."
+    [ -d "$real_home/.local/share/Trash" ] && rm -rf "$real_home/.local/share/Trash/"*
+    command -v flatpak >/dev/null && flatpak uninstall --unused -y
+  fi
+
+  after=$(df --output=avail -k / | tail -n1)
+  freed=$(( after - before ))
 
   echo ""
   echo "Zyphor: ✔ CLEAN COMPLETE"
-  echo "Space freed: $FREED KB"
+  echo "Space freed: $(numfmt --to=iec --from-unit=1024 "$freed" 2>/dev/null || echo "${freed} KB")"
   echo ""
 }
