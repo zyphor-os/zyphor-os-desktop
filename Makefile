@@ -167,29 +167,29 @@ status:
 	git status
 
 add:
-# 
+
 	# Update Makefile
 	git add Makefile
 	git commit -m "build: update Makefile"
 
 	# Update Zyphor CLI package metadata
-	git add pkg/v2/reforged/apps/zyphor-cli/DEBIAN/control
+	git add pkg/v3/apps/zyphor-cli/DEBIAN/control
 	git commit -m "pkg(zyphor-cli): update package metadata"
 
 	# Update Command Center package metadata
-	git add pkg/v2/reforged/apps/zyphor-command-center/DEBIAN/control
+	git add pkg/v3/apps/zyphor-command-center/DEBIAN/control
 	git commit -m "pkg(command-center): update package metadata"
 
 	# Update Command Center commands page
-	git add pkg/v2/reforged/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/html_pages/commands.html
+	git add pkg/v3/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/html_pages/commands.html
 	git commit -m "docs(command-center): update commands page"
 
 	# Update What's New package metadata
-	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
+	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
 	git commit -m "pkg(whats-new): update package metadata"
 
 	# Update What's New release information
-	git add pkg/v2/reforged/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
+	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
 	git commit -m "fix(whats-new): update release information"
 
 push:
@@ -366,8 +366,8 @@ release:
 
 # BETHANY APPS
 
-# 	zyphor build package pkg/v3/apps/zyphor-cli
-# 	mv pkg/v3/apps/zyphor-cli.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-cli
+	mv pkg/v3/apps/zyphor-cli.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	make -C pkg/v3/apps/zylearn clean
 # 	make -C pkg/v3/apps/zylearn
@@ -386,12 +386,12 @@ release:
 # 	zyphor build package pkg/v3/apps/zyphor-command-center-web
 # 	mv pkg/v3/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/apps/zyphor-command-center
-# 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-command-center
+	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 # 	mv pkg/v3/apps/zyphor-command-center.deb pkg/staging
 
-# 	zyphor build package pkg/v3/apps/zyphor-whats-new
-# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-whats-new
+	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/apps/zyphor-smart-downloads
 # 	mv pkg/v3/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose

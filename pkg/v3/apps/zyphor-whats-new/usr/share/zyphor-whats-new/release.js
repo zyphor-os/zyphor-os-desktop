@@ -1,9 +1,21 @@
 const releaseNotes = {
     distro: "Zyphor OS 3 \"Bethany\" LTS",
-    version: "3.2.0-bethany-lts-u8",
-    date: "Updated On: November 05, 2026 @ 08:00 PM",
+    version: "3.2.0-bethany-lts-u9",
+    date: "Updated On: November 11, 2026 @ 01:29 PM",
 
     sections: [
+        {
+            "title": "Smarter System Cleanup",
+            "items": [
+                "The zyphor system clean command now does a much more thorough cleanup: it removes package caches, unused packages, leftover configuration files, old rotated logs, and stale temporary files",
+                "The system journal is trimmed to the last 7 days, which can free up gigabytes on systems that have been running for a long time",
+                "Added a --dry-run option to system clean, so you can preview what would be removed before anything is changed",
+                "Added a --deep option to system clean, which also empties your Trash and removes unused Flatpak runtimes",
+                "Thumbnail cleanup now targets your own user account correctly, even when the command is run with sudo",
+                "After cleaning, Zyphor shows how much disk space was freed in easy-to-read units like MB and GB",
+                "The system clean command and its options are listed in the zyphor help screen and in the Zyphor CLI documentation"
+            ]
+        },
         {
             "title": "Package Install Works From the Command Center",
             "items": [
