@@ -172,25 +172,21 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update Zyphor CLI package metadata
-	git add pkg/v3/apps/zyphor-cli/DEBIAN/control
-	git commit -m "pkg(zyphor-cli): update package metadata"
+	# Update base configuration for Zyphor OS v2
+	git add scripts/_base_v2.sh
+	git commit -m "build(v2): update base configuration"
 
-	# Update Command Center package metadata
-	git add pkg/v3/apps/zyphor-command-center/DEBIAN/control
-	git commit -m "pkg(command-center): update package metadata"
+	# Update base configuration for Zyphor OS v3 XFCE
+	git add scripts/_base_v3.sh
+	git commit -m "build(v3): update base configuration"
 
-	# Update Command Center commands page
-	git add pkg/v3/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/html_pages/commands.html
-	git commit -m "docs(command-center): update commands page"
+	# Update base configuration for Zyphor OS v3 GNOME
+	git add scripts/_base_v3_gnome.sh
+	git commit -m "build(v3): update GNOME base configuration"
 
-	# Update What's New package metadata
-	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(whats-new): update package metadata"
-
-	# Update What's New release information
-	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "fix(whats-new): update release information"
+	# Update base configuration for Zyphor OS v3 KDE
+	git add scripts/_base_v3_kde.sh
+	git commit -m "build(v3): update KDE base configuration"
 
 push:
 	git push origin $(branch)
