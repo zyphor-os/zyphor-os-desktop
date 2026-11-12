@@ -29,6 +29,10 @@ apt install zyphor-bashrc-config -y
 
 apt install zycamera-launcher -y
 
+# new preinstalled
+
+apt install vim -y
+
 rm -rf ./zyphor-archive-keyring.deb
 
 rm -rf ./zyphor-repo-config.deb
