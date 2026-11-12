@@ -46,3 +46,6 @@ vmInit
 /new-iso/*.qcow2
 
 /mail
+
+# git branch compare
+/git-branch-compare.*
