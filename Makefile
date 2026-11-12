@@ -297,8 +297,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
 # 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
-# 	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
+	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
 # 	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
