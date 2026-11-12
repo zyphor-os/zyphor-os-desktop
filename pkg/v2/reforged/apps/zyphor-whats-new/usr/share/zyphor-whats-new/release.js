@@ -1,9 +1,21 @@
 const releaseNotes = {
     distro: "Zyphor OS Ada Lovelace LTS",
-    version: "2.2.1-ada-lovelace-lts-u74",
-    date: "Updated On: November 11, 2026 @ 01:37 PM",
+    version: "2.2.1-ada-lovelace-lts-u75",
+    date: "Updated On: November 12, 2026 @ 06:47 PM",
 
     sections: [
+        {
+            "title": "Cleaner Terminal Banner",
+            "items": [
+                "The terminal welcome banner is now minimal and clean, showing only the OS name and the most useful commands",
+                "Removed the build time from the banner, so the output is shorter and easier to read",
+                "The banner now shows only in interactive terminals, so scripts, SSH commands and piped output are no longer cluttered with it",
+                "If figlet and lolcat are installed, the OS name is shown in a colorful style; otherwise a simple colored text is used as a fallback",
+                "The OS name is read from your system's release information, so it always matches the installed version",
+                "Added quick command hints for updating the system with sudo zyphor system upgrade, plus the shorter sudo zy system upgrade alternative",
+                "Added a hint for sudo zy system clean, so you can easily clean and optimize your system right from the banner"
+            ]
+        },
         {
             "title": "Smarter System Cleanup",
             "items": [

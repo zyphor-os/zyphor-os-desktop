@@ -274,8 +274,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-background-themes
 # 	mv pkg/v2/reforged/zyphor-background-themes.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
-# 	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
-# 	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
+	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 	
 # 	zyphor build package pkg/v2/reforged/zyphor-face-icon
 # 	mv pkg/v2/reforged/zyphor-face-icon.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
@@ -390,8 +390,8 @@ release:
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 # 	mv pkg/v3/apps/zyphor-command-center.deb pkg/staging
 
-	zyphor build package pkg/v3/apps/zyphor-whats-new
-	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v3/apps/zyphor-whats-new
+# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/apps/zyphor-smart-downloads
 # 	mv pkg/v3/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
