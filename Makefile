@@ -172,21 +172,29 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update base configuration for Zyphor OS v2
-	git add scripts/_base_v2.sh
-	git commit -m "build(v2): update base configuration"
+	# Remove old v2 base script
+	git add -u scripts/_base_v2.sh
+	git commit -m "refactor(v2): remove old base build script"
 
-	# Update base configuration for Zyphor OS v3 XFCE
-	git add scripts/_base_v3.sh
-	git commit -m "build(v3): update base configuration"
+	# Update v2 ISO build script
+	git add scripts/_base_v2_iso.sh
+	git commit -m "build(v2): update ISO build script"
 
-	# Update base configuration for Zyphor OS v3 GNOME
-	git add scripts/_base_v3_gnome.sh
-	git commit -m "build(v3): update GNOME base configuration"
+	# Remove old v3 base script
+	git add -u scripts/_base_v3.sh
+	git commit -m "refactor(v3): remove old base build script"
 
-	# Update base configuration for Zyphor OS v3 KDE
-	git add scripts/_base_v3_kde.sh
-	git commit -m "build(v3): update KDE base configuration"
+	# Update v3 ISO build script
+	git add scripts/_base_v3_iso.sh
+	git commit -m "build(v3): update ISO build script"
+
+	# Add v2 XFCE build script
+	git add scripts/_base_v2_xfce.sh
+	git commit -m "build(v2): add XFCE build script"
+
+	# Add v3 XFCE build script
+	git add scripts/_base_v3_xfce.sh
+	git commit -m "build(v3): add XFCE build script"
 
 push:
 	git push origin $(branch)
