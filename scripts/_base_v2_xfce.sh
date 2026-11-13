@@ -82,4 +82,4 @@ fi
 
 echo "Cleanup complete."
 
-rm -rf ./_base_v2.sh
+rm -rf ./_base_v2_xfce.sh
