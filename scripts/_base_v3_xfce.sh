@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# download: https://raw.githubusercontent.com/zyphor-os/zyphor-os-desktop/main/scripts/_base_v3.sh
+# download: https://raw.githubusercontent.com/zyphor-os/zyphor-os-desktop/main/scripts/_base_v3_xfce.sh
 
 apt install wget
 
