@@ -1,0 +1,17 @@
+
+# Ghost text color (0-255 palette; higher = lighter, lower = darker)
+ble-face auto_complete='fg=240'
+# Other styles:
+# ble-face auto_complete='fg=244,italic'
+# ble-face auto_complete='fg=8'
+# Make sure suggestions come from your history
+bleopt complete_auto_complete=1
+bleopt complete_auto_history=1
+# Delay before the suggestion appears, in milliseconds (lower = faster)
+bleopt complete_auto_delay=50
+# Syntax highlighting colors (optional)
+ble-face command_builtin='fg=green'
+ble-face command_function='fg=cyan'
+ble-face syntax_error='fg=red,underline'
+# Cursor shape ble.sh sets (5 = blinking bar, 1 = blinking block, 3 = blinking underline)
+bleopt term_cursor_external=5
