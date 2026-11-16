@@ -172,29 +172,21 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Remove old v2 base script
-	git add -u scripts/_base_v2.sh
-	git commit -m "refactor(v2): remove old base build script"
+	# Update Ada Bashrc Config package metadata
+	git add pkg/v2/reforged/zyphor-bashrc-config/DEBIAN/control
+	git commit -m "pkg(bashrc): update package control metadata"
 
-	# Update v2 ISO build script
-	git add scripts/_base_v2_iso.sh
-	git commit -m "build(v2): update ISO build script"
+	# Update Ada Zyphor Bash configuration
+	git add pkg/v2/reforged/zyphor-bashrc-config/etc/bashrc.d/zyphor.sh
+	git commit -m "feat(bashrc): enhance Zyphor shell configuration"
 
-	# Remove old v3 base script
-	git add -u scripts/_base_v3.sh
-	git commit -m "refactor(v3): remove old base build script"
+	# Add Ada Zyphor configuration directory
+	git add pkg/v2/reforged/zyphor-bashrc-config/etc/zyphor/
+	git commit -m "feat(bashrc): add Zyphor configuration files"
 
-	# Update v3 ISO build script
-	git add scripts/_base_v3_iso.sh
-	git commit -m "build(v3): update ISO build script"
-
-	# Add v2 XFCE build script
-	git add scripts/_base_v2_xfce.sh
-	git commit -m "build(v2): add XFCE build script"
-
-	# Add v3 XFCE build script
-	git add scripts/_base_v3_xfce.sh
-	git commit -m "build(v3): add XFCE build script"
+	# Add Blesh package for Ada Reforged
+	git add pkg/v2/reforged/zyphor-blesh/
+	git commit -m "feat(bash): add Blesh package"
 
 push:
 	git push origin $(branch)
