@@ -1,0 +1,10 @@
+Package: zyphor-blesh
+Version: 1.0.0-r1-alpha
+Section: shells
+Priority: optional
+Architecture: all
+Depends: bash (>= 4.0), gawk
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
+Description: ble.sh (Bash Line Editor) for Zyphor OS
+ Provides inline history suggestions and syntax highlighting for Bash.
+ Built from https://github.com/akinomyoga/ble.sh
