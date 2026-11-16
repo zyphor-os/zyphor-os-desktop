@@ -8,3 +8,4 @@ Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
 Description: ble.sh (Bash Line Editor) for Zyphor OS
  Provides inline history suggestions and syntax highlighting for Bash.
  Built from https://github.com/akinomyoga/ble.sh
+ 
