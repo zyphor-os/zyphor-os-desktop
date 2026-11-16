@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        for dir in /usr/share/blesh /usr/share/doc/blesh; do
+            [ -d "$dir" ] || continue
+
+            # Owned by root so normal users can't edit anything
+            chown -R root:root "$dir"
+
+            # Directories 755, files 644, and keep the exec bit on scripts
+            # that already have it. Nobody except root can write.
+            chmod -R u=rwX,go=rX "$dir"
+        done
+        ;;
+esac
+
+exit 0
