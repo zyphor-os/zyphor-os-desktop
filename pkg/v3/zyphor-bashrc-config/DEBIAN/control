@@ -3,8 +3,8 @@ Version: 4.2.0-r6-alpha
 Section: shells
 Priority: optional
 Architecture: all
-Depends: git
-Recommends: zyphor-blesh, fzf
+Depends: git, zyphor-blesh
+Recommends: fzf
 Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
 Description: Zyphor OS Bash configuration
  Provides the default Zyphor OS Bash prompt, shell startup information,
