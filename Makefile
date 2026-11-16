@@ -173,21 +173,6 @@ add:
 	git commit -m "build: update Makefile"
 
 	# Update What's New package metadata
-<<<<<<< HEAD
-	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(whats-new): update package metadata"
-
-	# Update What's New release information
-	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(whats-new): update release information"
-
-	# Update Bashrc Config package metadata
-	git add pkg/v3/zyphor-bashrc-config/DEBIAN/control
-	git commit -m "pkg(bashrc): update package metadata"
-
-	# Update Blesh package metadata
-	git add pkg/v3/zyphor-blesh/DEBIAN/control
-=======
 	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
 	git commit -m "pkg(whats-new): update package metadata"
 
@@ -201,7 +186,6 @@ add:
 
 	# Update Blesh package metadata
 	git add pkg/v2/reforged/zyphor-blesh/DEBIAN/control
->>>>>>> ada-bash-history
 	git commit -m "pkg(blesh): update package metadata"
 
 push:
@@ -286,15 +270,11 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-background-themes
 # 	mv pkg/v2/reforged/zyphor-background-themes.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
-<<<<<<< HEAD
-# 	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
-=======
 	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
->>>>>>> ada-bash-history
-# 	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 	
-# 	zyphor build package pkg/v2/reforged/zyphor-blesh
-# 	mv pkg/v2/reforged/zyphor-blesh.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/zyphor-blesh
+	mv pkg/v2/reforged/zyphor-blesh.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
 # 	zyphor build package pkg/v2/reforged/zyphor-face-icon
 # 	mv pkg/v2/reforged/zyphor-face-icon.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
@@ -316,8 +296,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
 # 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
-# 	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
+	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
 # 	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
@@ -365,16 +345,11 @@ release:
 # 	zyphor build package pkg/v3/zyphor-background-themes
 # 	mv pkg/v3/zyphor-background-themes.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
-<<<<<<< HEAD
 	zyphor build package pkg/v3/zyphor-bashrc-config
-# 	mv pkg/v3/zyphor-bashrc-config.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+	mv pkg/v3/zyphor-bashrc-config.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/zyphor-blesh
-# 	mv pkg/v3/zyphor-blesh.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
-=======
-# 	zyphor build package pkg/v3/zyphor-bashrc-config
-# 	mv pkg/v3/zyphor-bashrc-config.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
->>>>>>> ada-bash-history
+	zyphor build package pkg/v3/zyphor-blesh
+	mv pkg/v3/zyphor-blesh.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/zyphor-plymouth
 # 	mv pkg/v3/zyphor-plymouth.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
@@ -417,8 +392,8 @@ release:
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 # 	mv pkg/v3/apps/zyphor-command-center.deb pkg/staging
 
-# 	zyphor build package pkg/v3/apps/zyphor-whats-new
-# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-whats-new
+	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/apps/zyphor-smart-downloads
 # 	mv pkg/v3/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
