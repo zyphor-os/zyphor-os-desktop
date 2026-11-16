@@ -1,9 +1,22 @@
 const releaseNotes = {
     distro: "Zyphor OS 3 \"Bethany\" LTS",
-    version: "3.2.0-bethany-lts-u10",
-    date: "Updated On: November 12, 2026 @ 06:42 PM",
+    version: "3.2.0-bethany-lts-u11",
+    date: "Updated On: November 16, 2026 @ 01:21 PM",
 
     sections: [
+        {
+            "title": "Smarter Command History",
+            "items": [
+                "Added Kali-style gray suggestions that finish your command as you type, based on your command history. Press the right arrow key to accept",
+                "Suggestions are powered by ble.sh, which is now included as a separate package (zyphor-blesh) and installed automatically with the Bash configuration",
+                "Commands are now saved to your history immediately, so every open terminal shares the same history and nothing is lost if a terminal closes unexpectedly",
+                "The history now remembers up to 50,000 commands, and duplicate entries and commands starting with a space are skipped",
+                "If ble.sh is not available, typing the start of a command and pressing the up or down arrow still searches your history by prefix",
+                "If fzf is installed, Ctrl+R opens a fuzzy search of your command history",
+                "Tab completion is now case-insensitive and shows all matches at once when there is more than one",
+                "Added default suggestion and syntax highlighting colors, which you can override by creating your own ~/.blerc file"
+            ]
+        },
         {
             "title": "Cleaner Terminal Banner",
             "items": [
