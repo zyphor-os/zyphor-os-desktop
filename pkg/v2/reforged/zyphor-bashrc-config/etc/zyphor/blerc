@@ -15,3 +15,5 @@ ble-face command_function='fg=cyan'
 ble-face syntax_error='fg=red,underline'
 # Cursor shape ble.sh sets (5 = blinking bar, 1 = blinking block, 3 = blinking underline)
 bleopt term_cursor_external=5
+# Disable command failure exit status notification
+bleopt exec_errexit_mark=''
