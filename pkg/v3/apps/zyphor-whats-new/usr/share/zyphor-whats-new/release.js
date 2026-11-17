@@ -1,9 +1,18 @@
 const releaseNotes = {
     distro: "Zyphor OS 3 \"Bethany\" LTS",
-    version: "3.2.0-bethany-lts-u11",
-    date: "Updated On: November 16, 2026 @ 01:21 PM",
+    version: "3.2.0-bethany-lts-u12",
+    date: "Updated On: November 17, 2026 @ 06:18 PM",
 
     sections: [
+        {
+            "title": "Cleaner Command Prompt",
+            "items": [
+                "Removed the exit status notification that appeared after a command failed, so your terminal stays clean and uncluttered",
+                "This is part of the default ble.sh configuration included with the Bash setup, so no action is needed on your part",
+                "If you already have your own ~/.blerc file, it overrides the default, so you can copy /etc/zyphor/blerc to your local ~/.blerc to get the update",
+                "If you prefer to see the failure notice again, set bleopt exec_errexit_mark to your preferred mark in your ~/.blerc"
+            ]
+        },
         {
             "title": "Smarter Command History",
             "items": [
