@@ -273,8 +273,8 @@ release:
 	zyphor build package pkg/v2/reforged/zyphor-bashrc-config
 	mv pkg/v2/reforged/zyphor-bashrc-config.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 	
-	zyphor build package pkg/v2/reforged/zyphor-blesh
-	mv pkg/v2/reforged/zyphor-blesh.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-blesh
+# 	mv pkg/v2/reforged/zyphor-blesh.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
 # 	zyphor build package pkg/v2/reforged/zyphor-face-icon
 # 	mv pkg/v2/reforged/zyphor-face-icon.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
@@ -348,8 +348,8 @@ release:
 	zyphor build package pkg/v3/zyphor-bashrc-config
 	mv pkg/v3/zyphor-bashrc-config.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
-	zyphor build package pkg/v3/zyphor-blesh
-	mv pkg/v3/zyphor-blesh.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+# 	zyphor build package pkg/v3/zyphor-blesh
+# 	mv pkg/v3/zyphor-blesh.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/zyphor-plymouth
 # 	mv pkg/v3/zyphor-plymouth.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
