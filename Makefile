@@ -167,35 +167,25 @@ status:
 	git status
 
 add:
-
 	# Update Makefile
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-<<<<<<< HEAD
-	# Update Ada Reforged Zyphor CLI package metadata
-	git add pkg/v2/reforged/apps/zyphor-cli/DEBIAN/control
-	git commit -m "pkg(cli): update package metadata"
+	# Update Ada Reforged What's New package metadata
+	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "pkg(whats-new): update Ada package metadata"
 
-	# Update Ada Reforged Wine setup script
-	git add pkg/v2/reforged/apps/zyphor-cli/usr/lib/zyphor/setup/wine
-	git commit -m "feat(cli): update Wine setup script"
+	# Update Ada Reforged release information
+	git add pkg/v2/reforged/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
+	git commit -m "feat(whats-new): update Ada release information"
 
-	# Add Ada Reforged Windows Handler package
-	git add pkg/v2/reforged/zyphor-windows-handler/
-=======
-	# Update Zyphor CLI package metadata
-	git add pkg/v3/apps/zyphor-cli/DEBIAN/control
-	git commit -m "pkg(cli): update package metadata"
+	# Update Bethany What's New package metadata
+	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "pkg(whats-new): update Bethany package metadata"
 
-	# Update Wine setup script
-	git add pkg/v3/apps/zyphor-cli/usr/lib/zyphor/setup/wine
-	git commit -m "feat(cli): update Wine setup script"
-
-	# Add Zyphor Windows Handler package
-	git add pkg/v3/zyphor-windows-handler/
->>>>>>> ft-bethany-zwh
-	git commit -m "feat(windows): add Windows file handler package"
+	# Update Bethany release information
+	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
+	git commit -m "feat(whats-new): update Bethany release information"
 
 push:
 	git push origin $(branch)
@@ -294,6 +284,9 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-desktop-environment
 # 	mv pkg/v2/reforged/zyphor-desktop-environment.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
+	zyphor build package pkg/v2/reforged/zyphor-windows-handler
+	mv pkg/v2/reforged/zyphor-windows-handler.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+
 # ADA LOVELACE APPS
 
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-cli
@@ -376,7 +369,7 @@ release:
 # 	mv pkg/v3/zyphor-calamares-settings.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 	zyphor build package pkg/v3/zyphor-windows-handler
-# 	mv pkg/v3/zyphor-windows-handler.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+	mv pkg/v3/zyphor-windows-handler.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 # BETHANY APPS
 
