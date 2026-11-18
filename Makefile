@@ -172,21 +172,17 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update What's New package metadata
-	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(whats-new): update package metadata"
+	# Update Ada Reforged Zyphor CLI package metadata
+	git add pkg/v2/reforged/apps/zyphor-cli/DEBIAN/control
+	git commit -m "pkg(cli): update package metadata"
 
-	# Update What's New release information
-	git add pkg/v2/reforged/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(whats-new): update release information"
+	# Update Ada Reforged Wine setup script
+	git add pkg/v2/reforged/apps/zyphor-cli/usr/lib/zyphor/setup/wine
+	git commit -m "feat(cli): update Wine setup script"
 
-	# Update Bashrc Config package metadata
-	git add pkg/v2/reforged/zyphor-bashrc-config/DEBIAN/control
-	git commit -m "pkg(bashrc): update package metadata"
-
-	# Update Blesh package metadata
-	git add pkg/v2/reforged/zyphor-blesh/DEBIAN/control
-	git commit -m "pkg(blesh): update package metadata"
+	# Add Ada Reforged Windows Handler package
+	git add pkg/v2/reforged/zyphor-windows-handler/
+	git commit -m "feat(windows): add Windows file handler package"
 
 push:
 	git push origin $(branch)
