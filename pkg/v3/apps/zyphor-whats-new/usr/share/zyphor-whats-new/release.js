@@ -1,9 +1,17 @@
 const releaseNotes = {
     distro: "Zyphor OS 3 \"Bethany\" LTS",
-    version: "3.2.0-bethany-lts-u12",
-    date: "Updated On: November 17, 2026 @ 06:18 PM",
+    version: "3.2.0-bethany-lts-u13",
+    date: "Updated On: November 18, 2026 @ 02:57 PM",
 
     sections: [
+        {
+            "title": "Seamless Windows App Integration",
+            "items": [
+                "No need for terminal setup, complicated Wine configuration, or environment variables; simply double-click a supported file to install or run",
+                "Getting started is as easy as running `sudo zy system upgrade` followed by `sudo zy setup wine` to enable the feature",
+                "Integration includes MIME-type associations, making your Windows apps feel right at home in the desktop environment"
+            ]
+        },
         {
             "title": "Cleaner Command Prompt",
             "items": [
