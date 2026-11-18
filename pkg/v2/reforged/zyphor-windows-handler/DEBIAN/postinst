@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+  configure)
+    chown root:root /usr/bin/zywin-handler \
+                    /usr/share/applications/zyphor-windows-handler.desktop \
+                    /usr/share/mime/packages/zyphor-windows-handler.xml
+
+    chmod 555 /usr/bin/zywin-handler
+    chmod 644 /usr/share/applications/zyphor-windows-handler.desktop
+    chmod 644 /usr/share/mime/packages/zyphor-windows-handler.xml
+    ;;
+esac
+
+exit 0
