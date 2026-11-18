@@ -1,9 +1,17 @@
 const releaseNotes = {
-    distro: "Zyphor OS Ada Lovelace LTS",
-    version: "2.2.1-ada-lovelace-lts-u77",
-    date: "Updated On: November 17, 2026 @ 06:18 PM",
+    distro: "Zyphor OS Ada Lovelace LTS Reforged",
+    version: "2.2.1-ada-lovelace-lts-u78",
+    date: "Updated On: November 18, 2026 @ 02:57 PM",
 
     sections: [
+        {
+            "title": "Seamless Windows App Integration",
+            "items": [
+                "No need for terminal setup, complicated Wine configuration, or environment variables; simply double-click a supported file to install or run",
+                "Getting started is as easy as running `sudo zy system upgrade` followed by `sudo zy setup wine` to enable the feature",
+                "Integration includes MIME-type associations, making your Windows apps feel right at home in the desktop environment"
+            ]
+        },
         {
             "title": "Cleaner Command Prompt",
             "items": [
