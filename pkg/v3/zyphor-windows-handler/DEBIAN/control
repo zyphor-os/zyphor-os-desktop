@@ -1,0 +1,14 @@
+Package: zyphor-windows-handler
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Mark Jason Espelita <markjasonespelita@gmail.com>
+Depends: bash, wine, libnotify-bin, udisks2, xdg-utils, thunar
+Description: Windows file handler for Zyphor OS
+ Opens Windows executables (.exe), Windows Installer packages (.msi)
+ and ISO disc images (.iso) directly from the file manager.
+ .
+ Executables and installers are launched with Wine. ISO images are
+ mounted read-only through udisks2 and opened in the file manager.
+ 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-ms-dos-executable">
+    <comment>Windows executable</comment>
+    <glob pattern="*.exe" weight="60"/>
+    <glob pattern="*.EXE" weight="60"/>
+  </mime-type>
+
+  <mime-type type="application/x-msi">
+    <comment>Windows Installer package</comment>
+    <glob pattern="*.msi" weight="60"/>
+    <glob pattern="*.MSI" weight="60"/>
+  </mime-type>
+
+  <mime-type type="application/x-iso9660-image">
+    <comment>ISO disc image</comment>
+    <glob pattern="*.iso" weight="60"/>
+    <glob pattern="*.ISO" weight="60"/>
+  </mime-type>
+</mime-info>

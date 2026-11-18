@@ -1,0 +1,81 @@
+#!/bin/bash
+# Zyphor Windows Handler - opens .exe, .msi and .iso files from the file manager.
+
+APP="Zyphor Windows Handler"
+
+notify() {
+    # $1 = title, $2 = message
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send "$1" "$2"
+    else
+        echo "$1: $2" >&2
+    fi
+}
+
+FILE="$1"
+
+if [[ -z "$FILE" || ! -f "$FILE" ]]; then
+    notify "$APP" "File not found."
+    exit 1
+fi
+
+FILE="$(realpath "$FILE")"
+
+open_folder() {
+    if command -v thunar >/dev/null 2>&1; then
+        thunar "$1" &
+    else
+        xdg-open "$1" &
+    fi
+}
+
+case "${FILE,,}" in
+    *.exe)
+        if ! command -v wine >/dev/null 2>&1; then
+            notify "$APP" "Wine is not installed."
+            exit 1
+        fi
+        exec wine "$FILE"
+        ;;
+
+    *.msi)
+        if ! command -v wine >/dev/null 2>&1; then
+            notify "$APP" "Wine is not installed."
+            exit 1
+        fi
+        exec wine msiexec /i "$FILE"
+        ;;
+
+    *.iso)
+        if ! command -v udisksctl >/dev/null 2>&1; then
+            notify "Zyphor ISO" "udisks2 is not installed."
+            exit 1
+        fi
+
+        # Attach the ISO to a loop device (no root needed, works without a terminal)
+        SETUP_OUT="$(udisksctl loop-setup --read-only --file "$FILE" 2>&1)"
+        LOOP_DEV="$(grep -oE '/dev/loop[0-9]+' <<<"$SETUP_OUT" | head -n1)"
+
+        if [[ -z "$LOOP_DEV" ]]; then
+            notify "Zyphor ISO" "Could not attach the ISO."
+            exit 1
+        fi
+
+        # Mount it (if it is already mounted, reuse the existing mount point)
+        MOUNT_OUT="$(udisksctl mount --block-device "$LOOP_DEV" 2>&1)"
+        MOUNT_DIR="$(sed -nE 's/.* at (.*)\.$/\1/p' <<<"$MOUNT_OUT" | head -n1)"
+        [[ -z "$MOUNT_DIR" ]] && MOUNT_DIR="$(findmnt -n -o TARGET --source "$LOOP_DEV" | head -n1)"
+
+        if [[ -n "$MOUNT_DIR" && -d "$MOUNT_DIR" ]]; then
+            open_folder "$MOUNT_DIR"
+        else
+            notify "Zyphor ISO" "Mount failed."
+            exit 1
+        fi
+        ;;
+
+    *)
+        notify "$APP" "Unsupported file type."
+        exit 1
+        ;;
+esac
