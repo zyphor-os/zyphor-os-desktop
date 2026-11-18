@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Zyphor Windows Application Handler
+Comment=Open Windows applications and ISO images
+Exec=/usr/bin/zywin-handler %f
+Terminal=false
+NoDisplay=true
+Categories=Utility;
+MimeType=application/x-ms-dos-executable;application/vnd.microsoft.portable-executable;application/x-msdownload;application/x-msi;application/x-iso9660-image;
