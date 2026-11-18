@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # zyphor_setup_wine — Wine (i386/32-bit Windows compatibility) bootstrapper
+# Also installs zyphor-windows-handler (double-click .exe/.msi/.iso support)
 #
 # Usage: zyphor setup wine
 #
@@ -29,8 +30,22 @@ _zyphor_setup_wine() {
   }
 
   echo ""
+  echo "Zyphor: Installing Zyphor Windows Handler..."
+  apt install -y zyphor-windows-handler || {
+    echo "Zyphor: ✖ Failed installing zyphor-windows-handler"
+    return 1
+  }
+
+  echo ""
   echo "Zyphor: Verifying installation..."
   wine --version || echo "⚠ Wine missing"
+
+  if dpkg -s zyphor-windows-handler >/dev/null 2>&1; then
+    echo "Zyphor: ✔ zyphor-windows-handler installed (.exe, .msi and .iso double-click enabled)"
+  else
+    echo "⚠ zyphor-windows-handler missing"
+    return 1
+  fi
 
   echo ""
   echo "Zyphor: ✔ Wine setup complete"
