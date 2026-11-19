@@ -171,21 +171,13 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update Ada Reforged What's New package metadata
-	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(whats-new): update Ada package metadata"
+	# Update ZyWin UI package metadata for Ada Reforged
+	git add pkg/v2/reforged/apps/zywin-ui/zywin-ui/DEBIAN/control
+	git commit -m "pkg(ada): update ZyWin UI package metadata"
 
-	# Update Ada Reforged release information
-	git add pkg/v2/reforged/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(whats-new): update Ada release information"
-
-	# Update Bethany What's New package metadata
-	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(whats-new): update Bethany package metadata"
-
-	# Update Bethany release information
-	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(whats-new): update Bethany release information"
+	# Update ZyWin UI package metadata for Bethany
+	git add pkg/v3/apps/zywin-ui/zywin-ui/DEBIAN/control
+	git commit -m "pkg(bethany): update ZyWin UI package metadata"
 
 push:
 	git push origin $(branch)
@@ -289,8 +281,8 @@ release:
 
 # ADA LOVELACE APPS
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-cli
-	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-cli
+# 	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
 # 	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
@@ -298,8 +290,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
 # 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
-	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
+# 	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
 # 	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
@@ -312,8 +304,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/apps/zywin/zywin
 # 	mv pkg/v2/reforged/apps/zywin/zywin.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
-# 	zyphor build package pkg/v2/reforged/apps/zywin-ui/zywin-ui
-# 	mv pkg/v2/reforged/apps/zywin-ui/zywin-ui.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/apps/zywin-ui/zywin-ui
+	mv pkg/v2/reforged/apps/zywin-ui/zywin-ui.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-smart-downloads
 # 	mv pkg/v2/reforged/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
@@ -373,8 +365,8 @@ release:
 
 # BETHANY APPS
 
-	zyphor build package pkg/v3/apps/zyphor-cli
-	mv pkg/v3/apps/zyphor-cli.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v3/apps/zyphor-cli
+# 	mv pkg/v3/apps/zyphor-cli.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	make -C pkg/v3/apps/zylearn clean
 # 	make -C pkg/v3/apps/zylearn
@@ -384,8 +376,8 @@ release:
 # 	zyphor build package pkg/v3/apps/zywin/zywin
 # 	mv pkg/v3/apps/zywin/zywin.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/apps/zywin-ui/zywin-ui
-# 	mv pkg/v3/apps/zywin-ui/zywin-ui.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zywin-ui/zywin-ui
+	mv pkg/v3/apps/zywin-ui/zywin-ui.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/apps/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v3/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
@@ -397,8 +389,8 @@ release:
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 # 	mv pkg/v3/apps/zyphor-command-center.deb pkg/staging
 
-	zyphor build package pkg/v3/apps/zyphor-whats-new
-	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v3/apps/zyphor-whats-new
+# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/apps/zyphor-smart-downloads
 # 	mv pkg/v3/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
