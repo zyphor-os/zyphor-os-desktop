@@ -3,7 +3,9 @@
 # zyphor_setup_wine — Wine (i386/32-bit Windows compatibility) bootstrapper
 # Also installs zyphor-windows-handler (double-click .exe/.msi/.iso support)
 #
-# Usage: zyphor setup wine
+# Usage:
+#   zyphor setup wine          Install Wine + zyphor-windows-handler
+#   zyphor setup wine undo     Remove them again
 #
 
 _zyphor_setup_wine() {
@@ -21,7 +23,10 @@ _zyphor_setup_wine() {
   fi
 
   echo "Zyphor: Updating package lists..."
-  apt update -qq
+  apt update -qq || {
+    echo "Zyphor: ✖ Failed updating package lists"
+    return 1
+  }
 
   echo "Zyphor: Installing Wine (wine, wine64, wine32:i386)..."
   apt install -y wine wine64 wine32:i386 || {
@@ -52,19 +57,304 @@ _zyphor_setup_wine() {
   echo ""
 }
 
-zyphor_setup_wine() {
-  local status
-  _zyphor_setup_wine
-  status=$?
+# Ask a yes/no question. Default is "no". Non-interactive runs always answer "no".
+_zyphor_wine_confirm() {
+  local prompt="$1" reply
+  [ -t 0 ] || return 1
+  read -r -p "$prompt [y/N]: " reply
+  [[ "$reply" =~ ^[Yy]$ ]]
+}
 
-  if [ "$status" -eq 0 ]; then
-    echo ""
-    echo "Zyphor: ✔ Setup 'wine' completed"
-    echo ""
+_zyphor_setup_wine_undo() {
+  _zyphor_require_root "wine undo" || return 1
+
+  echo ""
+  echo "Zyphor: 🧹 Removing Wine setup"
+  echo ""
+
+  # Collect every installed Wine-related package (not just the 3 we install):
+  # wine*, libwine*, fonts-wine, winetricks, plus our own handler.
+  local pkgs=() line
+  while IFS= read -r line; do
+    [ -n "$line" ] && pkgs+=("$line")
+  done < <(
+    dpkg-query -W -f='${db:Status-Abbrev} ${binary:Package}\n' \
+      'wine*' 'libwine*' 'fonts-wine' 'winetricks' 'zyphor-windows-handler' 2>/dev/null \
+      | awk '$1 ~ /^.i/ {print $2}' | sort -u
+  )
+
+  if [ "${#pkgs[@]}" -eq 0 ]; then
+    echo "Zyphor: Nothing to remove (no Wine packages installed)"
   else
+    echo "Zyphor: Removing ${#pkgs[@]} package(s):"
+    printf '  - %s\n' "${pkgs[@]}"
+    apt purge -y "${pkgs[@]}" || {
+      echo "Zyphor: ✖ Failed removing Wine packages"
+      return 1
+    }
+
+    echo "Zyphor: Cleaning up unused dependencies..."
+    apt autoremove -y || echo "⚠ autoremove failed (not critical)"
+  fi
+
+  # Resolve the real (non-root) user and home
+  local real_user="" real_home=""
+  if declare -F _zyphor_resolve_real_user >/dev/null 2>&1; then
+    real_user="$(_zyphor_resolve_real_user)"
+  else
+    real_user="${SUDO_USER:-$(logname 2>/dev/null)}"
+  fi
+  if [ -n "$real_user" ] && [ "$real_user" != "root" ]; then
+    if declare -F _zyphor_user_home >/dev/null 2>&1; then
+      real_home="$(_zyphor_user_home "$real_user")"
+    else
+      real_home="$(getent passwd "$real_user" | cut -d: -f6)"
+    fi
+  fi
+
+  # Optional: Windows apps data. Deleting these removes every installed Windows app.
+  if [ -n "$real_home" ]; then
+    local data_dirs=() d
+    for d in "$real_home/.wine" "$real_home/.local/share/zywin"; do
+      [ -d "$d" ] && data_dirs+=("$d")
+    done
+
+    if [ "${#data_dirs[@]}" -gt 0 ]; then
+      echo ""
+      echo "Zyphor: Found Windows app data:"
+      for d in "${data_dirs[@]}"; do
+        echo "  - $d ($(du -sh "$d" 2>/dev/null | cut -f1))"
+      done
+      echo "Zyphor: Deleting these will also remove all installed Windows apps, saves and settings."
+      if _zyphor_wine_confirm "Zyphor: Delete these directories and all Windows apps?"; then
+        for d in "${data_dirs[@]}"; do
+          rm -rf "$d"
+          echo "Zyphor: ✔ Removed $d"
+        done
+        # Launchers/menu entries Wine created for those apps
+        rm -rf "$real_home/.local/share/applications/wine" \
+               "$real_home/.config/menus/applications-merged/wine"* 2>/dev/null
+        echo "Zyphor: ✔ Removed Wine app launchers"
+      else
+        echo "Zyphor: Keeping Windows app data"
+      fi
+    fi
+  fi
+
+  # Optional: i386 architecture (only possible when no i386 packages remain)
+  if dpkg --print-foreign-architectures | grep -qx "i386"; then
+    local i386_left
+    i386_left=$(dpkg-query -W -f='${Architecture} ${Package}\n' 2>/dev/null | grep -c '^i386 ')
     echo ""
-    echo "Zyphor: ✖ Setup failed → wine"
-    echo ""
+    if [ "$i386_left" -gt 0 ]; then
+      echo "Zyphor: i386 architecture kept ($i386_left i386 package(s) still installed)"
+    elif _zyphor_wine_confirm "Zyphor: Disable i386 architecture?"; then
+      if dpkg --remove-architecture i386; then
+        echo "Zyphor: ✔ i386 architecture disabled"
+        apt update -qq || echo "⚠ apt update failed (not critical)"
+      else
+        echo "⚠ Could not disable i386 architecture"
+      fi
+    else
+      echo "Zyphor: Keeping i386 architecture enabled"
+    fi
+  fi
+
+  echo ""
+  echo "Zyphor: Verifying removal..."
+  if command -v wine >/dev/null 2>&1; then
+    echo "⚠ wine command is still present"
     return 1
   fi
+  if dpkg -s zyphor-windows-handler >/dev/null 2>&1; then
+    echo "⚠ zyphor-windows-handler is still installed"
+    return 1
+  fi
+  echo "Zyphor: ✔ Wine and related packages removed"
+  echo ""
+}
+
+zyphor_setup_wine() {
+  _zyphor_require_root "wine" || return 1
+
+  echo ""
+  echo "Zyphor: 🚀 Setting up Wine"
+  echo ""
+
+  if ! dpkg --print-foreign-architectures | grep -qx "i386"; then
+    echo "Zyphor: Adding i386 architecture..."
+    dpkg --add-architecture i386
+  else
+    echo "Zyphor: i386 architecture already enabled"
+  fi
+
+  echo "Zyphor: Updating package lists..."
+  apt update -qq || {
+    echo "Zyphor: ✖ Failed updating package lists"
+    return 1
+  }
+
+  echo "Zyphor: Installing Wine (wine, wine64, wine32:i386)..."
+  apt install -y wine wine64 wine32:i386 || {
+    echo "Zyphor: ✖ Failed installing Wine packages"
+    return 1
+  }
+
+  echo ""
+  echo "Zyphor: Installing Zyphor Windows Handler..."
+  apt install -y zyphor-windows-handler || {
+    echo "Zyphor: ✖ Failed installing zyphor-windows-handler"
+    return 1
+  }
+
+  echo ""
+  echo "Zyphor: Verifying installation..."
+  wine --version || echo "⚠ Wine missing"
+
+  if dpkg -s zyphor-windows-handler >/dev/null 2>&1; then
+    echo "Zyphor: ✔ zyphor-windows-handler installed (.exe, .msi and .iso double-click enabled)"
+  else
+    echo "⚠ zyphor-windows-handler missing"
+    return 1
+  fi
+
+  echo ""
+  echo "Zyphor: ✔ Wine setup complete"
+  echo ""
+}
+
+# Ask a yes/no question. Default is "no". Non-interactive runs always answer "no".
+_zyphor_wine_confirm() {
+  local prompt="$1" reply
+  [ -t 0 ] || return 1
+  read -r -p "$prompt [y/N]: " reply
+  [[ "$reply" =~ ^[Yy]$ ]]
+}
+
+_zyphor_setup_wine_undo() {
+  _zyphor_require_root "wine undo" || return 1
+
+  echo ""
+  echo "Zyphor: 🧹 Removing Wine setup"
+  echo ""
+
+  # Only remove what is actually installed
+  local pkgs=() p
+  for p in zyphor-windows-handler wine wine64 wine32:i386; do
+    if dpkg -s "$p" >/dev/null 2>&1; then
+      pkgs+=("$p")
+    fi
+  done
+
+  if [ "${#pkgs[@]}" -eq 0 ]; then
+    echo "Zyphor: Nothing to remove (Wine packages are not installed)"
+  else
+    echo "Zyphor: Removing: ${pkgs[*]}"
+    apt purge -y "${pkgs[@]}" || {
+      echo "Zyphor: ✖ Failed removing Wine packages"
+      return 1
+    }
+
+    echo "Zyphor: Cleaning up unused dependencies..."
+    apt autoremove -y || echo "⚠ autoremove failed (not critical)"
+  fi
+
+  # Optional: the user's Wine prefix (~/.wine) holds installed Windows apps and settings
+  local real_user="" real_home=""
+  if declare -F _zyphor_resolve_real_user >/dev/null 2>&1; then
+    real_user="$(_zyphor_resolve_real_user)"
+  else
+    real_user="${SUDO_USER:-$(logname 2>/dev/null)}"
+  fi
+  if [ -n "$real_user" ] && [ "$real_user" != "root" ]; then
+    if declare -F _zyphor_user_home >/dev/null 2>&1; then
+      real_home="$(_zyphor_user_home "$real_user")"
+    else
+      real_home="$(getent passwd "$real_user" | cut -d: -f6)"
+    fi
+  fi
+
+  if [ -n "$real_home" ] && [ -d "$real_home/.wine" ]; then
+    echo ""
+    echo "Zyphor: Found Wine prefix: $real_home/.wine"
+    echo "Zyphor: It contains installed Windows apps, saves and settings."
+    if _zyphor_wine_confirm "Zyphor: Delete $real_home/.wine?"; then
+      rm -rf "$real_home/.wine"
+      echo "Zyphor: ✔ Removed $real_home/.wine"
+    else
+      echo "Zyphor: Keeping $real_home/.wine"
+    fi
+  fi
+
+  # Optional: i386 architecture (only possible when no i386 packages remain)
+  if dpkg --print-foreign-architectures | grep -qx "i386"; then
+    local i386_left
+    i386_left=$(dpkg-query -W -f='${Architecture} ${Package}\n' 2>/dev/null | grep -c '^i386 ')
+    echo ""
+    if [ "$i386_left" -gt 0 ]; then
+      echo "Zyphor: i386 architecture kept ($i386_left i386 package(s) still installed)"
+    elif _zyphor_wine_confirm "Zyphor: Disable i386 architecture?"; then
+      if dpkg --remove-architecture i386; then
+        echo "Zyphor: ✔ i386 architecture disabled"
+        apt update -qq || echo "⚠ apt update failed (not critical)"
+      else
+        echo "⚠ Could not disable i386 architecture"
+      fi
+    else
+      echo "Zyphor: Keeping i386 architecture enabled"
+    fi
+  fi
+
+  echo ""
+  echo "Zyphor: Verifying removal..."
+  if command -v wine >/dev/null 2>&1; then
+    echo "⚠ wine command is still present"
+    return 1
+  fi
+  if dpkg -s zyphor-windows-handler >/dev/null 2>&1; then
+    echo "⚠ zyphor-windows-handler is still installed"
+    return 1
+  fi
+  echo "Zyphor: ✔ Wine and zyphor-windows-handler removed"
+  echo ""
+}
+
+zyphor_setup_wine() {
+  local action="${1:-install}" status
+
+  case "$action" in
+    install)
+      _zyphor_setup_wine
+      status=$?
+      if [ "$status" -eq 0 ]; then
+        echo ""
+        echo "Zyphor: ✔ Setup 'wine' completed"
+        echo ""
+      else
+        echo ""
+        echo "Zyphor: ✖ Setup failed → wine"
+        echo ""
+        return 1
+      fi
+      ;;
+    undo)
+      _zyphor_setup_wine_undo
+      status=$?
+      if [ "$status" -eq 0 ]; then
+        echo ""
+        echo "Zyphor: ✔ Undo 'wine' completed"
+        echo ""
+      else
+        echo ""
+        echo "Zyphor: ✖ Undo failed → wine"
+        echo ""
+        return 1
+      fi
+      ;;
+    *)
+      echo "Zyphor: ✖ Unknown option '$action'"
+      echo "Usage: zyphor setup wine [undo]"
+      return 1
+      ;;
+  esac
 }
