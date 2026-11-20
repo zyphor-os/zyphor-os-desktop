@@ -166,7 +166,7 @@ case "$CATEGORY" in
       #   zyphor_setup_theme "$@"
       # ;;
       wine)
-        zyphor_setup_wine
+        zyphor_setup_wine "$3"
       ;;
       pentest)
         zyphor_setup_pentest "$@"
