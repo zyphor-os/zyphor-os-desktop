@@ -1,9 +1,17 @@
 const releaseNotes = {
     distro: "Zyphor OS Ada Lovelace LTS Reforged",
-    version: "2.2.1-ada-lovelace-lts-u78",
-    date: "Updated On: November 18, 2026 @ 02:57 PM",
+    version: "2.2.1-ada-lovelace-lts-u79",
+    date: "Updated On: November 21, 2026 @ 01:54 PM",
 
     sections: [
+        {
+            "title": "Clean and Reversible Setup",
+            "items": [
+                "Changed your mind? Run `sudo zy setup wine undo` to remove Wine, its related packages, and Zyphor Windows Handler in one step",
+                "Your Windows apps and saves are safe by default; you're asked before `~/.wine` and `~/.local/share/zywin` are deleted, so nothing is removed by accident",
+                "Optionally disable the 32-bit (i386) architecture afterward to return your system to its original state"
+            ]
+        },
         {
             "title": "Seamless Windows App Integration",
             "items": [
