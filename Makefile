@@ -175,57 +175,17 @@ add:
 	git add pkg/v2/reforged/apps/zyphor-cli/DEBIAN/control
 	git commit -m "pkg(ada): update Zyphor CLI metadata"
 
-	# Update Ada Reforged CLI help
-	git add pkg/v2/reforged/apps/zyphor-cli/usr/lib/zyphor/core/help
-	git commit -m "docs(ada): update Zyphor CLI help"
-
 	# Update Ada Reforged pentest setup
 	git add pkg/v2/reforged/apps/zyphor-cli/usr/lib/zyphor/setup/pentest
 	git commit -m "feat(ada): update pentest setup"
-
-	# Update Ada Reforged Command Center metadata
-	git add pkg/v2/reforged/apps/zyphor-command-center/DEBIAN/control
-	git commit -m "pkg(ada): update Command Center metadata"
-
-	# Update Ada Reforged Command Center commands page
-	git add pkg/v2/reforged/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/html_pages/commands.html
-	git commit -m "docs(ada): update Command Center commands page"
-
-	# Update Ada Reforged What's New metadata
-	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(ada): update What's New metadata"
-
-	# Update Ada Reforged release information
-	git add pkg/v2/reforged/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(ada): update What's New release information"
 
 	# Update Bethany Zyphor CLI metadata
 	git add pkg/v3/apps/zyphor-cli/DEBIAN/control
 	git commit -m "pkg(bethany): update Zyphor CLI metadata"
 
-	# Update Bethany CLI help
-	git add pkg/v3/apps/zyphor-cli/usr/lib/zyphor/core/help
-	git commit -m "docs(bethany): update Zyphor CLI help"
-
 	# Update Bethany pentest setup
 	git add pkg/v3/apps/zyphor-cli/usr/lib/zyphor/setup/pentest
 	git commit -m "feat(bethany): update pentest setup"
-
-	# Update Bethany Command Center metadata
-	git add pkg/v3/apps/zyphor-command-center/DEBIAN/control
-	git commit -m "pkg(bethany): update Command Center metadata"
-
-	# Update Bethany Command Center commands page
-	git add pkg/v3/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/html_pages/commands.html
-	git commit -m "docs(bethany): update Command Center commands page"
-
-	# Update Bethany What's New metadata
-	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(bethany): update What's New metadata"
-
-	# Update Bethany release information
-	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(bethany): update What's New release information"
 
 push:
 	git push origin $(branch)
@@ -332,14 +292,14 @@ release:
 	zyphor build package pkg/v2/reforged/apps/zyphor-cli
 	mv pkg/v2/reforged/apps/zyphor-cli.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
-	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center
+# 	mv pkg/v2/reforged/apps/zyphor-command-center.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
 # 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
-	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
+# 	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
 # 	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
@@ -433,12 +393,12 @@ release:
 # 	zyphor build package pkg/v3/apps/zyphor-command-center-web
 # 	mv pkg/v3/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v3/apps/zyphor-command-center
-	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v3/apps/zyphor-command-center
+# 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 # 	mv pkg/v3/apps/zyphor-command-center.deb pkg/staging
 
-	zyphor build package pkg/v3/apps/zyphor-whats-new
-	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v3/apps/zyphor-whats-new
+# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/apps/zyphor-smart-downloads
 # 	mv pkg/v3/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
