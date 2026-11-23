@@ -171,83 +171,61 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update Ada Apps repository metadata
-	git add ada-lovelace-lts-reforged/ada-lovelace-apps/dists/ada-lovelace-apps/InRelease
-	git commit -m "repo(ada): update Apps InRelease"
+	# Update Ada Reforged Zyphor CLI metadata
+	git add pkg/v2/reforged/apps/zyphor-cli/DEBIAN/control
+	git commit -m "pkg(ada): update Zyphor CLI metadata"
 
-	git add ada-lovelace-lts-reforged/ada-lovelace-apps/dists/ada-lovelace-apps/Release
-	git commit -m "repo(ada): update Apps Release"
+	# Update Ada Reforged CLI help
+	git add pkg/v2/reforged/apps/zyphor-cli/usr/lib/zyphor/core/help
+	git commit -m "docs(ada): update Zyphor CLI help"
 
-	git add ada-lovelace-lts-reforged/ada-lovelace-apps/dists/ada-lovelace-apps/Release.gpg
-	git commit -m "repo(ada): update Apps Release signature"
+	# Update Ada Reforged pentest setup
+	git add pkg/v2/reforged/apps/zyphor-cli/usr/lib/zyphor/setup/pentest
+	git commit -m "feat(ada): update pentest setup"
 
-	git add ada-lovelace-lts-reforged/ada-lovelace-apps/dists/ada-lovelace-apps/main/binary-amd64/Packages
-	git commit -m "repo(ada): update Apps package index"
+	# Update Ada Reforged Command Center metadata
+	git add pkg/v2/reforged/apps/zyphor-command-center/DEBIAN/control
+	git commit -m "pkg(ada): update Command Center metadata"
 
-	git add ada-lovelace-lts-reforged/ada-lovelace-apps/dists/ada-lovelace-apps/main/binary-amd64/Packages.gz
-	git commit -m "repo(ada): update compressed Apps package index"
+	# Update Ada Reforged Command Center commands page
+	git add pkg/v2/reforged/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/html_pages/commands.html
+	git commit -m "docs(ada): update Command Center commands page"
 
-	# Update Ada Apps packages
-	git add ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z/zyphor-cli.deb
-	git commit -m "pkg(ada): update Zyphor CLI package"
+	# Update Ada Reforged What's New metadata
+	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "pkg(ada): update What's New metadata"
 
-	git add ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z/zyphor-command-center.deb
-	git commit -m "pkg(ada): update Command Center package"
+	# Update Ada Reforged release information
+	git add pkg/v2/reforged/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
+	git commit -m "feat(ada): update What's New release information"
 
-	git add ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z/zyphor-whats-new.deb
-	git commit -m "pkg(ada): update What's New package"
+	# Update Bethany Zyphor CLI metadata
+	git add pkg/v3/apps/zyphor-cli/DEBIAN/control
+	git commit -m "pkg(bethany): update Zyphor CLI metadata"
 
-	# Update Ada main repository metadata
-	git add ada-lovelace-lts-reforged/ada-lovelace/dists/ada-lovelace/InRelease
-	git commit -m "repo(ada): update main InRelease"
+	# Update Bethany CLI help
+	git add pkg/v3/apps/zyphor-cli/usr/lib/zyphor/core/help
+	git commit -m "docs(bethany): update Zyphor CLI help"
 
-	git add ada-lovelace-lts-reforged/ada-lovelace/dists/ada-lovelace/Release
-	git commit -m "repo(ada): update main Release"
+	# Update Bethany pentest setup
+	git add pkg/v3/apps/zyphor-cli/usr/lib/zyphor/setup/pentest
+	git commit -m "feat(bethany): update pentest setup"
 
-	git add ada-lovelace-lts-reforged/ada-lovelace/dists/ada-lovelace/Release.gpg
-	git commit -m "repo(ada): update main Release signature"
+	# Update Bethany Command Center metadata
+	git add pkg/v3/apps/zyphor-command-center/DEBIAN/control
+	git commit -m "pkg(bethany): update Command Center metadata"
 
-	git add ada-lovelace-lts-reforged/ada-lovelace/dists/ada-lovelace/main/binary-amd64/Packages.gz
-	git commit -m "repo(ada): update compressed main package index"
+	# Update Bethany Command Center commands page
+	git add pkg/v3/apps/zyphor-command-center/usr/share/zyphor-command-center/pages/html_pages/commands.html
+	git commit -m "docs(bethany): update Command Center commands page"
 
-	# Update Bethany Apps repository metadata
-	git add bethany-lts/bethany-apps/dists/bethany-apps/InRelease
-	git commit -m "repo(bethany): update Apps InRelease"
+	# Update Bethany What's New metadata
+	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "pkg(bethany): update What's New metadata"
 
-	git add bethany-lts/bethany-apps/dists/bethany-apps/Release
-	git commit -m "repo(bethany): update Apps Release"
-
-	git add bethany-lts/bethany-apps/dists/bethany-apps/Release.gpg
-	git commit -m "repo(bethany): update Apps Release signature"
-
-	git add bethany-lts/bethany-apps/dists/bethany-apps/main/binary-amd64/Packages
-	git commit -m "repo(bethany): update Apps package index"
-
-	git add bethany-lts/bethany-apps/dists/bethany-apps/main/binary-amd64/Packages.gz
-	git commit -m "repo(bethany): update compressed Apps package index"
-
-	# Update Bethany Apps packages
-	git add bethany-lts/bethany-apps/pool/main/z/zyphor-cli.deb
-	git commit -m "pkg(bethany): update Zyphor CLI package"
-
-	git add bethany-lts/bethany-apps/pool/main/z/zyphor-command-center.deb
-	git commit -m "pkg(bethany): update Command Center package"
-
-	git add bethany-lts/bethany-apps/pool/main/z/zyphor-whats-new.deb
-	git commit -m "pkg(bethany): update What's New package"
-
-	# Update Bethany main repository metadata
-	git add bethany-lts/bethany/dists/bethany/InRelease
-	git commit -m "repo(bethany): update main InRelease"
-
-	git add bethany-lts/bethany/dists/bethany/Release
-	git commit -m "repo(bethany): update main Release"
-
-	git add bethany-lts/bethany/dists/bethany/Release.gpg
-	git commit -m "repo(bethany): update main Release signature"
-
-	git add bethany-lts/bethany/dists/bethany/main/binary-amd64/Packages.gz
-	git commit -m "repo(bethany): update compressed main package index"
+	# Update Bethany release information
+	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
+	git commit -m "feat(bethany): update What's New release information"
 
 push:
 	git push origin $(branch)
