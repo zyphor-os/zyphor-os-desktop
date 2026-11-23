@@ -1,9 +1,17 @@
 const releaseNotes = {
     distro: "Zyphor OS 3 \"Bethany\" LTS",
-    version: "3.2.0-bethany-lts-u14",
-    date: "Updated On: November 21, 2026 @ 01:54 PM",
+    version: "3.2.0-bethany-lts-u15",
+    date: "Updated On: November 23, 2026 @ 08:22 AM",
 
     sections: [
+        {
+            "title": "Clean and Reversible Pentest Setup",
+            "items": [
+                "Done testing? Run `sudo zy setup pentest undo` to remove every pentest tool in one step, no matter which targets you installed (recon, web, wireless, passwords, sniffing, forensics, or exploitation)",
+                "You're shown exactly which packages will be removed and asked to confirm before anything is deleted; add `-y` to skip the prompt",
+                "Unused dependencies are cleaned up afterward, and your user is removed from the `wireshark` group, returning your system to its original state"
+            ]
+        },
         {
             "title": "Clean and Reversible Wine Setup",
             "items": [
