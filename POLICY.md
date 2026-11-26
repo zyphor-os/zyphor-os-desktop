@@ -111,6 +111,47 @@ We suffered through those commits. Future generations deserve to know.
 
 ---
 
+# 🕖 ZYPHOR OS PACKAGE RELEASE SCHEDULE
+*Because even packages deserve office hours.*
+
+*"This policy was originally established on **August 18, 2026**. I'm just restating it for everyone, in case some of you thought the rules magically disappeared. 💀"*
+
+Zyphor OS will normally release new packages and software updates between **7:00 PM and 9:00 PM (UTC+8)**.
+
+Why? Because we believe in organized releases, proper testing, and not randomly throwing packages at users at 3 AM while everyone is sleeping.
+
+During this window, the team may publish:
+
+- New features and functionalities.
+- Performance improvements.
+- Bug fixes (including bugs we accidentally introduced while fixing other bugs).
+- Security updates.
+- Updated packages and dependencies.
+- General system improvements.
+
+**Regular Release Window: 7:00 PM – 9:00 PM (UTC+8)**
+
+That's our usual delivery schedule. Think of it as package delivery, except nobody rings your doorbell.
+
+### 🚨 URGENT RELEASES
+*When shit hits the fan, the clock doesn't matter.*
+
+If a critical bug, security vulnerability, or urgent issue needs immediate attention, the Zyphor OS Team reserves the right to release the affected package or software **ANYTIME, INCLUDING OUTSIDE THE REGULAR RELEASE WINDOW.**
+
+Examples include:
+
+- Critical security vulnerabilities.
+- System-breaking bugs.
+- Package failures affecting multiple users.
+- Issues that threaten system stability.
+- Fixes that simply cannot wait until tomorrow.
+
+Urgent releases will be prioritized whenever delaying an update could negatively affect users, system stability, or security.
+
+**Translation:** If your system is on fire, we're not waiting until 7 PM to bring the extinguisher.
+
+---
+
 # 📜 CONTRIBUTOR DECLARATION
 *Before submitting that beautiful piece of code, let's establish a few things.*
 
