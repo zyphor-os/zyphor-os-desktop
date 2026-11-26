@@ -171,21 +171,29 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update Ada Reforged Zyphor CLI metadata
-	git add pkg/v2/reforged/apps/zyphor-cli/DEBIAN/control
-	git commit -m "pkg(ada): update Zyphor CLI metadata"
+	# Update Ada Reforged What's New metadata
+	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "pkg(ada): update What's New metadata"
 
-	# Update Ada Reforged pentest setup
-	git add pkg/v2/reforged/apps/zyphor-cli/usr/lib/zyphor/setup/pentest
-	git commit -m "feat(ada): update pentest setup"
+	# Update Ada Reforged release information
+	git add pkg/v2/reforged/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
+	git commit -m "feat(ada): update What's New release information"
 
-	# Update Bethany Zyphor CLI metadata
-	git add pkg/v3/apps/zyphor-cli/DEBIAN/control
-	git commit -m "pkg(bethany): update Zyphor CLI metadata"
+	# Update Ada Reforged Debian Handler metadata
+	git add pkg/v2/reforged/zyphor-debian-handler/DEBIAN/control
+	git commit -m "pkg(ada): update Debian Handler metadata"
 
-	# Update Bethany pentest setup
-	git add pkg/v3/apps/zyphor-cli/usr/lib/zyphor/setup/pentest
-	git commit -m "feat(bethany): update pentest setup"
+	# Update Bethany What's New metadata
+	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
+	git commit -m "pkg(bethany): update What's New metadata"
+
+	# Update Bethany release information
+	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
+	git commit -m "feat(bethany): update What's New release information"
+
+	# Update Bethany Debian Handler metadata
+	git add pkg/v3/zyphor-debian-handler/DEBIAN/control
+	git commit -m "pkg(bethany): update Debian Handler metadata"
 
 push:
 	git push origin $(branch)
