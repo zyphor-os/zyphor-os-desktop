@@ -1,49 +1,151 @@
-**This is the one and only POLICY in the entire Zyphor Operating System development universe. No hidden rules, no secret policies, no DLC. Nothing more, nothing less.**
+# ☠️ THE ONE AND ONLY ZYPHOR POLICY
 
-*"Disobey this rule, and I’ll marry your mother."*
+**This is the one and only POLICY in the entire Zyphor Operating System development universe.**
 
-Made by **Mark Jason Espelita** himself.
+No hidden rules. No secret policies. No premium DLC. No expansion packs. No surprise terms and conditions. Nothing more, nothing less.
 
-**AI USAGE**
+There is only ONE rule:
 
-* AI tools may be used for research and learning, but all content in contributions must **originate** from and be **understood by the contributor**.
-* This includes code, documentation, issues, security reports, pull request descriptions, and comments in all Zyphor OS codebases.
-* **ALL** usage of AI tools **MUST** be disclosed.
+> *"Disobey this rule, and I'll marry your mother."*
 
-**DEVELOPMENT**
+Authored, approved, threatened, and personally enforced by **Mark Jason Espelita** himself.
 
-- **One task, one branch.** No feature-stacking. No surprise fixes.
-- **Hands off `main`.** No direct commits. PRs only. Review first. Merge later.
-- **Delete merged branches.** Zombies belong in horror movies, not Git.
-- **No mixed changes.** One branch, one purpose. Messy PRs get rejected.
-- **Keep PRs focused.** If your PR needs a novel to explain, something is wrong.
+Congratulations. You have been warned. 💀
 
-**MEETINGS (No Ghosting Allowed)**
+---
 
-* Mentioned contributors are **expected** to attend. No disappearing acts.
-* Can't attend? We'll reschedule. Real life comes first.
-* Show a working program. Ideas are cool, but working code hits different.
+# 🤖 AI USAGE
+*Artificial Intelligence is a tool, not your replacement developer.*
 
-**USER CONFIGS**
+- AI tools are allowed for research, learning, debugging, and assistance. We're not living in the Stone Age.
+- However, everything you contribute must **originate from your understanding**. If you submit something, you better know what the hell it does.
+- This applies to EVERYTHING: code, documentation, issues, security reports, pull request descriptions, comments, and every other contribution across all Zyphor OS codebases.
+- **ALL AI USAGE MUST BE DISCLOSED.** No hiding your AI girlfriend behind your keyboard.
+- If AI generated it and you don't understand it, congratulations, you've just contributed a mystery box.
 
-* Features and contributions **must not break** existing user configurations.
-* The `/home` and `/etc` directories are **critical** and **sacred**.
-  
-**Undo of Features (Because Shit Happens)**
+**Remember:** AI can help you write the code. It cannot attend your code review and explain why you broke the boot process. 😭
 
-- Every feature must be **reversible**. No permanent regrets.
-- Maintainer scripts must clean up after themselves. No zombie services.
-- Uninstalling must never delete user data or configs. `/home` and `/etc` are sacred. Touch them and I'll marry your mother.
-- Every feature needs rollback instructions. "Works on my machine" isn't a recovery plan. 😭
+---
 
-**Dismantled Old Development Methods**
+# 🛠️ DEVELOPMENT RULES
+*We build an operating system, not a collection of random Git commits.*
 
-- **NO MORE FUCKING ONBOARDING.** We're contributing to an OS, not applying for a fucking mortgage. Clone the repo, read the docs, and let the code do the talking.
-- The old fucking **/DEVLOG** file deserves a place in the history books. We suffered through those commits; future generations deserve to know.
-  
-**By contributing to Zyphor OS, you solemnly swear that:**
+- **One task, one branch.** No feature-stacking. No surprise fixes. You're not ordering a combo meal.
+- **HANDS OFF `main`.** Direct commits are forbidden. Pull requests only. Review first, merge later. Main is not your personal playground.
+- **Delete merged branches.** Zombies belong in horror movies, not Git repositories.
+- **No mixed changes.** One branch, one purpose. Don't submit a PR fixing Wi-Fi, redesigning the desktop, and changing the bootloader simultaneously.
+- **Keep PRs focused.** If your pull request needs a 40-page novel, three sequels, and a documentary to explain itself, something is terribly wrong.
 
-- You wrote that **shit** yourself and have the rights to submit it under the project's license, **OR**
-- You borrowed someone else's work legally, respected its license, and didn't just Ctrl+C someone's entire existence.
-- You understand that your contribution will be released under Zyphor OS's open-source license. No take-backsies just because it becomes famous. 💀
-- You give Zyphor OS permission to **use**, **modify**, and **distribute** your contribution.
+**Git is version control, not a crime scene. Leave it clean.**
+
+---
+
+# 📅 MEETINGS
+*No Ghosting Allowed.*
+
+- If you're mentioned as an expected contributor in a meeting, you're expected to attend. Don't disappear like a discontinued Linux distribution.
+- Can't attend? Let us know. We'll reschedule. Real life comes first. We maintain an operating system, not a cult.
+- Bring something that works. A working program, prototype, or demonstrable progress is preferred.
+- Ideas are cool. Presentations are cool. But working code hits different.
+
+**Please don't show up with 47 slides explaining a feature that doesn't even compile.** 💀
+
+---
+
+# 🏠 USER CONFIGURATIONS
+*The user's machine is their home. Act like a guest.*
+
+- Features and contributions MUST NOT break existing user configurations.
+- The `/home` and `/etc` directories are **CRITICAL AND SACRED**.
+- Do not casually overwrite, delete, reset, or modify user configurations.
+- Respect existing environments. Not everyone wants their desktop to look exactly like yours.
+
+**Touch `/home` or `/etc` carelessly, and I'll personally arrange your mother's wedding.**
+
+---
+
+# 🔄 FEATURE REVERSIBILITY
+*Because shit happens. And sometimes it happens in production.*
+
+- Every feature MUST be reversible. No permanent regrets.
+- Maintainer scripts MUST clean up after themselves. No zombie services, orphaned files, or mysterious background processes.
+- Uninstalling a feature must NEVER delete user data or personal configurations.
+- `/home` and `/etc` remain sacred. I cannot stress this enough.
+- Every feature MUST include rollback instructions. If something goes wrong, we need a way back.
+- "It works on my machine" is NOT a recovery plan. Neither is praying to Linus Torvalds.
+
+**If you can install it, you should be able to uninstall it. If you can break it, you should know how to undo it.**
+
+And remember:
+
+*Touch someone's personal configuration without a damn good reason, and I'll marry your mother. This time, it's not a joke.*
+
+---
+
+# ⚰️ DISMANTLED OLD DEVELOPMENT METHODS
+*Some traditions deserve to die.*
+
+### NO MORE FUCKING ONBOARDING.
+
+We're contributing to an operating system, not applying for a fucking mortgage.
+
+- Clone the repository.
+- Read the documentation.
+- Understand the project structure.
+- Follow the contribution rules.
+- Let the code do the talking.
+
+No unnecessary onboarding ceremonies. No 17-step initiation rituals. No corporate welcome presentation.
+
+If you can use Git, read documentation, and understand what you're contributing, you're already halfway there.
+
+### RIP `/DEVLOG`
+
+The old fucking `/DEVLOG` file deserves a permanent place in the history books.
+
+It has witnessed commits, experiments, questionable decisions, and development suffering that future generations must never forget.
+
+We suffered through those commits. Future generations deserve to know.
+
+**Rest in peace, `/DEVLOG`. You were ugly, but you were ours.** 🫡
+
+---
+
+# 📜 CONTRIBUTOR DECLARATION
+*Before submitting that beautiful piece of code, let's establish a few things.*
+
+By contributing to Zyphor OS, you solemnly swear that:
+
+- You wrote that shit yourself and have the legal rights to submit it under the project's license.
+
+  **OR**
+
+- You legally borrowed someone else's work, respected its license, provided appropriate attribution, and didn't just Ctrl+C someone's entire existence.
+
+- You understand that your contributions will be released under the applicable Zyphor OS open-source license. No take-backsies just because your code becomes famous.
+- You grant Zyphor OS the permissions necessary to use, modify, and distribute your contributions under the project's license.
+- You understand what you're submitting. "ChatGPT told me to do it" is not a valid technical explanation.
+- You agree to follow the project's development standards, even when your favorite shortcut gets rejected.
+
+**Plagiarism is not contribution. Copying without permission is not collaboration. And ignorance of licensing is not a personality trait.**
+
+---
+
+# ☠️ FINAL NOTICE
+
+Zyphor OS is a community-driven project. We welcome contributors, ideas, collaboration, experimentation, and constructive criticism.
+
+We don't expect everyone to be perfect. We expect everyone to be responsible for what they contribute.
+
+Write good code. Respect other contributors. Protect user data. Keep the repository clean. Don't break existing installations just because you wanted to try something cool.
+
+And most importantly...
+
+> **DISOBEY THIS RULE, AND I'LL MARRY YOUR MOTHER.**
+
+Made with questionable humor, serious engineering standards, and an unreasonable amount of love for Linux.
+
+**— Mark Jason Espelita**  
+*Creator and Lead OS Maintainer | Zyphor Operating System*
+
+*P.S. Your mother has not been contacted. Yet.* 💀
