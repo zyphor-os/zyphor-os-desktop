@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Zyphor Debian Package Installer
+Comment=Install Debian packages
+Exec=/usr/bin/zydeb-handler %f
+Terminal=false
+NoDisplay=true
+Categories=System;PackageManager;
+MimeType=application/vnd.debian.binary-package;application/x-deb;application/x-debian-package;
