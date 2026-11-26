@@ -1,0 +1,33 @@
+#!/bin/bash
+# Zyphor Debian Handler - privileged helper (run through pkexec).
+# Installs a single local .deb with apt so dependencies get resolved.
+
+set -euo pipefail
+
+FILE="${1:-}"
+
+if [[ -z "$FILE" || ! -f "$FILE" || "${FILE,,}" != *.deb ]]; then
+    echo "Not a .deb file: $FILE" >&2
+    exit 2
+fi
+
+if ! dpkg-deb --info "$FILE" >/dev/null 2>&1; then
+    echo "Not a valid Debian package: $FILE" >&2
+    exit 2
+fi
+
+# Work on a private copy: the file cannot change after it was confirmed,
+# and apt's unprivileged download user can read it (no sandbox warning).
+TMP="$(mktemp -d /tmp/zydeb-install.XXXXXX)"
+trap 'rm -rf "$TMP"' EXIT
+cp -- "$FILE" "$TMP/package.deb"
+chmod 755 "$TMP"
+chmod 644 "$TMP/package.deb"
+
+export DEBIAN_FRONTEND=noninteractive
+export APT_LISTCHANGES_FRONTEND=none
+
+apt-get install -y \
+    -o DPkg::Lock::Timeout=60 \
+    -o Dpkg::Options::=--force-confold \
+    "$TMP/package.deb"
