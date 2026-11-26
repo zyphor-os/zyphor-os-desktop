@@ -298,6 +298,9 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-windows-handler
 # 	mv pkg/v2/reforged/zyphor-windows-handler.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
+	zyphor build package pkg/v2/reforged/zyphor-debian-handler
+	mv pkg/v2/reforged/zyphor-debian-handler.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+
 # ADA LOVELACE APPS
 
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-cli
@@ -309,8 +312,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
 # 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
-# 	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
+	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
 # 	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
@@ -383,7 +386,7 @@ release:
 # 	mv pkg/v3/zyphor-windows-handler.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 	zyphor build package pkg/v3/zyphor-debian-handler
-# 	mv pkg/v3/zyphor-debian-handler.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+	mv pkg/v3/zyphor-debian-handler.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 # BETHANY APPS
 
@@ -411,8 +414,8 @@ release:
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 # 	mv pkg/v3/apps/zyphor-command-center.deb pkg/staging
 
-# 	zyphor build package pkg/v3/apps/zyphor-whats-new
-# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-whats-new
+	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	zyphor build package pkg/v3/apps/zyphor-smart-downloads
 # 	mv pkg/v3/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
