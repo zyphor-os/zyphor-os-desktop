@@ -1,0 +1,38 @@
+#!/bin/sh
+set -e
+
+MIMEAPPS=/etc/xdg/mimeapps.list
+DESKTOP=zyphor-debian-handler.desktop
+
+case "$1" in
+  configure)
+    chown root:root /usr/bin/zydeb-handler \
+                    /usr/lib/zyphor-debian-handler/zydeb-install \
+                    /usr/share/applications/zyphor-debian-handler.desktop \
+                    /usr/share/polkit-1/actions/org.zyphor.debian-handler.policy
+
+    chmod 555 /usr/bin/zydeb-handler
+    chmod 555 /usr/lib/zyphor-debian-handler/zydeb-install
+    chmod 644 /usr/share/applications/zyphor-debian-handler.desktop
+    chmod 644 /usr/share/polkit-1/actions/org.zyphor.debian-handler.policy
+
+    # Make double-clicking a .deb use this handler (system-wide default)
+    for mt in application/vnd.debian.binary-package application/x-deb; do
+      if [ ! -f "$MIMEAPPS" ]; then
+        printf '[Default Applications]\n' > "$MIMEAPPS"
+      fi
+      if ! grep -q '^\[Default Applications\]' "$MIMEAPPS"; then
+        printf '\n[Default Applications]\n' >> "$MIMEAPPS"
+      fi
+      if ! grep -q "^$mt=" "$MIMEAPPS"; then
+        sed -i "/^\[Default Applications\]/a $mt=$DESKTOP" "$MIMEAPPS"
+      fi
+    done
+
+    if command -v update-desktop-database >/dev/null 2>&1; then
+      update-desktop-database -q /usr/share/applications || true
+    fi
+    ;;
+esac
+
+exit 0

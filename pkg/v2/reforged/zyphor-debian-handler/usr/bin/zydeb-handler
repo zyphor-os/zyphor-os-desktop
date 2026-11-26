@@ -1,0 +1,110 @@
+#!/bin/bash
+# Zyphor Debian Handler - installs .deb packages when double-clicked in the file manager.
+
+APP="Zyphor Debian Handler"
+HELPER="/usr/lib/zyphor-debian-handler/zydeb-install"
+
+notify() {
+    # $1 = title, $2 = message
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send "$1" "$2"
+    else
+        echo "$1: $2" >&2
+    fi
+}
+
+fail() {
+    if command -v zenity >/dev/null 2>&1; then
+        zenity --error --title="$APP" --no-markup --width=420 --text="$1" 2>/dev/null
+    else
+        notify "$APP" "$1"
+    fi
+    exit 1
+}
+
+FILE="$1"
+
+if [[ -z "$FILE" || ! -f "$FILE" ]]; then
+    notify "$APP" "File not found."
+    exit 1
+fi
+
+FILE="$(realpath "$FILE")"
+
+if [[ "${FILE,,}" != *.deb ]]; then
+    notify "$APP" "Unsupported file type."
+    exit 1
+fi
+
+for tool in dpkg-deb pkexec zenity; do
+    command -v "$tool" >/dev/null 2>&1 || fail "$tool is not installed."
+done
+
+# Read package details (also validates that this is a real .deb)
+NAME="$(dpkg-deb -f "$FILE" Package 2>/dev/null)"
+VERSION="$(dpkg-deb -f "$FILE" Version 2>/dev/null)"
+ARCH="$(dpkg-deb -f "$FILE" Architecture 2>/dev/null)"
+DESC="$(dpkg-deb -f "$FILE" Description 2>/dev/null | head -n1)"
+
+[[ -z "$NAME" || -z "$VERSION" ]] && fail "This is not a valid Debian package:
+$(basename "$FILE")"
+
+# Already installed at the same version?
+INSTALLED="$(dpkg-query -W -f='${Version}' "$NAME" 2>/dev/null)"
+if [[ -n "$INSTALLED" ]]; then
+    if [[ "$INSTALLED" == "$VERSION" ]]; then
+        ACTION="Reinstall"
+        NOTE="Version $INSTALLED is already installed."
+    else
+        ACTION="Install"
+        NOTE="Installed version: $INSTALLED (will be replaced)."
+    fi
+else
+    ACTION="Install"
+    NOTE=""
+fi
+
+zenity --question --no-markup --title="$APP" --width=420 \
+    --ok-label="$ACTION" --cancel-label="Cancel" \
+    --text="$ACTION this package?
+
+Package: $NAME
+Version: $VERSION
+Architecture: $ARCH
+${DESC:+$DESC
+}${NOTE:+
+$NOTE}" 2>/dev/null || exit 0
+
+LOG="$(mktemp /tmp/zydeb-handler.XXXXXX.log)"
+trap 'rm -f "$LOG"' EXIT
+
+# Run the privileged installer (polkit shows the password prompt)
+pkexec "$HELPER" "$FILE" >"$LOG" 2>&1 &
+PID=$!
+
+# Busy indicator while it works
+(
+    echo "# Installing $NAME $VERSION..."
+    while kill -0 "$PID" 2>/dev/null; do sleep 0.5; done
+    echo 100
+) | zenity --progress --pulsate --auto-close --no-cancel \
+    --title="$APP" --width=360 2>/dev/null
+
+wait "$PID"
+RC=$?
+
+case "$RC" in
+    0)
+        notify "$APP" "$NAME $VERSION installed successfully."
+        ;;
+    126|127)
+        # Authentication dismissed or denied
+        notify "$APP" "Installation cancelled."
+        exit 1
+        ;;
+    *)
+        fail "Installation of $NAME failed.
+
+$(tail -n 15 "$LOG")"
+        ;;
+esac

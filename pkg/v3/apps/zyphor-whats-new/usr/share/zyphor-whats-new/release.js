@@ -1,9 +1,20 @@
 const releaseNotes = {
     distro: "Zyphor OS 3 \"Bethany\" LTS",
-    version: "3.2.0-bethany-lts-u15",
-    date: "Updated On: November 23, 2026 @ 08:22 AM",
+    version: "3.2.0-bethany-lts-u16",
+    date: "Updated On: November 26, 2026 @ 07:54 PM",
 
     sections: [
+        {
+            "title": "Install .deb Packages With a Double-Click",
+            "items": [
+                "Downloaded a `.deb` file? Just double-click it and Zyphor OS handles the rest, no terminal and no `dpkg -i` needed",
+                "A confirmation dialog shows the package name, version, architecture and description before anything is installed, and tells you if it will replace an existing version or reinstall the same one",
+                "Installation runs through `apt`, so missing dependencies are resolved and installed automatically",
+                "Admin access is requested through a graphical password prompt, and nothing runs as root until you approve it",
+                "You get a notification when it finishes, or a clear error message with the last lines of the log if something goes wrong",
+                "Optional install (sudo zy pkg install zyphor-debian-handler) for existing users but included by default on new ISO releases"
+            ]
+        },
         {
             "title": "Clean and Reversible Pentest Setup",
             "items": [

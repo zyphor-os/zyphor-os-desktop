@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+MIMEAPPS=/etc/xdg/mimeapps.list
+
+case "$1" in
+  remove|purge)
+    if [ -f "$MIMEAPPS" ]; then
+      sed -i '/=zyphor-debian-handler\.desktop$/d' "$MIMEAPPS"
+    fi
+    if command -v update-desktop-database >/dev/null 2>&1; then
+      update-desktop-database -q /usr/share/applications || true
+    fi
+    ;;
+esac
+
+exit 0
