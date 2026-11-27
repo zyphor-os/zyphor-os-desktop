@@ -171,29 +171,21 @@ add:
 	git add Makefile
 	git commit -m "build: update Makefile"
 
-	# Update Ada Reforged What's New metadata
-	git add pkg/v2/reforged/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(ada): update What's New metadata"
+	# Update Ada Reforged Smart Downloads metadata
+	git add pkg/v2/reforged/apps/zyphor-smart-downloads/DEBIAN/control
+	git commit -m "pkg(ada): update Smart Downloads metadata"
 
-	# Update Ada Reforged release information
-	git add pkg/v2/reforged/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(ada): update What's New release information"
+	# Update Ada Reforged Smart Downloads post-install script
+	git add pkg/v2/reforged/apps/zyphor-smart-downloads/DEBIAN/postinst
+	git commit -m "fix(ada): update Smart Downloads post-install script"
 
-	# Update Ada Reforged Debian Handler metadata
-	git add pkg/v2/reforged/zyphor-debian-handler/DEBIAN/control
-	git commit -m "pkg(ada): update Debian Handler metadata"
+	# Update Bethany Smart Downloads metadata
+	git add pkg/v3/apps/zyphor-smart-downloads/DEBIAN/control
+	git commit -m "pkg(bethany): update Smart Downloads metadata"
 
-	# Update Bethany What's New metadata
-	git add pkg/v3/apps/zyphor-whats-new/DEBIAN/control
-	git commit -m "pkg(bethany): update What's New metadata"
-
-	# Update Bethany release information
-	git add pkg/v3/apps/zyphor-whats-new/usr/share/zyphor-whats-new/release.js
-	git commit -m "feat(bethany): update What's New release information"
-
-	# Update Bethany Debian Handler metadata
-	git add pkg/v3/zyphor-debian-handler/DEBIAN/control
-	git commit -m "pkg(bethany): update Debian Handler metadata"
+	# Update Bethany Smart Downloads post-install script
+	git add pkg/v3/apps/zyphor-smart-downloads/DEBIAN/postinst
+	git commit -m "fix(bethany): update Smart Downloads post-install script"
 
 push:
 	git push origin $(branch)
@@ -298,8 +290,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/zyphor-windows-handler
 # 	mv pkg/v2/reforged/zyphor-windows-handler.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/zyphor-debian-handler
-	mv pkg/v2/reforged/zyphor-debian-handler.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/zyphor-debian-handler
+# 	mv pkg/v2/reforged/zyphor-debian-handler.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace/pool/main/z --verbose
 
 # ADA LOVELACE APPS
 
@@ -312,8 +304,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/apps/zyphor-command-center-web
 # 	mv pkg/v2/reforged/apps/zyphor-command-center-web.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
-	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v2/reforged/apps/zyphor-whats-new
+# 	mv pkg/v2/reforged/apps/zyphor-whats-new.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 	
 # 	zyphor build package pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher
 # 	mv pkg/v2/reforged/apps/zycamera-launcher/zycamera-launcher.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
@@ -329,8 +321,8 @@ release:
 # 	zyphor build package pkg/v2/reforged/apps/zywin-ui/zywin-ui
 # 	mv pkg/v2/reforged/apps/zywin-ui/zywin-ui.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v2/reforged/apps/zyphor-smart-downloads
-# 	mv pkg/v2/reforged/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
+	zyphor build package pkg/v2/reforged/apps/zyphor-smart-downloads
+	mv pkg/v2/reforged/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/ada-lovelace-lts-reforged/ada-lovelace-apps/pool/main/z --verbose
 
 # V3 UPDATES ===========================================================
 
@@ -385,8 +377,8 @@ release:
 # 	zyphor build package pkg/v3/zyphor-windows-handler
 # 	mv pkg/v3/zyphor-windows-handler.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
-	zyphor build package pkg/v3/zyphor-debian-handler
-	mv pkg/v3/zyphor-debian-handler.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
+# 	zyphor build package pkg/v3/zyphor-debian-handler
+# 	mv pkg/v3/zyphor-debian-handler.deb ../zyphor-os.github.io/bethany-lts/bethany/pool/main/z --verbose
 
 # BETHANY APPS
 
@@ -414,11 +406,11 @@ release:
 # 	mv pkg/v3/apps/zyphor-command-center.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 # 	mv pkg/v3/apps/zyphor-command-center.deb pkg/staging
 
-	zyphor build package pkg/v3/apps/zyphor-whats-new
-	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+# 	zyphor build package pkg/v3/apps/zyphor-whats-new
+# 	mv pkg/v3/apps/zyphor-whats-new.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
-# 	zyphor build package pkg/v3/apps/zyphor-smart-downloads
-# 	mv pkg/v3/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
+	zyphor build package pkg/v3/apps/zyphor-smart-downloads
+	mv pkg/v3/apps/zyphor-smart-downloads.deb ../zyphor-os.github.io/bethany-lts/bethany-apps/pool/main/z --verbose
 
 # 	---
 
