@@ -1,192 +1,93 @@
-# ☠️ THE ONE AND ONLY ZYPHOR POLICY
+# ☠️ THE ZYPHOR DEVELOPMENT POLICY
 
-**This is the one and only POLICY in the entire Zyphor Operating System development universe.**
+*One project. One standard. One shared responsibility.*
 
-No hidden rules. No secret policies. No premium DLC. No expansion packs. No surprise terms and conditions. Nothing more, nothing less.
+Zyphor OS follows one fundamental principle:
 
-There is only ONE rule:
+> **Respect the project, respect its contributors, and respect the users.**
 
-> *"Disobey this rule, and I'll marry your mother."*
+Authored and maintained by **Mark Jason Espelita**, Creator and Lead OS Maintainer of Zyphor OS.
 
-Authored, approved, threatened, and personally enforced by **Mark Jason Espelita** himself.
+## 🤖 AI USAGE
 
-Congratulations. You have been warned. 💀
+AI tools are welcome for research, learning, debugging, and development assistance.
 
----
+- Understand everything you contribute.
+- Disclose all AI usage.
+- Take responsibility for AI-assisted work.
 
-# 🤖 AI USAGE
-*Artificial Intelligence is a tool, not your replacement developer.*
+**AI is a tool, not a replacement for understanding.**
 
-- AI tools are allowed for research, learning, debugging, and assistance. We're not living in the Stone Age.
-- However, everything you contribute must **originate from your understanding**. If you submit something, you better know what the hell it does.
-- This applies to EVERYTHING: code, documentation, issues, security reports, pull request descriptions, comments, and every other contribution across all Zyphor OS codebases.
-- **ALL AI USAGE MUST BE DISCLOSED.** No hiding your AI girlfriend behind your keyboard.
-- If AI generated it and you don't understand it, congratulations, you've just contributed a mystery box.
+## 🛠️ DEVELOPMENT STANDARDS
 
-**Remember:** AI can help you write the code. It cannot attend your code review and explain why you broke the boot process. 😭
+- One task, one branch.
+- No direct commits to `main`. Pull requests are required.
+- Keep changes focused and organized.
+- Delete merged branches.
+- All contributions must follow project standards.
 
----
+**Keep the repository clean and maintainable.**
 
-# 🛠️ DEVELOPMENT RULES
-*We build an operating system, not a collection of random Git commits.*
+## 📅 MEETINGS
 
-- **One task, one branch.** No feature-stacking. No surprise fixes. You're not ordering a combo meal.
-- **HANDS OFF `main`.** Direct commits are forbidden. Pull requests only. Review first, merge later. Main is not your personal playground.
-- **Delete merged branches.** Zombies belong in horror movies, not Git repositories.
-- **No mixed changes.** One branch, one purpose. Don't submit a PR fixing Wi-Fi, redesigning the desktop, and changing the bootloader simultaneously.
-- **Keep PRs focused.** If your pull request needs a 40-page novel, three sequels, and a documentary to explain itself, something is terribly wrong.
+- Attend meetings when expected.
+- Notify the team if you cannot attend.
+- Real-life responsibilities come first.
+- Demonstrable progress is encouraged.
 
-**Git is version control, not a crime scene. Leave it clean.**
+## 🏠 USER CONFIGURATIONS
 
----
+User environments must always be respected.
 
-# 📅 MEETINGS
-*No Ghosting Allowed.*
+- `/home` and `/etc` are critical directories.
+- Never unnecessarily overwrite, delete, or reset user configurations.
+- Preserve existing environments and personal data.
 
-- If you're mentioned as an expected contributor in a meeting, you're expected to attend. Don't disappear like a discontinued Linux distribution.
-- Can't attend? Let us know. We'll reschedule. Real life comes first. We maintain an operating system, not a cult.
-- Bring something that works. A working program, prototype, or demonstrable progress is preferred.
-- Ideas are cool. Presentations are cool. But working code hits different.
+**The user's machine is their home. Treat it accordingly.**
 
-**Please don't show up with 47 slides explaining a feature that doesn't even compile.** 💀
+## 🔄 FEATURE REVERSIBILITY
 
----
+Every feature must be designed with recovery in mind.
 
-# 🏠 USER CONFIGURATIONS
-*The user's machine is their home. Act like a guest.*
+- Provide rollback instructions.
+- Ensure clean installation and removal.
+- Avoid orphaned files, services, and processes.
+- Never delete user data or personal configurations during removal.
 
-- Features and contributions MUST NOT break existing user configurations.
-- The `/home` and `/etc` directories are **CRITICAL AND SACRED**.
-- Do not casually overwrite, delete, reset, or modify user configurations.
-- Respect existing environments. Not everyone wants their desktop to look exactly like yours.
+**If a feature can be installed, it should have a responsible removal path.**
 
-**Touch `/home` or `/etc` carelessly, and I'll personally arrange your mother's wedding.**
+## ⚰️ DEVELOPMENT HISTORY
 
----
+- No unnecessary onboarding procedures. Read the documentation, understand the project, and follow its contribution guidelines.
+- The old `/DEVLOG` has been retired. Its development history remains part of Zyphor's journey.
 
-# 🔄 FEATURE REVERSIBILITY
-*Because shit happens. And sometimes it happens in production.*
+## 🕖 PACKAGE RELEASE SCHEDULE
 
-- Every feature MUST be reversible. No permanent regrets.
-- Maintainer scripts MUST clean up after themselves. No zombie services, orphaned files, or mysterious background processes.
-- Uninstalling a feature must NEVER delete user data or personal configurations.
-- `/home` and `/etc` remain sacred. I cannot stress this enough.
-- Every feature MUST include rollback instructions. If something goes wrong, we need a way back.
-- "It works on my machine" is NOT a recovery plan. Neither is praying to Linus Torvalds.
+**Regular release window: 7:00 PM – 9:00 PM (UTC+8).**
 
-**If you can install it, you should be able to uninstall it. If you can break it, you should know how to undo it.**
+Updates normally include features, improvements, bug fixes, security patches, and package maintenance.
 
-And remember:
+Critical issues and security updates may be released at any time when necessary. User safety and system stability take priority over schedules.
 
-*Touch someone's personal configuration without a damn good reason, and I'll marry your mother. This time, it's not a joke.*
+## 📜 CONTRIBUTOR RESPONSIBILITY
 
----
+By contributing, you agree that:
 
-# ⚰️ DISMANTLED OLD DEVELOPMENT METHODS
-*Some traditions deserve to die.*
+- Your work is original or properly licensed and attributed.
+- You have the legal right to submit your contributions.
+- You understand the code and changes you submit.
+- Your contributions may be distributed under the applicable project license.
+- You respect the project's development standards and licensing requirements.
 
-### NO MORE FUCKING ONBOARDING.
+## ☠️ FINAL NOTICE
 
-We're contributing to an operating system, not applying for a fucking mortgage.
+Zyphor OS welcomes contributors, collaboration, experimentation, and constructive criticism.
 
-- Clone the repository.
-- Read the documentation.
-- Understand the project structure.
-- Follow the contribution rules.
-- Let the code do the talking.
+We don't expect perfection. We expect responsibility, transparency, respect, and a willingness to learn.
 
-No unnecessary onboarding ceremonies. No 17-step initiation rituals. No corporate welcome presentation.
+Build responsibly. Protect users. Respect contributors. Keep improving.
 
-If you can use Git, read documentation, and understand what you're contributing, you're already halfway there.
-
-### RIP `/DEVLOG`
-
-The old fucking `/DEVLOG` file deserves a permanent place in the history books.
-
-It has witnessed commits, experiments, questionable decisions, and development suffering that future generations must never forget.
-
-We suffered through those commits. Future generations deserve to know.
-
-**Rest in peace, `/DEVLOG`. You were ugly, but you were ours.** 🫡
-
----
-
-# 🕖 ZYPHOR OS PACKAGE RELEASE SCHEDULE
-*Because even packages deserve office hours.*
-
-*"This policy was originally established on **August 18, 2026**. I'm just restating it for everyone, in case some of you thought the rules magically disappeared. 💀"*
-
-Zyphor OS will normally release new packages and software updates between **7:00 PM and 9:00 PM (UTC+8)**.
-
-Why? Because we believe in organized releases, proper testing, and not randomly throwing packages at users at 3 AM while everyone is sleeping.
-
-During this window, the team may publish:
-
-- New features and functionalities.
-- Performance improvements.
-- Bug fixes (including bugs we accidentally introduced while fixing other bugs).
-- Security updates.
-- Updated packages and dependencies.
-- General system improvements.
-
-**Regular Release Window: 7:00 PM – 9:00 PM (UTC+8)**
-
-That's our usual delivery schedule. Think of it as package delivery, except nobody rings your doorbell.
-
-### 🚨 URGENT RELEASES
-*When shit hits the fan, the clock doesn't matter.*
-
-If a critical bug, security vulnerability, or urgent issue needs immediate attention, the Zyphor OS Team reserves the right to release the affected package or software **ANYTIME, INCLUDING OUTSIDE THE REGULAR RELEASE WINDOW.**
-
-Examples include:
-
-- Critical security vulnerabilities.
-- System-breaking bugs.
-- Package failures affecting multiple users.
-- Issues that threaten system stability.
-- Fixes that simply cannot wait until tomorrow.
-
-Urgent releases will be prioritized whenever delaying an update could negatively affect users, system stability, or security.
-
-**Translation:** If your system is on fire, we're not waiting until 7 PM to bring the extinguisher.
-
----
-
-# 📜 CONTRIBUTOR DECLARATION
-*Before submitting that beautiful piece of code, let's establish a few things.*
-
-By contributing to Zyphor OS, you solemnly swear that:
-
-- You wrote that shit yourself and have the legal rights to submit it under the project's license.
-
-  **OR**
-
-- You legally borrowed someone else's work, respected its license, provided appropriate attribution, and didn't just Ctrl+C someone's entire existence.
-
-- You understand that your contributions will be released under the applicable Zyphor OS open-source license. No take-backsies just because your code becomes famous.
-- You grant Zyphor OS the permissions necessary to use, modify, and distribute your contributions under the project's license.
-- You understand what you're submitting. "ChatGPT told me to do it" is not a valid technical explanation.
-- You agree to follow the project's development standards, even when your favorite shortcut gets rejected.
-
-**Plagiarism is not contribution. Copying without permission is not collaboration. And ignorance of licensing is not a personality trait.**
-
----
-
-# ☠️ FINAL NOTICE
-
-Zyphor OS is a community-driven project. We welcome contributors, ideas, collaboration, experimentation, and constructive criticism.
-
-We don't expect everyone to be perfect. We expect everyone to be responsible for what they contribute.
-
-Write good code. Respect other contributors. Protect user data. Keep the repository clean. Don't break existing installations just because you wanted to try something cool.
-
-And most importantly...
-
-> **DISOBEY THIS RULE, AND I'LL MARRY YOUR MOTHER.**
-
-Made with questionable humor, serious engineering standards, and an unreasonable amount of love for Linux.
+Made with humor, serious engineering standards, and a shared passion for Linux.
 
 **— Mark Jason Espelita**  
 *Creator and Lead OS Maintainer | Zyphor Operating System*
-
-*P.S. Your mother has not been contacted. Yet.* 💀
