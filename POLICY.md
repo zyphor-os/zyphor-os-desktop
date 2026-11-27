@@ -87,8 +87,6 @@ We don't expect perfection. We expect responsibility, transparency, respect, and
 
 Build responsibly. Protect users. Respect contributors. Keep improving.
 
-> **Break the rules, and I'll marry your mother.** 💀
-
 Made with humor, serious engineering standards, and a shared passion for Linux.
 
 **— Mark Jason Espelita**  
