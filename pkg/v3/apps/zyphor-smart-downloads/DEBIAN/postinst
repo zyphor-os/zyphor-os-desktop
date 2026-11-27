@@ -7,6 +7,25 @@ case "$1" in
     configure)
         mkdir -p /var/lib/zyphor-smart-downloads
 
+        # Lock down the program files: owned by root, read/execute only (555).
+        # These scripts run as root from cron, so nobody else may modify them.
+        LIB_DIR=/usr/lib/zyphor-smart-downloads
+        if [ -d "$LIB_DIR" ]; then
+            chown root:root "$LIB_DIR"
+            find "$LIB_DIR" -type f -exec chown root:root {} + -exec chmod 555 {} +
+        fi
+        if [ -f /usr/bin/zyphor-smart-downloads ]; then
+            chown root:root /usr/bin/zyphor-smart-downloads
+            chmod 555 /usr/bin/zyphor-smart-downloads
+        fi
+        for f in /etc/zyphor-smart-downloads/zyphor-smart-downloads.conf \
+                 /usr/share/doc/zyphor-smart-downloads/copyright; do
+            if [ -f "$f" ]; then
+                chown root:root "$f"
+                chmod 555 "$f"
+            fi
+        done
+
         # Add the cron entry: run every minute. The runner itself decides
         # (from SCAN_INTERVAL in the config) whether it is time to scan.
         cat > "$CRON_FILE" <<'CRON'
